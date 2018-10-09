@@ -1,0 +1,43 @@
+#lb-page {
+  margin-top: 50px;
+}
+
+#leaderboard {
+  font-size: 50px;
+  text-align: center;
+  font-weight: bold;
+}
+
+#boards {
+  display: table;
+  width: 100%;
+  vertical-align: middle;
+  border-spacing: 50px;
+  text-align: center;
+}
+
+#boards .boards-row {
+  display: table-row;
+}
+
+#boards .board {
+  background: #fbfbfb;
+  display: table-cell;
+}
+
+.board ul {
+  list-style: none;
+  padding: 20px;
+  padding-top: 20px;
+}
+
+.board > ul > li {
+  margin: 10px;
+}
+
+.board-title {
+  padding: 10px;
+  font-size: 25px;
+  border-bottom: 5px dashed #f7f7f7;
+  font-weight: bold;
+}
