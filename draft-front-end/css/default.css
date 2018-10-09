@@ -4,7 +4,7 @@
 
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 16px;
+  /*font-size: 16px*/
   background-color: #f7f7f7;
 }
 
@@ -16,6 +16,7 @@ input {
   background-color: #fbfbfb; 
   padding: 2px 0;
   border-bottom: 1px solid #d3d3d3;
+  margin-bottom: 0px;
 }
 
 .navbar-container {
