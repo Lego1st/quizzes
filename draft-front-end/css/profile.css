@@ -1,0 +1,24 @@
+.list-profile {
+	width: 80%
+}
+
+.active {
+	color: blue;
+}
+.avatar {
+	width: 80%;
+	height: auto;
+}
+
+.badge {
+	float: right;
+}
+
+.info {
+	float: right;
+}
+
+.btn {
+	background-color: #393533;
+	color: white;
+}

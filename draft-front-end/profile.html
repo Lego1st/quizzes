@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head profile="http://www.w3.org/2005/10/profile">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Profile</title>
+    <link rel="icon" type="image/png" href="https://png.icons8.com/ios/1600/pokeball.png" />
+
+  
+
+    <!-- Custom styles for this template -->
+    <link href="css/profile.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/progress_pie_compiled.css"/>
+    <link rel="stylesheet" href="css/progress_pie_color_compiled.css"/>
+    <link rel="stylesheet" href="css/default.css"/>
+
+    <!-- Boostrap and jQuery -->
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Lobster|Lobster+Two|Ubuntu+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+    <!-- Font Awesome -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+"
+      crossorigin="anonymous"></script>
+  </head> 
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="container navbar-container">
+        
+        <div class="navbar-row">
+        
+          <div class="navbar-head">
+            <a class="navbar-brand" href="#">? Quizzes</a>
+          </div>
+
+          <div class="navbar-mid" role="search">
+            <div class="subnavbar-row">
+              <form class="input-group" id="searcher">
+                <input type="search" class="form-control" placeholder="What are you looking for?">
+              </form>
+
+              <div id="category">
+                <a href="#">Category</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="navbar-tail">
+            <div class="subnavbar-row">
+              <div id="create-quiz">
+                <i class="fas fa-plus-circle"></i>
+              </div>
+              <div id="head-ava">
+                N
+              </div>
+            </div>
+          </div>  
+          
+        </div>    
+        
+      </div>
+    </nav>
+  
+    <!-- Container -->
+    <div class="container">
+      <hr>
+      <div class="row">
+        <div class="col-3">
+          <img src="images/default_avatar.jpg" alt="default avatar" class="rounded-circle avatar">
+          <br>
+          <br>
+          <ul class="list-group">
+            <li class="list-group-item  list-profile active">Profile</li>
+            <li class="list-group-item  list-profile ">My Quizzes</li>
+            <li class="list-group-item  list-profile ">Favorite</li>
+            <li class="list-group-item  list-profile ">Answered</li>
+          </ul>
+        </div>
+        <div class="col-6">
+              <a href="#" class="btn" style="display:inline-block; float: right;">Edit</a>
+              <strong><h4>FULL NAME (username)</h4></strong>
+              <br>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Age</strong> <span class="info">null</span></li>
+                <li class="list-group-item"><strong>Country</strong> <span class="info">null</span></li>
+                <li class="list-group-item"><strong>Education</strong> <span class="info">null</span></li>
+                <li class="list-group-item"><strong>Bio</strong> <span class="info">null</span></li>
+              </ul>
+
+              <br>
+
+              <strong><h4>RANK</h4></strong>
+              <br>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Math</strong> <span class="badge badge-primary">16</span> </li>
+                <li class="list-group-item"><strong>Computer Science</strong> <span class="badge badge-success">11</span></li>
+                <li class="list-group-item"><strong>Logic</strong> <span class="badge badge-secondary">1997</span></li>
+              </ul>
+
+              <br>
+
+              <strong><h4>PROCESS</h4></strong>
+              <br>
+              
+              <div class="progress-pie-color" data-value="35"></div>
+              <div class="progress-pie-color" data-value="55"></div>
+              <div class="progress-pie-color" data-value="80"></div>
+
+        </div>
+      </div>
+      
+    </div>
+
+
+  </body>
+
+</html>
