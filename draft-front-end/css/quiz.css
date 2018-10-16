@@ -1,0 +1,40 @@
+.avatar {
+	width: 50%;
+    height: auto;
+}
+
+#quiz-page {
+    margin-top: 5%;
+}
+
+#drop-btn {
+    border-style: dashed;
+}
+
+#quiz-category {
+    width: 80%;
+    height: auto;
+
+}
+
+#left-body {
+    padding-top: 10%;
+    padding-right: 2%;
+}
+
+#main-body {
+    border: 1px solid #cacaca;
+    padding: 3%;
+    background-color: white;
+}
+#right-body {
+    padding-left: 2%;
+}
+
+#answer-list {
+    padding: 2px;
+}
+
+#answer-list li {
+    margin: 3%;
+}

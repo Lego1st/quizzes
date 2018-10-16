@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="css/default.css">
+  <link rel="stylesheet" type="text/css" href="css/home.css">
+  <link rel="stylesheet" type="text/css" href="css/quizapproval.css">
+  <title>Home</title>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container navbar-container">      
+      <div class="navbar-row">
+        <!-- Navbar Head here -->
+        <div class="navbar-head">
+          <a class="navbar-brand" href="#">? Quizzes</a>
+        </div>
+        <!-- Navbar search & category here -->
+        <div class="navbar-mid" role="search">
+          <div class="navbar-mid-row">
+            <form class="input-group" id="searcher">
+              <input type="search" class="form-control" placeholder="What are you looking for?">
+            </form>
+
+            <div id="category">
+              <a href="#">Category</a>
+            </div>
+          </div>
+        </div>
+        <!-- Navbar ava & add button -->
+        <div class="navbar-tail">
+          <div class="navbar-tail-row">
+            <div id="create-quiz">
+              <i class="fas fa-plus-circle"></i>
+            </div>
+            <div id="head-ava">
+              N
+            </div>
+          </div>
+        </div>  
+        
+      </div>    
+    </div>
+  </nav>
+  <!-- HTML here -->
+  <div class="container" id="home-page">
+    <div class="row">
+
+      <div class="col-sm-3" id="left-body">
+        <div id="home-category"> Category </div>
+        <ul id="home-cate-list">
+          <li>Math</li>
+          <li>Animal</li>
+          <li>Color</li>
+          <li>Shape</li>
+        </ul>
+      </div>
+
+      <div class="col-sm-6" id="main-body">
+        
+        <div id="qz_pending_list">
+          <div class="qz_list_title">
+            Quiz for you
+          </div> 
+          <div class="qz_quiz_item">
+              <div class="qz_quiz_title">Get started wit Quizzes</div>
+              <div class="qz_quiz_desc">Brief description here...</div>
+              <div class="qz_quiz_rating">
+                  <span class="qz_rating"></span>
+                  <span class="qz_rating"></span>
+                  <span class="qz_rating"></span>
+              </div>
+          </div>
+          <div class="qz_quiz_item">
+              <div class="qz_quiz_title">How Quizzes rank you ?</div>
+              <div class="qz_quiz_desc">Brief description here...</div>
+              <div class="qz_quiz_rating">
+                  <span class="qz_rating"></span>
+                  <span class="qz_rating"></span>
+              </div>
+          </div>
+        </div>
+
+        <div id="qz_pending_list">
+          <div class="qz_list_title">
+            Top quiz
+          </div> 
+          <div class="qz_quiz_item">
+              <div class="qz_quiz_title">Quiz 1</div>
+              <div class="qz_quiz_desc">Brief description here...</div>
+              <div class="qz_quiz_rating">
+                  <span class="qz_rating"></span>
+                  <span class="qz_rating"></span>
+                  <span class="qz_rating"></span>
+              </div>
+          </div>
+          <div class="qz_quiz_item">
+              <div class="qz_quiz_title">Quiz 2</div>
+              <div class="qz_quiz_desc">Brief description here...</div>
+              <div class="qz_quiz_rating">
+                  <span class="qz_rating"></span>
+                  <span class="qz_rating"></span>
+              </div>
+          </div>
+          <div class="qz_quiz_item">
+              <div class="qz_quiz_title">Quiz 3</div>
+              <div class="qz_quiz_desc">Brief description here...</div>
+              <div class="qz_quiz_rating">
+                  <span class="qz_rating"></span>
+                  <span class="qz_rating"></span>
+              </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-sm-3" id="right-body"></div>
+    </div>
+  </div>
+
+</body>
+</html>

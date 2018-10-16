@@ -1,0 +1,30 @@
+#home-page {
+  margin-top: 50px;
+}
+
+#home-category {
+  width: 50%;
+  font-size: 20px;
+  text-align: center;
+  background-color: #393533;
+  color: #fbfbfb;
+}
+
+#home-cate-list {
+  margin-top: 20px;
+  list-style: none;
+  color: #666666;
+}
+
+#home-cate-list li {
+  margin: 10px 0px;
+  font-size: 16px;
+}
+
+.qz_list_title {
+  text-align: center;
+  color: black;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 10px 0px;
+}

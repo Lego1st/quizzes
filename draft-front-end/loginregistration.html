@@ -8,8 +8,10 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="css/default.css">
-  <title>Home</title>
+  <link rel="stylesheet" href="css/login.css">
+  <title>Login/Registration</title>
 </head>
+
 <body>
   <!-- Navbar -->
   <nav class="navbar">
@@ -46,8 +48,50 @@
       </div>    
     </div>
   </nav>
-  <!-- HTML here -->
-  <div class="container"></div>
+
+  <div class="container">
+    <div id='registration'>
+      <h3 style="padding-bottom: 40px;">REGISTRATION</h3>
+      <br>
+      <form>
+        <div class='inputs'>
+          <input id='username' placeholder="Type username here..">
+        </div>
+        <div class='inputs'>
+          <input id='email' placeholder="Type email here..">
+        </div>
+        <div class='inputs'>
+          <input id='password' placeholder="Type password">
+        </div>
+        <div class='inputs'>
+          <input id='retypepass' placeholder="Retype password">
+        </div>
+        <div class='inputs'>
+          <button class='btn-submit' id='registerbt'> Register</button>
+        </div>
+      </form>
+    </div>
+    <div  id='split'>
+      <h3 id="middle-or"> OR </h3>
+    </div>
+    <div id='login'>
+      <h3 style="padding-bottom: 40px;">LOGIN</h3>
+      <br>
+      <form>
+        <div class='inputs'>
+          <input id='username' placeholder="Type username..">
+        </div>
+        <div class='inputs'>
+          <input id='email' placeholder="Type password..">
+        </div>
+
+        <div class='inputs'>
+          <button class='btn-submit' id='loginbt'> Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
 </body>
+
 </html>
