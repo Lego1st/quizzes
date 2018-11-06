@@ -10,15 +10,20 @@ app = flask.Flask(__name__)
 CORS(app)
 app.config["DEBUG"] = True
 
-@app.route('/test', methods=['GET'])
-def get_vip():
-    keys = ['Linear Algebra', 'History', 'Logic', 'Hacking']
+keys = ['Linear Algebra', 'History', 'Logic', 'Hacking']
+
+@app.route('/rank', methods=['GET'])
+def rank():
+    ranks = [np.random.randint(1, 1000) for _ in range(len(keys))]
+
+    return jsonify({"fetch_data": dict(zip(keys, ranks))})
+
+@app.route('/chart', methods=['GET'])
+def chart():
     data = []
     r = lambda: np.random.randint(0,255)
-    s = 0
     for i, k in enumerate(keys):
-        upper_bound = 60 if i == 0 else 100
-        rand = np.random.randint(0, upper_bound - s) if i < len(keys) - 1 else 100 -s
+        rand = np.random.randint(50, 300)
         rand_color = '#%02X%02X%02X' % (r(),r(),r())
         item = {
             "value": rand,
@@ -26,8 +31,18 @@ def get_vip():
             "highlight": rand_color,
             "label": k
         }
-        s += rand
         data.append(item)
+
+    return jsonify({"fetch_data": data})
+
+@app.route('/info', methods=['GET'])
+def info():
+    data = {
+        'age': 21,
+        'country': 'Vietnam',
+        'edu': 'University of Engineering and Technology',
+        'bio': 'emotional unstable :<'
+    }
 
     return jsonify({"fetch_data": data})
 
