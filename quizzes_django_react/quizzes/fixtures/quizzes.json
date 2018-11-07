@@ -1,0 +1,50 @@
+[
+    {
+        "model": "quizzes.profilestatistic",
+        "pk": 1,
+        "fields": {
+            "course": "Logic",
+            "counter": 161,
+            "rank": 1997
+        }
+    },
+    {
+        "model": "quizzes.profilestatistic",
+        "pk": 2,
+        "fields": {
+            "course": "Probability",
+            "counter": 1611,
+            "rank": 16
+        }
+    },
+    {
+        "model": "quizzes.profilestatistic",
+        "pk": 3,
+        "fields": {
+            "course": "Calculus",
+            "counter": 1997,
+            "rank": 11
+        }
+    },
+    {
+        "model": "quizzes.profilestatistic",
+        "pk": 4,
+        "fields": {
+            "course": "Computer science",
+            "counter": 209,
+            "rank": 209
+        }
+    },
+    {
+        "model": "quizzes.user",
+        "pk": 1,
+        "fields": {
+            "userName": "yoshi",
+            "fullName": "Nguyen Tai Long",
+            "age": 21,
+            "country": "Vietnam",
+            "education": "University of Engineering and Technology",
+            "bio": "emotional unstable :<"
+        }
+    }
+]
