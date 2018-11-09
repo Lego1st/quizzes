@@ -34,6 +34,6 @@ Import vào App.js, thêm route cho component vừa tạo vào hàm render
 Cập nhật url backend trong web_server/quizzes/urls
 
 ## Lưu ý: 
-Sử dụng component <Link> của react để chuyển giữa các trang, ví dụ như trong component Navigation
+Sử dụng component Link của react để chuyển giữa các trang, ví dụ như trong component Navigation
 
 Css để trong web_server/quizzes/static/css. Dùng file css nào thì tạo và import vào main.css
