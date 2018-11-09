@@ -4,8 +4,7 @@
   "description": "## Mô tả",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --mode development ./quizzes_django_react/quizzes/src/index.js --output ./quizzes_django_react/quizzes/static/quizzes/main.js",
-    "build": "webpack --mode production ./quizzes_django_react/quizzes/src/index.js --output ./quizzes_django_react/quizzes/static/quizzes/main.js"
+    "build": "webpack --watch --mode development"
   },
   "repository": {
     "type": "git",
@@ -36,6 +35,7 @@
   },
   "dependencies": {
     "chart.js": "^1.1.1",
-    "react-chartjs": "^1.2.0"
+    "react-chartjs": "^1.2.0",
+    "react-router-dom": "^4.3.1"
   }
 }
