@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Navigation from './Navigation';
 import Home from './Home';
 import Profile from './Profile';
-import Category from './Category'
+import Category from './Category';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 
 class App extends Component {
