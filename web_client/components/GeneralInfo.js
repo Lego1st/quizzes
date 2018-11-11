@@ -39,7 +39,7 @@ class GeneralInfo extends React.Component {
 	render() {
 		if (this.state.isLoaded) {
 			return (
-				<ul className="list-group list-group-flush">
+				<ul className="list-group">
 					<li className="list-group-item"><strong>Username</strong> 
 						<i className="fas edit-btn fa-edit"></i> <span className="info">{this.state.data['userName']}</span></li>
 					<li className="list-group-item"><strong>FullName</strong> 

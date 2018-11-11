@@ -2,31 +2,17 @@ import React from 'react';
 import Ranking from './Ranking';
 import GeneralInfo from './GeneralInfo';
 import StatsChart from './StatsChart';
+import ProfileSideBar from './ProfileSideBar';
+import {Link} from 'react-router-dom';
 
 class Profile extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      default_avatar: "{% static 'quizzes/default_avatar.jpg' %}",
-    }
-  }
 
   render() {
 
     return (
     <div className="container" id="profile-page">
       <div className="row">
-        <div className="col-md-3">
-          <img src="#" alt="default avatar" className="img-circle avatar"/>
-          <br/>
-          <br/>
-          <ul className="list-group">
-            <li className="list-group-item  list-profile active">Profile</li>
-            <li className="list-group-item  list-profile ">My Quizzes</li>
-            <li className="list-group-item  list-profile ">Favorite</li>
-            <li className="list-group-item  list-profile ">Answered</li>
-          </ul>
-        </div>
+        <ProfileSideBar/>
         <div className="col-md-4">
               <ul className="nav nav-tabs">
                 <li className="nav-item">
@@ -38,10 +24,10 @@ class Profile extends React.Component {
               </ul>
 
               <div className="tab-content">
-                <div id="general-info" className="container tab-pane active"><br/>
+                <div id="general-info" className="container tab-pane active">
                   <GeneralInfo/>
                 </div>
-                <div id="ranking" className="container tab-pane fade"><br/>
+                <div id="ranking" className="container tab-pane fade">
                   <Ranking/>
                 </div>
               </div>

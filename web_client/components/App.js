@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Navigation from './Navigation';
 import Home from './Home';
 import Profile from './Profile';
+import Post from './Post';
+import Favorite from './Favorite';
+import Answered from './Answered';
 import Category from './Category';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 
@@ -19,6 +22,9 @@ class App extends Component {
             <Route exact path='/' component={Home}/>
             <Route path='/profile' component={Profile}/>
             <Route path='/category' component={Category}/>
+            <Route path='/myquizzes' component={Post}/>
+            <Route path='/favorite' component={Favorite}/>
+            <Route path='/answered' component={Answered}/>
           </Switch>
         </div>
       </BrowserRouter>

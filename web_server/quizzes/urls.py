@@ -6,5 +6,8 @@ urlpatterns = [
     path('api/profile/general-info', views.UserListCreate.as_view()),
     path('profile/', views.index),
     path('category/', views.index),
+    path('myquizzes/', views.index),
+    path('favorite/', views.index),
+    path('answered/', views.index),
     path('', views.index),
 ]

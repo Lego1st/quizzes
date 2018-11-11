@@ -48,7 +48,7 @@ var chartOptions = {
 	legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"><%if(segments[i].label){%><%=segments[i].label%><%}%></span></li><%}%></ul>"
 }
 
-var colors = ["#F7464A", "#46BFBD", "#FDB45C", "#NTL22H"]
+var colors = ["#F7464A", "#46BFBD", "#FDB45C", "#5985cc"]
 
 var myWidth = 400;
 var myHeight = 400;
