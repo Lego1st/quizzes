@@ -31,6 +31,9 @@ class Navigation extends Component {
                       <li><Link to='/'>Shape</Link></li>
                     </ul>
                   </li>
+                  <div className="nav-category">
+                    <a><Link to="/leaderboard">Leaderboard</Link></a>
+                  </div>
                 </div>
               </div>
               <div className="navbar-tail">

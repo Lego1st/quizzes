@@ -56,20 +56,20 @@ class QuizCategory extends Component {
 
   render() {
     return (
-      <div class="container" id="quizzes-page">
-        <div class="row">
+      <div className="container" id="quizzes-page">
+        <div className="row">
 
-          <div class="col-sm-3" id="left-body">
+          <div className="col-sm-3" id="left-body">
             <img id="quizzes-category" src={"/static/quizzes/images/animal.png"}/>
           </div>
 
-          <div class="col-sm-6" id="main-body">
+          <div className="col-sm-6" id="main-body">
 
             <div id="qz_pending_list">
               {this.renderQuizList()}
             </div>
           </div>
-          <div class="col-sm-3" id="right-body"></div>
+          <div className="col-sm-3" id="right-body"></div>
         </div>
       </div>
     );

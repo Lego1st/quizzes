@@ -6,6 +6,7 @@ import Post from './Post';
 import Favorite from './Favorite';
 import Answered from './Answered';
 import QuizCategory from './QuizCategory';
+import LeaderBoard from './LeaderBoard';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 
 class App extends Component {
@@ -25,6 +26,7 @@ class App extends Component {
             <Route path='/myquizzes' component={Post}/>
             <Route path='/favorite' component={Favorite}/>
             <Route path='/answered' component={Answered}/>
+            <Route path='/leaderboard' component={LeaderBoard}/>
           </Switch>
         </div>
       </BrowserRouter>

@@ -43,6 +43,10 @@ input {
   vertical-align: middle;
 }
 
+.navbar-mid {
+  width: 60%;
+}
+
 .navbar-brand > a {
   font-size: 30px;
   font-weight: 800;
