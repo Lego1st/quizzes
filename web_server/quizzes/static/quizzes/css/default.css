@@ -81,6 +81,28 @@ input {
   font-weight: bold;
 }
 
+.nav-category {
+  display: table-cell;
+  padding: 10px 5px;
+}
+
+.nav-category a {
+  color: #393533;
+  text-decoration: none;
+}
+
+.nav-category ul {
+  margin-top: 8px;
+}
+
+.nav-category > ul > li {
+  padding: 7px 20px;
+}
+
+.nav-category > ul > li:hover {
+  background-color: #ececec;
+}
+
 .navbar-tail-row {
   float: right;
   border-spacing: 5px;
@@ -90,15 +112,23 @@ input {
   font-size: 20px;
 }
 
-#head-ava {
-  background-color: #393533;
-  border: 0;
+#head-ava img {
   width: 45px;
-  text-align: center;
-  color: #f7f7f7;
-  font-size: 30px;
   cursor: pointer;
   border-radius: 50%;
+}
+
+#head-ava::after {
+  display: none;
+}
+
+li.nav-category {
+  border-spacing: 0;
+}
+
+.navbar-tail .nav-category ul {
+  margin-top: 7px;
+  left: -50%;
 }
 
 

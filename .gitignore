@@ -1,2 +1,5 @@
 node_modules/
 .vscode
+web_server/quizzes/__pycache__
+web_server/quizzes/migrations/__pycache__
+web_server/quizzes_django_react/__pycache__

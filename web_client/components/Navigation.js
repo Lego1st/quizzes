@@ -21,10 +21,16 @@ class Navigation extends Component {
                   <form className="input-group" id="searcher">
                     <input type="search" className="form-control" placeholder="What are you looking for?"/>
                   </form>
-
-                  <div id="category">
-                    <Link to="/category">Category</Link>
-                  </div>
+                  <li className="dropdown nav-category">
+                    <a className="dropdown-toggle" data-toggle="dropdown" href="#">Category
+                    <span className="caret"></span></a>
+                    <ul className="dropdown-menu">
+                      <li><Link to='/'>Math</Link></li>
+                      <li><Link to='/'>Animal</Link></li>
+                      <li><Link to='/'>Color</Link></li>
+                      <li><Link to='/'>Shape</Link></li>
+                    </ul>
+                  </li>
                 </div>
               </div>
               <div className="navbar-tail">
@@ -32,11 +38,17 @@ class Navigation extends Component {
                   <div id="create-quiz">
                     <i className="fas fa-plus-circle"></i>
                   </div>
-                  <div id="head-ava">
-                    <Link to="/profile">
-                      N
-                    </Link>
-                  </div>
+                  <li className="dropdown nav-category" style={{padding: 0}}>
+                    <div id="head-ava" className="dropdown-toggle" data-toggle="dropdown">
+                      <Link to="/profile">
+                        <img src={"/static/quizzes/images/default_avatar.jpg"} alt="default avatar" />
+                      </Link>
+                    </div>
+                    <ul className="dropdown-menu">
+                      <li><Link to='/profile'>Your Profile</Link></li>
+                      <li><Link to='/'>Logout</Link></li>
+                    </ul>
+                  </li>
                 </div>
               </div>  
               
