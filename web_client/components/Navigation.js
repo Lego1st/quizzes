@@ -26,7 +26,7 @@ class Navigation extends Component {
                     <span className="caret"></span></a>
                     <ul className="dropdown-menu">
                       <li><Link to='/'>Math</Link></li>
-                      <li><Link to='/'>Animal</Link></li>
+                      <li><Link to='/category'>Animal</Link></li>
                       <li><Link to='/'>Color</Link></li>
                       <li><Link to='/'>Shape</Link></li>
                     </ul>

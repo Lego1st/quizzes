@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import QuizItem from "./QuizItem"
+import {Link} from 'react-router-dom';
 
 class Home extends Component {
   constructor(props) {
@@ -60,7 +61,7 @@ class Home extends Component {
             <div id="home-category"> Category </div>
             <ul id="home-cate-list">
               <li>Math</li>
-              <li>Animal</li>
+              <li><Link to='/category'>Animal</Link></li>
               <li>Color</li>
               <li>Shape</li>
             </ul>

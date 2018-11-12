@@ -5,7 +5,7 @@ import Profile from './Profile';
 import Post from './Post';
 import Favorite from './Favorite';
 import Answered from './Answered';
-import Category from './Category';
+import QuizCategory from './QuizCategory';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 
 class App extends Component {
@@ -21,7 +21,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/' component={Home}/>
             <Route path='/profile' component={Profile}/>
-            <Route path='/category' component={Category}/>
+            <Route path='/category' component={QuizCategory}/>
             <Route path='/myquizzes' component={Post}/>
             <Route path='/favorite' component={Favorite}/>
             <Route path='/answered' component={Answered}/>
