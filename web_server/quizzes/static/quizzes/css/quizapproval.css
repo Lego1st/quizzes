@@ -33,7 +33,7 @@
 }
 
 .qz_quiz_item {
-    height: 100px;
+    height: 130px;
     border: 1px solid #cacaca;
     padding: 15px 25px;
     background-color: white;
@@ -60,6 +60,10 @@
     display: inline-block;
 }
 
+.qz_quiz_cate {
+    color: #666666;
+    font-style: italic;
+}
 .qz_detail_title {
     font-size: 24px;
     font-weight: 600;
