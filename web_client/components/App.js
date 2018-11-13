@@ -8,6 +8,7 @@ import Answered from './Answered';
 import QuizCategory from './QuizCategory';
 import LeaderBoard from './LeaderBoard';
 import QuizApproval from './QuizApproval';
+import QuizDetail from './QuizDetail';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 
 class App extends Component {
@@ -29,6 +30,7 @@ class App extends Component {
             <Route path='/answered' component={Answered}/>
             <Route path='/leaderboard' component={LeaderBoard}/>
             <Route path='/quizapproval' component={QuizApproval}/>
+            <Route path='/quiz' component={QuizDetail}/>
           </Switch>
         </div>
       </BrowserRouter>
