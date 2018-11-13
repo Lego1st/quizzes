@@ -32,7 +32,7 @@ class Navigation extends Component {
                     </ul>
                   </li>
                   <div className="nav-category">
-                    <a><Link to="/leaderboard">Leaderboard</Link></a>
+                    <Link to="/leaderboard">Leaderboard</Link>
                   </div>
                 </div>
               </div>

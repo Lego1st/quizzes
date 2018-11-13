@@ -3,18 +3,20 @@ import React from 'react';
 // 			GENERAL INFO		  //
 ////////////////////////////////////
 
+var Config = require('Config');
+
 class GeneralInfo extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
 			error: null,
 			isLoaded: false,
-			data: null,
+			data: {},
 		};
 	}
 
 	componentDidMount() {
-	    fetch("http://127.0.0.1:8000/api/profile/general-info")
+	    fetch(Config.serverUrl + "/api/profile/general-info")
 	      .then(res => res.json())
 	      .then(
 	        (result) => {

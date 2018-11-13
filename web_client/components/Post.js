@@ -53,7 +53,7 @@ class Post extends React.Component {
 		for (var i = this.state.posts.length - 1; i >= 0; i--) {
 			let post = this.state.posts[i];
 			posts.push(
-				<div className="userPost">
+				<div className="userPost" key = {i}>
 					<h2 style = {{display: 'inline-block', margin: '0px'}}> {post['title']} </h2>
 					<p style = {{float:'right', margin: '0px'}}> {post['category']} </p>
 					
@@ -63,7 +63,7 @@ class Post extends React.Component {
 					<hr/>
 					<div>
 						<div id="head-ava" style={{transform: "scale(0.5)", display: "inline-block"}}>N</div>
-						<p style={{display: 'inline', fontSize: '15px'}}>by Someone   <i class="fas fa-heart"></i> {post['likes']}</p>
+						<p style={{display: 'inline', fontSize: '15px'}}>by Someone   <i className="fas fa-heart"></i> {post['likes']}</p>
 						<p style={{float: 'right', margin: '0px', fontSize: '15px'}}>{post['status']}</p>
 					</div>
 				</div>

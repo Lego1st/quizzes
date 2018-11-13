@@ -21,5 +21,11 @@ module.exports = {
       }
     ]
   },
-  devtool: 'cheap-module-eval-source-map'
+  devtool: 'cheap-module-eval-source-map',
+  externals: {
+  'Config': JSON.stringify({
+    serverUrl: "http://af158492.ngrok.io"
+    // serverUrl: "http://127.0.0.1:8000"
+  })
+}
 };

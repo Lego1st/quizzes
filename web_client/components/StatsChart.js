@@ -53,6 +53,8 @@ var colors = ["#F7464A", "#46BFBD", "#FDB45C", "#5985cc"]
 var myWidth = 400;
 var myHeight = 400;
 
+var Config = require('Config');
+
 class StatChart extends React.Component{
 	constructor(props){
 		super(props);
@@ -64,7 +66,7 @@ class StatChart extends React.Component{
 	}
 
 	componentDidMount() {
-	    fetch("http://127.0.0.1:8000/api/profile/statistic")
+	    fetch(Config.serverUrl + "/api/profile/statistic")
 	      .then(res => res.json())
 	      .then(
 	        (result) => {

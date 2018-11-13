@@ -54,7 +54,7 @@ class Answered extends React.Component {
     for (var i = this.state.posts.length - 1; i >= 0; i--) {
       let post = this.state.posts[i];
       posts.push(
-        <div className="userPost">
+        <div className="userPost" key = {i}>
           <h2 style = {{display: 'inline-block', margin: '0px'}}> {post['title']} </h2>
           <p style = {{float:'right', margin: '0px'}}> {post['category']} </p>
           
