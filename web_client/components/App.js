@@ -7,6 +7,7 @@ import Favorite from './Favorite';
 import Answered from './Answered';
 import QuizCategory from './QuizCategory';
 import LeaderBoard from './LeaderBoard';
+import QuizApproval from './QuizApproval';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 
 class App extends Component {
@@ -27,6 +28,7 @@ class App extends Component {
             <Route path='/favorite' component={Favorite}/>
             <Route path='/answered' component={Answered}/>
             <Route path='/leaderboard' component={LeaderBoard}/>
+            <Route path='/quizapproval' component={QuizApproval}/>
           </Switch>
         </div>
       </BrowserRouter>
