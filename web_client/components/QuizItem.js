@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 
 class QuizItem extends Component {
   constructor(props) {
@@ -15,12 +16,14 @@ class QuizItem extends Component {
   render() {
     return (
       <div className="qz_quiz_item">
-        <div className="qz_quiz_title">{this.props.info.title}</div>
-        <div className="qz_quiz_desc">{this.props.info.description}</div>
-        <div className="qz_quiz_rating">
-          {this.renderRating()}
-        </div>
-        <div className="qz_quiz_cate">{this.props.info.category}</div>
+        <Link to="/quiz">
+          <div className="qz_quiz_title">{this.props.info.title}</div>
+          <div className="qz_quiz_desc">{this.props.info.description}</div>
+          <div className="qz_quiz_rating">
+            {this.renderRating()}
+          </div>
+          <div className="qz_quiz_cate">{this.props.info.category}</div>
+        </Link>
       </div>  
     );
   }
