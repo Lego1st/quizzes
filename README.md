@@ -37,3 +37,6 @@ Cập nhật url backend trong web_server/quizzes/urls
 Sử dụng component Link của react để chuyển giữa các trang, ví dụ như trong component Navigation
 
 Css để trong web_server/quizzes/static/css. Dùng file css nào thì tạo và import vào main.css
+
+## Temporary Web address Ngrok
+http://55efaa49.ngrok.io/
