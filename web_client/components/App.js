@@ -9,6 +9,7 @@ import QuizCategory from './QuizCategory';
 import LeaderBoard from './LeaderBoard';
 import QuizApproval from './QuizApproval';
 import QuizDetail from './QuizDetail';
+import LoginSignUp from './LoginSignUp';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 
 class App extends Component {
@@ -22,7 +23,8 @@ class App extends Component {
         <div>
           <Navigation/>
           <Switch>
-            <Route exact path='/' component={Home}/>
+            <Route exact path='/' component={LoginSignUp}/>
+            <Route path='/home' component={Home}/>
             <Route path='/profile' component={Profile}/>
             <Route path='/category' component={QuizCategory}/>
             <Route path='/myquizzes' component={Post}/>

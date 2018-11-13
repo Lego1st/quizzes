@@ -12,5 +12,6 @@ urlpatterns = [
     path('leaderboard/', views.index),
     path('quizapproval/', views.index),
     path('quiz/', views.index),
+    path('home/',views.index),
     path('', views.index),
 ]
