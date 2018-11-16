@@ -3,6 +3,8 @@ import React from 'react';
 // // 			RANKING INFO		  //
 // ////////////////////////////////////
 
+var Config = require('Config');
+
 class Ranking extends React.Component {
 	constructor(props){
 		super(props);
@@ -30,7 +32,7 @@ class Ranking extends React.Component {
 	}
 
 	componentDidMount() {
-	    fetch("http://127.0.0.1:8000/api/profile/statistic")
+	    fetch(Config.serverUrl + "/api/profile/statistic")
 	      .then(res => res.json())
 	      .then(
 	        (result) => {
