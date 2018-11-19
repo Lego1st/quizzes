@@ -49,7 +49,7 @@ class QuizCategory extends Component {
   renderQuizList() {
     var quizzes = [];
     for (var i = 0; i < this.state.quiz_cate_list.length; i++) {
-      quizzes.push(<QuizItem info={this.state.quiz_cate_list[i]}/>)
+      quizzes.push(<QuizItem key={i} info={this.state.quiz_cate_list[i]}/>)
     }
     return quizzes;
   }

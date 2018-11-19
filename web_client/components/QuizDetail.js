@@ -36,7 +36,7 @@ class QuizDetail extends Component {
                         <p>Description here. Something is long enought to make this look beautiful</p>
                     </div>
                     <div className="col-lg-3" id="right-body">
-                        <p class="font-weight-bold">And your answer is:</p>
+                        <p className="font-weight-bold">And your answer is:</p>
                         <ul id="answer-list">
                             <li className="btn btn-info">One</li>
                             <br/>

@@ -46,7 +46,7 @@ class Home extends Component {
   renderQuizList(quiz_list) {
     var quizzes = [];
     for (var i = 0; i < quiz_list.length; i++) {
-      quizzes.push(<QuizItem info={quiz_list[i]}/>)
+      quizzes.push(<QuizItem key={i} info={quiz_list[i]}/>)
     }
     return quizzes;
   }

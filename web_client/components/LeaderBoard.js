@@ -6,7 +6,7 @@ function Board(props) {
   var display_user_list = [];
   var user_list = getTopUserByCategoryAPI(props.category);
   for (var i = 0; i < user_list.length; i++)
-    display_user_list.push(<li>{user_list[i]}</li>)
+    display_user_list.push(<li key={i}>{user_list[i]}</li>)
   return (
     <div className="board">
       <div className="board-title"> {props.category} </div>
@@ -32,14 +32,14 @@ class LeaderBoard extends Component {
     var boards = []
     var board_row = []
     for (var i = 0; i < this.state.category.length; i++) {
-      board_row.push(<Board category={this.state.category[i]}/>)
+      board_row.push(<Board key={i} category={this.state.category[i]}/>)
       if (board_row.length == 3) {
-        boards.push(<div className="boards-row">{board_row}</div>)
+        boards.push(<div key={i} className="boards-row">{board_row}</div>)
         board_row = []
       }
     }
     if (board_row.length > 0) {
-      boards.push(<div className="boards-row">{board_row}</div>)
+      boards.push(<div key="-1" className="boards-row">{board_row}</div>)
     }
 
     return (
