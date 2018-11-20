@@ -66,7 +66,7 @@ class StatChart extends React.Component{
 	}
 
 	componentDidMount() {
-	    fetch(Config.serverUrl + "/api/profile/statistic")
+	    fetch(Config.serverUrl + "/api/profile/statistic/")
 	      .then(res => res.json())
 	      .then(
 	        (result) => {

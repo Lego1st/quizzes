@@ -6,6 +6,9 @@ class Navigation extends Component {
     super(props);
     this.state = {};
   }
+  handle_logout = () => {
+    localStorage.removeItem('token');
+  };
 
   render() {
     return (
@@ -49,7 +52,7 @@ class Navigation extends Component {
                     </div>
                     <ul className="dropdown-menu">
                       <li><Link to='/profile'>Your Profile</Link></li>
-                      <li><Link to='/'>Logout</Link></li>
+                      <li><Link to='/login' onClick={this.handle_logout}>Logout</Link></li>
                     </ul>
                   </li>
                 </div>

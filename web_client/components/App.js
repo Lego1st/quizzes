@@ -10,21 +10,29 @@ import LeaderBoard from './LeaderBoard';
 import QuizApproval from './QuizApproval';
 import QuizDetail from './QuizDetail';
 import LoginSignUp from './LoginSignUp';
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import PrivateRoute from './PrivateRoute';
+import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
+import {history} from 'history';
 
 class App extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      logged_in: localStorage.getItem('token') ? true : false,
+      username: ''
+    };
   }
 
   render() {
+
+
     return (
       <BrowserRouter>
         <div>
           <Navigation/>
           <Switch>
-            <Route exact path='/' component={LoginSignUp}/>
-            <Route path='/home' component={Home}/>
+            <Route path="/dashboard" component={Home}/>
+            <Route path='/login' component={LoginSignUp}/>
             <Route path='/profile' component={Profile}/>
             <Route path='/category' component={QuizCategory}/>
             <Route path='/myquizzes' component={Post}/>
@@ -33,6 +41,9 @@ class App extends Component {
             <Route path='/leaderboard' component={LeaderBoard}/>
             <Route path='/quizapproval' component={QuizApproval}/>
             <Route path='/quiz' component={QuizDetail}/>
+            <PrivateRoute path='/'  logged_in={this.state.logged_in} component={App}/>
+
+
           </Switch>
         </div>
       </BrowserRouter>

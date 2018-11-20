@@ -39,13 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'quizzes',
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', # new
+    'django.middleware.common.CommonMiddleware', # new
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -71,7 +73,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'quizzes_django_react.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
 
+CORS_ORIGIN_WHITELIST = (
+    'localhost:8000',
+)
+AUTH_USER_MODEL='quizzes.User'
+JWT_AUTH = {
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'quizzes.views.my_jwt_response_handler',
+    'JWT_AUTH_HEADER_PREFIX': 'Token',
+
+}
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 

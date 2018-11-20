@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
@@ -31,15 +32,14 @@ class ProfileStatistic(models.Model):
 	def name(self):
 		return "profilestatistic"
 
-class User(models.Model):
+class User(AbstractUser):
 	COUNTRIES = tuple([(c.capitalize(), c.capitalize()) for c in COUNTRIES])
 
-	userName = models.CharField(max_length = 40)
-	fullName = models.CharField(max_length = 40)
-	age = models.PositiveIntegerField()
-	country = models.CharField(choices = COUNTRIES, max_length = 100)
-	education = models.CharField(max_length = 40)
-	bio = models.CharField(max_length = 200)
+	
+	age = models.PositiveIntegerField(null=True)
+	country = models.CharField(choices = COUNTRIES, max_length = 100,null=True)
+	education = models.CharField(max_length = 40,null=True)
+	bio = models.CharField(max_length = 200,null=True)
 
 	@property
 	def name(self):
