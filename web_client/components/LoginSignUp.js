@@ -71,7 +71,7 @@ class LoginSignUp extends React.Component {
                             logged_in: true,
                             username: result.user.username
                         });
-                        this.props.history.push("/home");
+                        this.props.history.push("/");
                     }
                     else {
                         this.setState({
@@ -108,7 +108,7 @@ class LoginSignUp extends React.Component {
                             logged_in: true,
                             username: json.username
                         });
-                        this.props.history.push("/home");
+                        this.props.history.push("/");
                     }
                     else {
                         alert(json.username);

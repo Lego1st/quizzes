@@ -31,7 +31,7 @@ class App extends Component {
         <div>
           <Navigation/>
           <Switch>
-            <Route path="/dashboard" component={Home}/>
+            
             <Route path='/login' component={LoginSignUp}/>
             <Route path='/profile' component={Profile}/>
             <Route path='/category' component={QuizCategory}/>
@@ -41,7 +41,8 @@ class App extends Component {
             <Route path='/leaderboard' component={LeaderBoard}/>
             <Route path='/quizapproval' component={QuizApproval}/>
             <Route path='/quiz' component={QuizDetail}/>
-            <PrivateRoute path='/'  logged_in={this.state.logged_in} component={App}/>
+            <PrivateRoute path='/'  logged_in={this.state.logged_in} component={Home}/>
+            <Route path="/" component={Home}/>
 
 
           </Switch>
