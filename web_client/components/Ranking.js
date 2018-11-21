@@ -1,4 +1,5 @@
 import React from 'react';
+import get_data from "./Utils"
 // ////////////////////////////////////
 // // 			RANKING INFO		  //
 // ////////////////////////////////////
@@ -32,7 +33,7 @@ class Ranking extends React.Component {
 	}
 
 	componentDidMount() {
-	    fetch(Config.serverUrl + "/api/profile/statistic/")
+	    get_data("/api/profile/statistic/",true)
 	      .then(res => res.json())
 	      .then(
 	        (result) => {

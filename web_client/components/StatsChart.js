@@ -1,4 +1,5 @@
 import React from 'react';
+import get_data from './Utils';
 
 /////////////////////////////////
 // 			POLARCHART	  	   //
@@ -66,7 +67,7 @@ class StatChart extends React.Component{
 	}
 
 	componentDidMount() {
-	    fetch(Config.serverUrl + "/api/profile/statistic/")
+	    get_data("/api/profile/statistic/",true)
 	      .then(res => res.json())
 	      .then(
 	        (result) => {

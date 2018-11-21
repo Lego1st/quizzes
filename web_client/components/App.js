@@ -10,7 +10,6 @@ import LeaderBoard from './LeaderBoard';
 import QuizApproval from './QuizApproval';
 import QuizDetail from './QuizDetail';
 import LoginSignUp from './LoginSignUp';
-import PrivateRoute from './PrivateRoute';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 import {history} from 'history';
 

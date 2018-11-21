@@ -9,13 +9,13 @@ from rest_framework.views import APIView
 from django.views.decorators.csrf import csrf_exempt
 
 class PSListCreate(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, ]
+    permission_classes = [permissions.IsAuthenticated, ]
 
     queryset = ProfileStatistic.objects.all()
     serializer_class = PSSerializer
 
 class UserListCreate(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, ]
+    permission_classes = [permissions.IsAuthenticated, ]
 
     queryset = User.objects.all()
     serializer_class = UserSerializer

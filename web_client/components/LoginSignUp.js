@@ -55,7 +55,7 @@ class LoginSignUp extends React.Component {
     handle_login = (e, data) => {
         e.preventDefault();
 
-        fetch('http://127.0.0.1:8000/token-auth/', {
+        fetch(Config.serverUrl+'/token-auth/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -93,7 +93,7 @@ class LoginSignUp extends React.Component {
     handle_signup = (e, data) => {
         e.preventDefault();
         if (this.handleValidation()) {
-            fetch('http://127.0.0.1:8000/api/register/', {
+            fetch(Config.serverUrl+'/api/register/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -117,12 +117,7 @@ class LoginSignUp extends React.Component {
                 });
         }
     };
-
-    handle_logout = () => {
-        localStorage.removeItem('token');
-        this.setState({ logged_in: false, username: '' });
-    };
-
+    
     render() {
 
         return (

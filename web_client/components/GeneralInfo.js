@@ -1,8 +1,9 @@
 import React from 'react';
+import get_data from './Utils'
+
 ////////////////////////////////////
 // 			GENERAL INFO		  //
 ////////////////////////////////////
-
 var Config = require('Config');
 
 class GeneralInfo extends React.Component {
@@ -16,8 +17,7 @@ class GeneralInfo extends React.Component {
 	}
 
 	componentDidMount() {
-		console.log( localStorage.getItem("token"));
-		fetch(Config.serverUrl + "/api/profile/general-info/")
+		get_data("/api/profile/general-info/",true)
 			.then(res => res.json())
 			.then(
 				(result) => {
