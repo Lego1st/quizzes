@@ -67,10 +67,11 @@ class LoginSignUp extends React.Component {
                 (result) => {
                     if (!('non_field_errors' in result)) {
                         localStorage.setItem('token', result.token);
-                        this.setState({
-                            logged_in: true,
-                            username: result.user.username
-                        });
+                        this.props.setLoginState(true);
+                        // this.setState({
+                        //     // logged_in: true,
+                        //     username: result.user.username
+                        // });
                         this.props.history.push("/");
                     }
                     else {

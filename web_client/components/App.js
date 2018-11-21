@@ -23,29 +23,41 @@ class App extends Component {
     };
   }
 
+  setLoginState(state) {
+    this.setState({
+      logged_in: state
+    })
+  }
+
+  componentDidMount() {
+    console.log(this.state.logged_in);
+  }
+
   render() {
-
-
     return (
       <BrowserRouter>
         <div>
-          <Navigation/>
-          <Switch>
-            
-            <Route path='/login' component={LoginSignUp}/>
-            <Route path='/profile' component={Profile}/>
-            <Route path='/category' component={QuizCategory}/>
-            <Route path='/myquizzes' component={Post}/>
-            <Route path='/favorite' component={Favorite}/>
-            <Route path='/answered' component={Answered}/>
-            <Route path='/leaderboard' component={LeaderBoard}/>
-            <Route path='/quizapproval' component={QuizApproval}/>
-            <Route path='/quiz' component={QuizDetail}/>
-            <PrivateRoute path='/'  logged_in={this.state.logged_in} component={Home}/>
-            <Route path="/" component={Home}/>
-
-
-          </Switch>
+          <Navigation setLoginState={this.setLoginState.bind(this)}/>
+          {this.state.logged_in ? 
+            <Switch>
+              <Route exact path="/" component={Home}/>
+              <Route path='/profile' component={Profile}/>
+              <Route path='/category' component={QuizCategory}/>
+              <Route path='/myquizzes' component={Post}/>
+              <Route path='/favorite' component={Favorite}/>
+              <Route path='/answered' component={Answered}/>
+              <Route path='/leaderboard' component={LeaderBoard}/>
+              <Route path='/quizapproval' component={QuizApproval}/>
+              <Route path='/quiz' component={QuizDetail}/>
+              <Redirect to='/'/>
+            </Switch>
+            :
+            <Switch>
+              <Route path='/login' component={(props) => <LoginSignUp 
+                                    setLoginState={this.setLoginState.bind(this)} {...props}/>} />
+              <Redirect to='/login'/>
+            </Switch>
+          }
         </div>
       </BrowserRouter>
     );

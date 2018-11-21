@@ -7,6 +7,7 @@ class Navigation extends Component {
     this.state = {};
   }
   handle_logout = () => {
+    this.props.setLoginState(false);
     localStorage.removeItem('token');
   };
 
