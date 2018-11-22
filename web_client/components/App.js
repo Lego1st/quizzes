@@ -41,7 +41,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Home}/>
               <Route path='/profile' component={Profile}/>
-              <Route path='/category' component={QuizCategory}/>
+              <Route path='/category/:cate' component={QuizCategory}/>
               <Route path='/myquizzes' component={Post}/>
               <Route path='/favorite' component={Favorite}/>
               <Route path='/answered' component={Answered}/>
