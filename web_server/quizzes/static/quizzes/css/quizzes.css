@@ -5,3 +5,21 @@
 #quizzes-page {
   margin-top: 50px;
 }
+
+#left-body {
+	position: relative;
+	display: inline-block;
+	/*background: #c7c7c7;*/
+}
+
+.category-name {
+  -moz-transform: translateX(-50%) translateY(-50%) rotate(-90deg);
+  -webkit-transform: translateX(-50%) translateY(-50%) rotate(-90deg);
+  transform:  translateX(-50%) translateY(-50%) rotate(-90deg);
+	font-size: 80px;
+	font-family: 'Black Han Sans', sans-serif;
+	color: #393533;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+}

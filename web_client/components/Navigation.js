@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 
+
 class Navigation extends Component {
   constructor(props) {
     super(props);
@@ -29,10 +30,9 @@ class Navigation extends Component {
                     <a className="dropdown-toggle" data-toggle="dropdown" href="#">Category
                     <span className="caret"></span></a>
                     <ul className="dropdown-menu">
-                      <li><Link to='/'>Math</Link></li>
-                      <li><Link to='/category'>Animal</Link></li>
-                      <li><Link to='/'>Color</Link></li>
-                      <li><Link to='/'>Shape</Link></li>
+                      <li><Link to='/category/ma'>Math</Link></li>
+                      <li><Link to='/category/cs'>Computer Science</Link></li>
+                      <li><Link to='/category/lg'>Logic</Link></li>
                     </ul>
                   </li>
                   <div className="nav-category">
