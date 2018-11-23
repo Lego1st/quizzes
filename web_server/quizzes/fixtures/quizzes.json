@@ -39,8 +39,6 @@
         "model": "quizzes.user",
         "pk": 1,
         "fields": {
-            "userName": "yoshi",
-            "fullName": "Nguyen Tai Long",
             "age": 21,
             "country": "Vietnam",
             "education": "University of Engineering and Technology",
