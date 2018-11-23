@@ -47,7 +47,7 @@ class App extends Component {
               <Route path='/answered' component={Answered}/>
               <Route path='/leaderboard' component={LeaderBoard}/>
               <Route path='/quizapproval' component={QuizApproval}/>
-              <Route path='/quiz' component={QuizDetail}/>
+              <Route path='/quiz/:quizid' component={QuizDetail}/>
               <Redirect to='/'/>
             </Switch>
             :

@@ -38,3 +38,15 @@
 #answer-list li {
     margin: 3%;
 }
+
+#ques_detail > button {
+    background: white;
+    border-style: solid;
+    border-radius: 20%;
+}
+
+#ques_detail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
