@@ -3,22 +3,42 @@
   "version": "1.0.0",
   "description": "## Mô tả",
   "main": "index.js",
-  "scripts": {
-    "build": "webpack --watch --mode development"
-  },
+  "author": "",
+  "homepage": "https://github.com/Lego1st/quizzes#readme",
+  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Lego1st/quizzes.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/Lego1st/quizzes/issues"
   },
-  "homepage": "https://github.com/Lego1st/quizzes#readme",
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "codemirror": "^5.18.2",
+    "chart.js": "^1.1.1",
+    "draft-js": "^0.10.5",
+    "package-json-merge": "0.0.1",
+    "react-chartjs": "^1.2.0",
+    "react-markdown-editor": "^1.0.0",
+    "react-mde": "^6.0.0-alpha.1",
+    "react-router-dom": "^4.3.1",
+    "showdown": "^1.9.0",
+    "simplemde": "^1.11.2"
+  },
+  "peerDependencies": {
+    "react": "^0.14.0 || ^15.0.0",
+    "react-dom": "^0.14.0 || ^15.0.0"
+  },
   "devDependencies": {
+    "gulp": "^3.9.1",
+    "happiness": "^7.1.2",
+    "marked": "^0.3.6",
+    "react": "^16.6.1",
+    "react-component-gulp-tasks": "^0.7.7",
+    "react-dom": "^16.6.1",
     "@babel/core": "^7.1.5",
+    "@babel/plugin-proposal-export-default-from": "^7.0.0",
     "@babel/preset-env": "^7.1.5",
     "@babel/preset-react": "^7.0.0",
     "babel-cli": "^6.26.0",
@@ -34,9 +54,34 @@
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.2"
   },
-  "dependencies": {
-    "chart.js": "^1.1.1",
-    "react-chartjs": "^1.2.0",
-    "react-router-dom": "^4.3.1"
+  "browserify-shim": {
+    "react": "global:React"
+  },
+  "scripts": {
+    "build": "webpack --watch --mode development",
+    "examples": "gulp dev:server",
+    "publish:site": "gulp publish:examples",
+    "release": "gulp release",
+    "start": "gulp dev",
+    "test": "echo \"no tests yet\" && exit 0",
+    "lint": "happiness",
+    "watch": "gulp watch:lib"
+  },
+  "happiness": {
+    "ignore": [
+      "**/.publish/**",
+      "**/dist/**",
+      "**/lib/**"
+    ]
+  },
+  "keywords": {
+    "0": "react",
+    "1": "react-component",
+    "2": "codemirror",
+    "3": "editor",
+    "4": "code",
+    "5": "wysiwyg",
+    "6": "md",
+    "7": "markdown"
   }
 }

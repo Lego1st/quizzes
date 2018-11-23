@@ -18,9 +18,16 @@ COUNTRIES = [
 		'Japan'
 	]
 
-CATEGORIES = [
-		
-]
+CATEGORIES = (
+	('ma', "Math"),
+	('cs', "Computer Science")
+)
+
+QUIZ_STATUS = (
+	('p', 'Pending'),
+	('r', 'Rejected'),
+	('a', 'Approved')
+)
 
 class ProfileStatistic(models.Model):
 	COURSES = tuple([(c.capitalize(), c.capitalize()) for c in COURSES])
@@ -44,3 +51,23 @@ class User(AbstractUser):
 	@property
 	def name(self):
 		return "user"
+
+## Quiz and Question models
+class Quiz(models.Model):
+	title = models.CharField(max_length=100)
+	brief = models.TextField(max_length=200, null=True)
+	rating = models.FloatField(default=0.0)
+	created_at = models.DateTimeField(auto_now_add=True)
+	status = models.CharField(max_length=1, choices=QUIZ_STATUS, default='p')
+	category = models.CharField(max_length=2, choices=CATEGORIES)
+	#author = ....
+
+class Question(models.Model):
+	quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+	index = models.PositiveIntegerField()
+	content = models.TextField() #json string
+	answer = models.TextField() #json string
+
+	class Meta:
+		unique_together = ('quiz', 'index')
+		ordering = ['index']
