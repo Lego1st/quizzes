@@ -43,7 +43,9 @@ class Navigation extends Component {
               <div className="navbar-tail">
                 <div className="navbar-tail-row">
                   <div id="create-quiz">
-                    <i className="fas fa-plus-circle"></i>
+                    <Link to="/addquiz">
+                      <i className="fas fa-plus-circle"></i>
+                    </Link>
                   </div>
                   <li className="dropdown nav-category" style={{padding: 0}}>
                     <div id="head-ava" className="dropdown-toggle" data-toggle="dropdown">

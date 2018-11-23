@@ -11,6 +11,7 @@ import QuizApproval from './QuizApproval';
 import QuizDetail from './QuizDetail';
 import LoginSignUp from './LoginSignUp';
 import PrivateRoute from './PrivateRoute';
+import AddQuiz from './AddQuiz';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 import {history} from 'history';
 
@@ -49,6 +50,7 @@ class App extends Component {
               <Route path='/leaderboard' component={LeaderBoard}/>
               <Route path='/quizapproval' component={QuizApproval}/>
               <Route path='/quiz' component={QuizDetail}/>
+              <Route path='/addquiz' component={AddQuiz}/>
               <Redirect to='/'/>
             </Switch>
             :
