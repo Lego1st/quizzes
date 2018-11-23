@@ -3,6 +3,6 @@ node_modules/
 *.pyc
 web_server/quizzes/static/quizzes/js/main.js
 package-lock.json
-db.sqlite3
+web_server/db.sqlite3
 **/migrations/**
 !**/migrations/__init__.py
