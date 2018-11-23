@@ -60,10 +60,9 @@ class Home extends Component {
           <div className="col-sm-3" id="left-body">
             <div id="home-category"> Category </div>
             <ul id="home-cate-list">
-              <li>Math</li>
-              <li><Link to='/category'>Animal</Link></li>
-              <li>Color</li>
-              <li>Shape</li>
+              <li><Link to='/category/ma'>Math</Link></li>
+              <li><Link to='/category/cs'>Computer Science</Link></li>
+              <li><Link to='/category/lg'>Logic</Link></li>
             </ul>
           </div>
 
