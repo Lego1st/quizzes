@@ -69,23 +69,6 @@ class QuizQuestionReadOnlySerializer(serializers.ModelSerializer):
         model = Quiz
         fields = ('id' ,'title', 'brief', 'category', 'shuffle', 'questions')
 
-class AnswerReadOnlySerializer(serializers.BaseSerializer):
-    
-    def to_representation(self, obj):
-        return {
-            'index': obj.index,
-            'type': obj.question_type,
-            'answer': json.loads(obj.answer)
-        }
-
-class QuizAnswerReadOnlySerializer(serializers.ModelSerializer):
-    questions = AnswerReadOnlySerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Quiz
-        fields = ('id' ,'title', 'brief', 'category', 'shuffle', 'questions')
-
-
 class FullQuestionSerializer(serializers.BaseSerializer):
 
     def to_internal_value(self, data):
