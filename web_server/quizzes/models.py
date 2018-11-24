@@ -29,6 +29,13 @@ QUIZ_STATUS = (
 	('a', 'Approved')
 )
 
+QUESTION_TYPE = (
+	('si', 'Single choice'),
+	('mu', 'Multiple choice'),
+	('ma', 'Matching'),
+	('fi', 'Filling in the blank')
+)
+
 class ProfileStatistic(models.Model):
 	COURSES = tuple([(c.capitalize(), c.capitalize()) for c in COURSES])
 	course = models.CharField(choices = COURSES, max_length = 100)
@@ -60,12 +67,16 @@ class Quiz(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	status = models.CharField(max_length=1, choices=QUIZ_STATUS, default='p')
 	category = models.CharField(max_length=2, choices=CATEGORIES)
+	shuffle = models.BooleanField(default=False)
 	#author = ....
 
 class Question(models.Model):
-	quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+	quiz = models.ForeignKey(Quiz, related_name='questions', on_delete=models.CASCADE)
 	index = models.PositiveIntegerField()
-	content = models.TextField() #json string
+	question_type = models.CharField(max_length=2, choices=QUESTION_TYPE, default='si')
+	content = models.TextField()
+	options = models.TextField() #json string
+	matchings = models.TextField() #json string
 	answer = models.TextField() #json string
 
 	class Meta:
