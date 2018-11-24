@@ -1,73 +1,75 @@
 import React, { Component } from 'react';
-import QuizItem from "./QuizItem"
+import ReactDOM from 'react-dom';
+// import QuizItem from "./QuizItem";
+import TableView from './TableView';
 import { CODE_CATEGORY } from './Constants';
 
-function get_quizzes_cate(cate, num_page, quiz_per_page) {
+function get_quiz_by_category(cate, num_page) {
   /* TODO: get quizzes regraded with API */
-  const quiz_cate_list = [
-    {
-      title: "Quiz 1",
-      description: "Brief description 1 here...",
-      category: CODE_CATEGORY[cate],
-      rated: 3
-    },
-    {
-      title: "Quiz 2",
-      description: "Brief description 2 here...",
-      category: CODE_CATEGORY[cate],
-      rated: 2
-    },
-    {
-      title: "Quiz 3",
-      description: "Brief description 3 here...",
-      category: CODE_CATEGORY[cate],
-      rated: 1
-    },
-    {
-      title: "Quiz 4",
-      description: "Brief description 4 here...",
-      category: CODE_CATEGORY[cate],
-      rated: 3
-    },
-    {
-      title: "Quiz 5",
-      description: "Brief description 5 here...",
-      category: CODE_CATEGORY[cate],
-      rated: 2
-    },
-    {
-      title: "Quiz 6",
-      description: "Brief description 6 here...",
-      category: CODE_CATEGORY[cate],
-      rated: 1
-    }
-  ];
-  return quiz_cate_list;
+  console.log(cate);
+  console.log(num_page);
+  return new Promise((resolve, reject) => {
+    const quiz_cate_list = [...Array(10).keys()].map((x) => 
+      ({
+        title: "Quiz " + (x + 10*num_page),
+        description: "Brief description " + (x + 10*num_page),
+        category: CODE_CATEGORY[cate],
+        rated: Math.floor((Math.random() * 3) + 1)
+      })
+    );
+    resolve(quiz_cate_list);
+  })
 }
 
 class QuizCategory extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      num_page: 0,
       quiz_cate_list : []
     }
+    // this.dom = ReactDOM.findDOMNode(this)
   }
 
-  componentDidMount() {
-    this.setState({
-      quiz_cate_list : get_quizzes_cate(this.props.match.params.cate, 1, 6)
+  fetchQuizList() {
+    get_quiz_by_category(this.props.match.params.cate, 0).then((data) => {
+      this.setState({
+        num_page: 0,
+        quiz_cate_list : data
+      })
     })
   }
 
-  renderQuizList() {
-    var quizzes = [];
-    for (var i = 0; i < this.state.quiz_cate_list.length; i++) {
-      quizzes.push(<QuizItem key={i} info={this.state.quiz_cate_list[i]}/>)
+  componentDidMount() {
+    this.fetchQuizList();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params.cate != this.props.match.params.cate) {
+      let tableView = ReactDOM.findDOMNode(this.refs.qz_pending_list);
+      tableView.scrollTop = 0;
+      this.fetchQuizList();
     }
-    return quizzes;
+  }
+
+  handleScrollToBottom(completed) {
+    // load more
+
+    // var newData = this.moreData(this.state.quiz_cate_list)
+    var new_num_page = this.state.num_page+1;
+    get_quiz_by_category(this.props.match.params.cate, new_num_page).then((data) => {
+      var newData = Object.assign([], this.state.quiz_cate_list);
+      newData.push.apply(newData, data);
+      completed();
+      this.setState({
+        quiz_cate_list: newData,
+        num_page: new_num_page
+      })
+    })
   }
 
   render() {
+    
     return (
       <div className="container" id="quizzes-page">
         <div className="row">
@@ -77,10 +79,11 @@ class QuizCategory extends Component {
           </div>
 
           <div className="col-sm-6" id="main-body">
-
-            <div id="qz_pending_list">
-              {this.renderQuizList()}
-            </div>
+            <TableView
+              ref="qz_pending_list" 
+              dataSource={this.state.quiz_cate_list}
+              onScrollToBottom={this.handleScrollToBottom.bind(this)}
+            />
           </div>
           <div className="col-sm-3" id="right-body"></div>
         </div>

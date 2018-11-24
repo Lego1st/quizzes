@@ -16,7 +16,7 @@ class QuizItem extends Component {
   render() {
     return (
       <div className="qz_quiz_item">
-        <Link to="/quiz">
+        <Link to="/quiz/1997">
           <div className="qz_quiz_title">{this.props.info.title}</div>
           <div className="qz_quiz_desc">{this.props.info.description}</div>
           <div className="qz_quiz_rating">
