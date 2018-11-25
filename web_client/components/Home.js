@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import QuizItem from "./QuizItem"
 import {Link} from 'react-router-dom';
-
+import get_data from './Utils';
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -50,7 +50,15 @@ class Home extends Component {
     }
     return quizzes;
   }
-
+  componentDidMount(){
+    console.log(localStorage.getItem('token'));
+    get_data('/profile/current_user/',true)
+    .then(res => res.json())
+    .then(
+    (result) => {
+      localStorage.setItem('id',result['id']);
+    });
+  }
   render() {
  
     return (
