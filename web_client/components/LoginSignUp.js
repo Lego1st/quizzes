@@ -55,7 +55,7 @@ class LoginSignUp extends React.Component {
     handle_login = (e, data) => {
         e.preventDefault();
 
-        fetch(Config.serverUrl+'/token-auth/', {
+        fetch(Config.serverUrl + '/token-auth/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -76,13 +76,13 @@ class LoginSignUp extends React.Component {
                     }
                     else {
                         this.setState({
-                            errors: {login:"Wrong username or password"}
+                            errors: { login: "Wrong username or password" }
                         });
                     }
                 },
-                (error) =>{
+                (error) => {
                     this.setState({
-                        errors: {login:"Wrong username or password"}
+                        errors: { login: "Wrong username or password" }
                     });
                 }
 
@@ -93,7 +93,7 @@ class LoginSignUp extends React.Component {
     handle_signup = (e, data) => {
         e.preventDefault();
         if (this.handleValidation()) {
-            fetch(Config.serverUrl+'/api/register/', {
+            fetch(Config.serverUrl + '/profile/api/register/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -103,21 +103,21 @@ class LoginSignUp extends React.Component {
                 .then(res => res.json())
                 .then(json => {
                     console.log(json);
-                    if ('token' in json) {
-                        localStorage.setItem('token', json.token);
+                    console.log('username' in json);
+                    if ('username' in json) {
                         this.setState({
-                            logged_in: true,
-                            username: json.username
+                            errors: { signup: json['username'][0] }
                         });
-                        this.props.history.push("/");
                     }
                     else {
-                        alert(json.username);
+                        localStorage.setItem('token', json['user']['token']);
+
+                        this.props.setLoginState(true);
                     }
                 });
         }
     };
-    
+
     render() {
 
         return (
@@ -127,6 +127,8 @@ class LoginSignUp extends React.Component {
                     <h3>REGISTRATION</h3>
                     <br></br>
                     <form onSubmit={e => this.handle_signup(e, this.state)} >
+                        <span style={{ color: "red" }}>{this.state.errors["signup"]}</span>
+
                         <div className='inputs'>
                             <input id='reusername' placeholder="Type username here.."
                                 onChange={e => this.setState({ username: e.target.value })} />
@@ -136,14 +138,14 @@ class LoginSignUp extends React.Component {
 
                         <div className='inputs'>
                             <input id='reemail' placeholder="Type email here.."
-                                onChange={e => this.setState({ email: e.target.value } )} />
-                                <br></br>
+                                onChange={e => this.setState({ email: e.target.value })} />
+                            <br></br>
                             <span style={{ color: "red" }}>{this.state.errors["email"]}</span>
                         </div>
 
                         <div className='inputs'>
                             <input id='repassword' placeholder="Type password" type='password'
-                                onChange={e => this.setState({ password: e.target.value } )} />
+                                onChange={e => this.setState({ password: e.target.value })} />
                             <span style={{ color: "red" }}>{this.state.errors["password"]}</span>
                         </div>
 
@@ -173,11 +175,11 @@ class LoginSignUp extends React.Component {
 
                         <div className='inputs'>
                             <input id='username' placeholder="Type username.."
-                                onChange={e => this.setState({ username: e.target.value } )} />
+                                onChange={e => this.setState({ username: e.target.value })} />
                         </div>
                         <div className='inputs'>
                             <input id='email' placeholder="Type password.." type='password'
-                                onChange={e => this.setState( { password: e.target.value } )} />
+                                onChange={e => this.setState({ password: e.target.value })} />
                         </div>
 
                         <div className='inputs'>

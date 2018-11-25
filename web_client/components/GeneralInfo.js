@@ -17,14 +17,15 @@ class GeneralInfo extends React.Component {
 	}
 
 	componentDidMount() {
-		get_data("/api/profile/general-info/",true)
+
+		get_data("/profile/api/get/?profileid=" + localStorage.getItem('id'), true)
 			.then(res => res.json())
 			.then(
 				(result) => {
 					console.log('general-info', result);
 					this.setState({
 						isLoaded: true,
-						data: result[0]
+						data: result
 					});
 				},
 				// Note: it's important to handle errors here
@@ -32,9 +33,18 @@ class GeneralInfo extends React.Component {
 				// exceptions from actual bugs in components.
 				(error) => {
 					this.setState({
-						isLoaded: true,
-						error
+						isLoaded: false,
+						error,
+						data: {
+							first_name: '',
+							last_name: '',
+							age: '',
+							country: '',
+							education: '',
+							bio: ''
+						}
 					});
+
 				}
 			)
 	}
@@ -42,24 +52,27 @@ class GeneralInfo extends React.Component {
 	render() {
 		if (this.state.isLoaded) {
 			return (
+				<div>
 				<ul className="list-group">
-					<li className="list-group-item"><strong>Username</strong>
-						<i className="fas edit-btn fa-edit"></i> <span className="info">{this.state.data['userName']}</span></li>
-					<li className="list-group-item"><strong>FullName</strong>
-						<i className="fas edit-btn fa-edit"></i> <span className="info">{this.state.data['fullName']}</span></li>
+
+					<li className="list-group-item"><strong>First Name</strong>
+						<button className="edit-btn"><i className="fas fa-edit"></i></button><span className="info"><input id='first-name' disabled>{this.state.data['first_name']}</input></span></li>
+					<li className="list-group-item"><strong>Last Name</strong>
+						<button className="edit-btn"><i className="fas fa-edit"></i></button><span className="info"><input id='last_name' disabled>{this.state.data['last_name']}</input></span></li>
 					<li className="list-group-item"><strong>Age</strong>
-						<i className="fas edit-btn fa-edit"></i> <span className="info">{this.state.data['age']}</span></li>
+						<button className="edit-btn"><i className="fas fa-edit"></i></button><span className="info"><input id='age' disabled>{this.state.data['age']}</input></span></li>
 					<li className="list-group-item"><strong>Country</strong>
-						<i className="fas edit-btn fa-edit"></i> <span className="info">{this.state.data['country']}</span></li>
+						<button className="edit-btn"><i className="fas fa-edit"></i></button><span className="info"><input id='country' disabled>{this.state.data['country']}</input></span></li>
 					<li className="list-group-item"><strong>Education</strong>
-						<i className="fas edit-btn fa-edit"></i> <span className="info">{this.state.data['education']}</span></li>
+						<button className="edit-btn"><i className="fas fa-edit"></i></button><span className="info"><input id='education' disabled>{this.state.data['education']}</input></span></li>
 					<li className="list-group-item"><strong>Bio</strong>
-						<i className="fas edit-btn fa-edit"></i> <span className="info">{this.state.data['bio']}</span></li>
+						<button className="edit-btn"><i className="fas fa-edit"></i></button><span className="info"><input id='bio' disabled>{this.state.data['bio']}</input></span></li>
 				</ul>
+				</div>
 			);
 		}
 		else {
-			return null;
+			return '';
 		}
 
 	}

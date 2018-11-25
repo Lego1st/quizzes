@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'quizzes',
+    'userprofile',
     'rest_framework',
     'corsheaders',
 ]
@@ -87,9 +88,9 @@ REST_FRAMEWORK = {
 CORS_ORIGIN_WHITELIST = (
     'localhost:8000',
 )
-AUTH_USER_MODEL='quizzes.User'
+
 JWT_AUTH = {
-    'JWT_RESPONSE_PAYLOAD_HANDLER': 'quizzes.views.my_jwt_response_handler',
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'userprofile.views.my_jwt_response_handler',
     'JWT_AUTH_HEADER_PREFIX': 'Token',
 
 }
