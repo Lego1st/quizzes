@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from quizzes.models import Quiz, Question
+from quizzes.models import Quiz, Question, User_Action_Quiz
+from userprofile.serializers import PSSerializer
 from rest_framework_jwt.settings import api_settings
 import json
 from random import shuffle
@@ -27,10 +28,11 @@ class QuestionReadOnlySerializer(serializers.BaseSerializer):
 
 class QuizQuestionReadOnlySerializer(serializers.ModelSerializer):
     questions = QuestionReadOnlySerializer(many=True, read_only=True)
+    author = PSSerializer(read_only=True)
 
     class Meta:
         model = Quiz
-        fields = ('id' ,'title', 'brief', 'category', 'shuffle', 'questions')
+        fields = ('id' ,'title', 'brief', 'category', 'shuffle', 'questions', 'author')
 
 class FullQuestionSerializer(serializers.BaseSerializer):
 
@@ -51,6 +53,7 @@ class FullQuestionSerializer(serializers.BaseSerializer):
         options = data.get('options')
         matchings = data.get('matchings')
         answer = data.get('answer')
+        print(options)
 
         # validate fields
         _validate(index, {'index': 'This field is required.'})
@@ -58,24 +61,25 @@ class FullQuestionSerializer(serializers.BaseSerializer):
         _validate(content, {'content|question index: {}'.format(index): 'This field is required.'})
         _validate(answer, {'answer|question index: {}'.format(index): 'This field is required.'})
         _validate(type(answer) == list, {'answer|question index: {}'.format(index): 'This field must be a list.'})
-        _validate(options, {'options|question index: {}'.format(index): 'This field is required.'})
-        _validate(type(options) == list, {'options|question index: {}'.format(index): 'This field must be a list.'})
         if question_type == 'ma':
             _validate(matchings, {'matchings|question index: {}'.format(index): 'This field is required in matching question.'})
             _validate(type(matchings), {'matchings|question index: {}'.format(index): 'This field must be a list'})
 
         # validate fields length
-        min_option_len = QUESTION_TYPE[question_type]['min_option']
-        max_option_len = QUESTION_TYPE[question_type]['max_option']
-        question_name = QUESTION_TYPE[question_type]['full_name']
-        _validate(
-            len(options) >= min_option_len, 
-            {'options|question index: {}'.format(index): '{} question needs at least {} options'.format(question_name, min_option_len)}
-        )
-        _validate(
-            len(options) <= max_option_len,
-            {'options|question index: {}'.format(index): '{} question limits to {} options'.format(question_name, max_option_len)}
-        )
+        if question_type != 'fi':
+            _validate(options, {'options|question index: {}'.format(index): 'This field is required.'})
+            _validate(type(options) == list, {'options|question index: {}'.format(index): 'This field must be a list.'})
+            min_option_len = QUESTION_TYPE[question_type]['min_option']
+            max_option_len = QUESTION_TYPE[question_type]['max_option']
+            question_name = QUESTION_TYPE[question_type]['full_name']
+            _validate(
+                len(options) >= min_option_len, 
+                {'options|question index: {}'.format(index): '{} question needs at least {} options'.format(question_name, min_option_len)}
+            )
+            _validate(
+                len(options) <= max_option_len,
+                {'options|question index: {}'.format(index): '{} question limits to {} options'.format(question_name, max_option_len)}
+            )
 
         if question_type == 'ma':
             _validate(
@@ -150,3 +154,10 @@ class FullQuizSerializer(serializers.ModelSerializer):
             Question.objects.create(quiz=quiz, **question_data)
         return instance
         
+
+class UserActionQuizSerializer(serializers.ModelSerializer):
+    quiz = QuizQuestionReadOnlySerializer(read_only=True)
+
+    class Meta:
+        model = User_Action_Quiz
+        fields = ('quiz',)

@@ -51,6 +51,8 @@ class App extends Component {
               <Route path='/quiz/:quizid' component={QuizDetail}/>
               <Route path='/quiz' component={QuizDetail}/>
               <Route path='/addquiz' component={AddQuiz}/>
+              <Route path='/login' component={(props) => <LoginSignUp 
+                setLoginState={this.setLoginState.bind(this)} {...props}/>}/>
               <Redirect to='/'/>
             </Switch>
             :
