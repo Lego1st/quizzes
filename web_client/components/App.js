@@ -51,6 +51,7 @@ class App extends Component {
               <Route path='/quiz/:quizid' component={QuizDetail}/>
               <Route path='/quiz' component={QuizDetail}/>
               <Route path='/addquiz' component={AddQuiz}/>
+              <Route path='/login' component={LoginSignUp}/>
               <Redirect to='/'/>
             </Switch>
             :
