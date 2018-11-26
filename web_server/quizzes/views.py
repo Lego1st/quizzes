@@ -31,4 +31,13 @@ class QuizCreate(generics.CreateAPIView):
     queryset = Quiz.objects.all()
     serializer_class = FullQuizSerializer
 
+class AnsweredQuiz(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+    serializer_class = AnsweredQuizSerializer
+    
+    def get_queryset(self):
+        user = self.request.user
+        return User_Action_Quiz.objects.filter(user=user, action='an')
+
+
 # class QuizBrief(generics.)

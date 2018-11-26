@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from quizzes.models import Quiz, Question
+from quizzes.models import Quiz, Question, User_Action_Quiz
+from userprofile.serializers import UserSerializer
 from rest_framework_jwt.settings import api_settings
 import json
 
@@ -26,10 +27,11 @@ class QuestionReadOnlySerializer(serializers.BaseSerializer):
 
 class QuizQuestionReadOnlySerializer(serializers.ModelSerializer):
     questions = QuestionReadOnlySerializer(many=True, read_only=True)
+    author = UserSerializer(read_only=True)
 
     class Meta:
         model = Quiz
-        fields = ('id' ,'title', 'brief', 'category', 'shuffle', 'questions')
+        fields = ('id' ,'title', 'brief', 'category', 'shuffle', 'questions', 'author')
 
 class FullQuestionSerializer(serializers.BaseSerializer):
 
@@ -147,3 +149,10 @@ class FullQuizSerializer(serializers.ModelSerializer):
             Question.objects.create(quiz=quiz, **question_data)
         return instance
         
+
+class AnsweredQuizSerializer(serializers.ModelSerializer):
+    quiz = QuizQuestionReadOnlySerializer(read_only=True)
+
+    class Meta:
+        model = User_Action_Quiz
+        fields = ('quiz',)
