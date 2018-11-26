@@ -11,6 +11,7 @@ COURSES = [
 		"computer science"
 	]
 COUNTRIES = [
+		'Undefined'
 		'Vietnam',
 		'England',
 		'America',
@@ -19,14 +20,14 @@ COUNTRIES = [
 
 
 class Profile(models.Model):
-	user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
+	user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
-	fullname = models.CharField(max_length = 40,blank=True,null=True)
+	fullname = models.CharField(max_length = 40, blank=True, default = "undefined")
 	COUNTRIES = tuple([(c.capitalize(), c.capitalize()) for c in COUNTRIES])
-	age = models.PositiveIntegerField(blank=True,null=True)
-	country = models.CharField(choices = COUNTRIES, max_length = 100,blank=True,null=True)
-	education = models.CharField(max_length = 40,blank=True,null=True)
-	bio = models.CharField(max_length = 200,blank=True,null=True)
+	age = models.PositiveIntegerField(blank=True, default = 0)
+	country = models.CharField(choices = COUNTRIES, max_length = 100, blank=True, default = "undefined")
+	education = models.CharField(max_length = 40, blank=True, default = "undefined")
+	bio = models.CharField(max_length = 200, blank=True, default = "undefined")
 	
 	@property
 	def name(self):

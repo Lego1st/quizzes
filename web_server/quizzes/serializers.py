@@ -3,6 +3,7 @@ from quizzes.models import Quiz, Question, User_Action_Quiz
 from userprofile.serializers import UserSerializer
 from rest_framework_jwt.settings import api_settings
 import json
+from random import shuffle
 
 
 ## Quiz and Question serializers
@@ -104,6 +105,8 @@ class FullQuestionSerializer(serializers.BaseSerializer):
         }
         if question_type == 'ma':
             output['matchings'] = json.dumps(matchings)
+            shuffle(options)
+            output['options'] = json.dumps(options)
 
         return output
 

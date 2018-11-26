@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import QuizItem from "./QuizItem"
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import get_data from './Utils';
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      quiz_pending_list : [
+      quiz_pending_list: [
         {
           title: "Get started wit Quizzes",
           description: "Brief description 1 here...",
@@ -46,21 +46,31 @@ class Home extends Component {
   renderQuizList(quiz_list) {
     var quizzes = [];
     for (var i = 0; i < quiz_list.length; i++) {
-      quizzes.push(<QuizItem key={i} info={quiz_list[i]}/>)
+      quizzes.push(<QuizItem key={i} info={quiz_list[i]} />)
     }
     return quizzes;
   }
-  componentDidMount(){
+  componentDidMount() {
     console.log(localStorage.getItem('token'));
-    get_data('/profile/current_user/',true)
-    .then(res => res.json())
-    .then(
-    (result) => {
-      localStorage.setItem('id',result['id']);
-    });
+    get_data('/profile/current_user/', true)
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+        } else {
+          this.props.history.push('/login')
+        }
+      })
+      .then(
+        (result) => {
+          if(result){
+            localStorage.setItem('id', result['id']);
+          }
+        })
   }
+
+
   render() {
- 
+
     return (
       <div className="container" id="home-page">
         <div className="row">
@@ -78,10 +88,10 @@ class Home extends Component {
 
             <div id="qz_pending_list">
               <div className="qz_list_title">
-                Quiz for you 
+                Quiz for you
               </div>
               {this.renderQuizList(this.state.quiz_pending_list)}
-            
+
             </div>
 
             <div id="qz_pending_list">
