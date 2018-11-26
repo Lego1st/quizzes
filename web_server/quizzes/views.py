@@ -35,12 +35,19 @@ class QuizCreate(generics.CreateAPIView):
 
 class AnsweredQuiz(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated, ]
-    serializer_class = AnsweredQuizSerializer
+    serializer_class = UserActionQuizSerializer
     
     def get_queryset(self):
         user = self.request.user
         return User_Action_Quiz.objects.filter(user=user, action='an')
 
+class FavoriteQuiz(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+    serializer_class = UserActionQuizSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return User_Action_Quiz.objects.filter(user=user, action='li')
 
 #Pagination class
 class StandardPaginationResult(PageNumberPagination):

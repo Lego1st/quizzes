@@ -36,7 +36,6 @@ class Quiz(models.Model):
 	category = models.CharField(max_length=2, choices=CATEGORIES)
 	shuffle = models.BooleanField(default=False)
 	author = models.ForeignKey(User, on_delete=models.CASCADE)
-	#author = ....
 
 class Question(models.Model):
 	quiz = models.ForeignKey(Quiz, related_name='questions', on_delete=models.CASCADE)

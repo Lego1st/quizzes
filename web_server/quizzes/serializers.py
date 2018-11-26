@@ -153,7 +153,7 @@ class FullQuizSerializer(serializers.ModelSerializer):
         return instance
         
 
-class AnsweredQuizSerializer(serializers.ModelSerializer):
+class UserActionQuizSerializer(serializers.ModelSerializer):
     quiz = QuizQuestionReadOnlySerializer(read_only=True)
 
     class Meta:
