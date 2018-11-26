@@ -279,11 +279,18 @@ class AddQuiz extends React.Component {
 		console.log(this.state.deletions);
 	}
 
-	handleSubmit(e) {
+	convertState() {
 		const converted_state = Object.assign({}, this.state);
 		converted_state['category'] = CODE_CATEGORY[converted_state['category']];
 
+		for (var i = 0; i < converted_state.deletions.length; i++) {
+		}
+
 		for (var i = 0; i < converted_state.questions.length; i++) {
+			if (converted_state.deletions.includes(converted_state.questions[i]['index'])) {
+				delete converted_state.questions[i];
+				continue;
+			}
 			if (converted_state.questions[i]['type'] == 3) {
 				converted_state.questions[i]['answer'] = converted_state.questions[i]['options'];
 			}
@@ -294,6 +301,12 @@ class AddQuiz extends React.Component {
 		}
 		delete converted_state['deletions'];
 		delete converted_state['rating'];
+
+		return converted_state;
+	}
+
+	handleSubmit(e) {
+		const converted_state = this.convertState();
 
 		console.log('Final state: ', JSON.stringify(converted_state));
 		fetch(Config.serverUrl + '/api/create_quiz/', {
@@ -350,7 +363,7 @@ class AddQuiz extends React.Component {
 					  		placeholder={this.state.title}
 					  		onChange = {this.handleChangeTitle.bind(this)}/>
 						  <div className="input-group-append ">
-						  <button className="btn btn-outline-secondary" type="button" onClick={() => console.log(this.state)}>Check state</button>
+						  <button className="btn btn-outline-secondary" type="button" onClick={() => console.log(this.convertState())}>Check state</button>
 						  </div> 
 						</div>
 				  </h1>
