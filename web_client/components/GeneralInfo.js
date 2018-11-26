@@ -10,17 +10,17 @@ class GeneralInfo extends React.Component {
 	constructor(props) {
 		super(props);
 
+		this.state = {
+			error: null,
+			isLoaded: false,
+			fullname: '',
+			age: '',
+			country: '',
+			education: '',
+			bio: '',
+			id: localStorage.getItem('id'),
+		};
 	}
-	state = {
-		error: null,
-		isLoaded: false,
-		fullname: '',
-		age: '',
-		country: '',
-		education: '',
-		bio: '',
-		id: localStorage.getItem('id'),
-	};
 	componentDidMount() {
 		console.log(localStorage.getItem('id'));
 		get_data("/profile/api/get/?profileid=" + localStorage.getItem('id'), true)
@@ -110,7 +110,7 @@ class GeneralInfo extends React.Component {
 							<button className="edit-btn" onClick={e => this.refs.fn.removeAttribute('disabled')} ><i className="fas fa-edit"></i>
 							</button>
 							<span className="info">
-								<input id='fullname' ref='ln' disabled onChange={e => this.setState({ fullname : e.target.value }) } value={this.state.fullname}/>
+								<input id='fullname' ref='fn' disabled onChange={e => this.setState({ fullname : e.target.value }) } value={this.state.fullname}/>
 							</span>
 						</li>
 						<li className="list-group-item"><strong>Age</strong>
