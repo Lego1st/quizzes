@@ -11,8 +11,11 @@ api/recent_quiz/
 
 ### `api/quiz_question/<quiz_id>`
 **Method:** `GET`
+
 **Descriptions:** Response a quiz with its questions, solutions is not included
+
 **Parameters:** None
+
 Example:
 ```
 Link: http://127.0.0.1:8000/api/full_quiz/3/
@@ -44,8 +47,11 @@ Response: 200 OK
 
 ### `api/full_quiz/<quiz_id>/`
 **Method:** `GET`
+
 **Descriptions:** Response a quiz with its questions, solutions is included
+
 **Parameters:** None
+
 Example:
 ```
 Link: http://127.0.0.1:8000/api/full_quiz/3/
@@ -78,7 +84,9 @@ Response: 200 OK
 ```
 
 **Method:** `PUT`
+
 **Descriptions:** Use for update a quiz and its questions
+
 **Parameters:**
 - `id`: int
 - `title`: string
@@ -127,8 +135,11 @@ Response: 200 OK
 ```
 
 **Method:** `DELETE`
+
 **Descriptions:** Use for update a quiz and its questions
+
 **Parameters:** None
+
 Example:
 ```
 Link: http://127.0.0.1:8000/api/full_quiz/4/
@@ -187,7 +198,9 @@ Response: 201 Created
 
 ### `api/recent_quiz/`
 **Method:** `GET`
+
 **Descriptions:** Get a list of most recent quiz
+
 **Parameters:**
 - `page`: page index, start from 1
 - `page_size`: page size
