@@ -2,6 +2,7 @@ from rest_framework import serializers
 from quizzes.models import Quiz, Question
 from rest_framework_jwt.settings import api_settings
 import json
+from random import shuffle
 
 
 ## Quiz and Question serializers
@@ -102,6 +103,7 @@ class FullQuestionSerializer(serializers.BaseSerializer):
         }
         if question_type == 'ma':
             output['matchings'] = json.dumps(matchings)
+            output['options'] = json.dumps(random.shuffle(options))
 
         return output
 
