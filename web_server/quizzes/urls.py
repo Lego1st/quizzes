@@ -9,5 +9,6 @@ urlpatterns = [
     path('api/answered_quiz/', views.AnsweredQuiz.as_view()),
     path('api/favorite_quiz/', views.FavoriteQuiz.as_view()),
     path('api/recent_quiz/', views.RecentQuiz.as_view()),
+    path('api/posted_quiz/', views.PostedQuiz.as_view()),
     re_path(r'^.*$', views.index),
 ]

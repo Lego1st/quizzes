@@ -49,6 +49,14 @@ class FavoriteQuiz(generics.ListAPIView):
         user = self.request.user
         return User_Action_Quiz.objects.filter(user=user.profile, action='li')
 
+class PostedQuiz(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+    serializer_class = QuizQuestionReadOnlySerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Quiz.objects.filter(author=user.profile)
+
 #Pagination class
 class StandardPaginationResult(PageNumberPagination):
     page_size = 10
