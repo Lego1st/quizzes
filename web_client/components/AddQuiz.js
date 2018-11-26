@@ -219,7 +219,7 @@ function Adder(props) {
 	return (
 		<div className = {'whatever-' + props.index} style = {{display: 'inline', textAlign: 'center'}}>
 			<button type="button" className="btn btn-default" style = {{border: 'dashed', backgroundColor: 'white', width : "40%", marginLeft: '5%', marginRight: '5%', marginBottom: '2%'}} 
-					data-toggle="modal" data-target={"#adder-" + props.index}  onClick = {props.handleAddQuestion}>Adding question {props.index}</button>
+					data-toggle="modal" data-target={"#adder-" + props.index}  onClick = {props.handleAddQuestion.bind(this, props.index)}>Adding question {props.index}</button>
 		</div>
 	);
 }
@@ -258,9 +258,10 @@ class AddQuiz extends React.Component {
 		console.log("Saving new question: ", this.state.questions);
 	}
 
-	handleAddQuestion() {
+	handleAddQuestion(_index) {
 		const new_questions = this.state.questions;
 		new_questions.push({
+			index: _index,
 			content: 'Edit question ' + new_questions.length,
 			type: 0,
 			matchings: [],
@@ -283,22 +284,25 @@ class AddQuiz extends React.Component {
 		const converted_state = Object.assign({}, this.state);
 		converted_state['category'] = CODE_CATEGORY[converted_state['category']];
 
-		for (var i = 0; i < converted_state.deletions.length; i++) {
-		}
-
+		const converted_questions = [];
+		console.log("Delete: ", converted_state.deletions);
 		for (var i = 0; i < converted_state.questions.length; i++) {
-			if (converted_state.deletions.includes(converted_state.questions[i]['index'])) {
-				delete converted_state.questions[i];
+			const question = Object.assign({}, converted_state.questions[i]);
+			if (converted_state.deletions.includes(question['index'])) {
 				continue;
 			}
-			if (converted_state.questions[i]['type'] == 3) {
-				converted_state.questions[i]['answer'] = converted_state.questions[i]['options'];
+						
+			if (question['type'] == 3) {
+				question[i]['answer'] = question['options'];
 			}
-			if (converted_state.questions[i]['type'] < 2) {
-				converted_state.questions[i]['answer'] = converted_state.questions[i]['answer'].map((item) => converted_state.questions[i]['options'][item]); 
+			if (question['type'] < 2) {
+				question['answer'] = question['answer'].map((item) => question['options'][item]); 
 			}
-			converted_state.questions[i]['type'] = QUESTION_TYPE[converted_state.questions[i]['type']];
+			question['type'] = QUESTION_TYPE[question['type']];
+			converted_questions.push(question);
 		}
+
+		converted_state.questions = converted_questions;
 		delete converted_state['deletions'];
 		delete converted_state['rating'];
 
