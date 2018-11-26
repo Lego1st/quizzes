@@ -22,7 +22,7 @@ class Answered extends React.Component {
       })
       .then((result) => {
         this.setState({
-          posts: result
+          posts: result || []
         })
       },
       (error) => {
