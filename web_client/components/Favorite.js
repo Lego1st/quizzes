@@ -49,7 +49,7 @@ class Favorite extends React.Component {
           <hr/>
           <div>
             {/* <div id="head-ava" style={{transform: "scale(0.5)", display: "inline-block"}}>N</div> */}
-            <p style={{display: 'inline', fontSize: '15px'}}>by {post.author.username}   <i className="fas fa-heart"></i> {post['likes']}</p>
+            <p style={{display: 'inline', fontSize: '15px'}}>by {post.author.user.username}   <i className="fas fa-heart"></i> {post['likes']}</p>
           </div>
         </div>
       );
