@@ -1,7 +1,7 @@
 import React from 'react';
 import ProfileSideBar from './ProfileSideBar';
 import get_data from './Utils';
-import {CODE_CATEGORY} from './Constants';
+import {CATEGORY_FROM_CODE} from './Constants';
 
 class Post extends React.Component {
 	constructor(props) {
@@ -40,7 +40,7 @@ class Post extends React.Component {
 			posts.push(
 				<div className="userPost" key = {i}>
 					<h2 style = {{display: 'inline-block', margin: '0px'}}> {post['title']} </h2>
-					<p style = {{float:'right', margin: '0px'}}> {CODE_CATEGORY[post['category']]} </p>
+					<p style = {{float:'right', margin: '0px'}}> {CATEGORY_FROM_CODE[post['category']]} </p>
 					
 					<div style={{marginTop: "2%"}}>
 						<p> {post['brief']} </p>
