@@ -103,7 +103,8 @@ class FullQuestionSerializer(serializers.BaseSerializer):
         }
         if question_type == 'ma':
             output['matchings'] = json.dumps(matchings)
-            output['options'] = json.dumps(random.shuffle(options))
+            shuffle(options)
+            output['options'] = json.dumps(options)
 
         return output
 
