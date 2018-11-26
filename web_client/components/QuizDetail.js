@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import { render } from "react-dom";
 import Pagination from "react-paginating";
+import get_data from './Utils';
 
 const limit = 1;
 const pageCount = 5;
@@ -36,7 +37,7 @@ class QuestDetail extends Component {
   constructor(props) {
     super(props);
   }
-
+ 
   render() {
     var x = this.props.quest_detail;
     return (
@@ -55,7 +56,7 @@ class QuestDetail extends Component {
       </div>
       <div className="col-lg-4">
         <p className="font-weight-bold">And your answer is:</p>
-          <ul style={{"list-style-type": "none"}} id="answer-list">
+          <ul style={{"listStyleType": "none"}} id="answer-list">
           {
             (x.question_type==1 || x.question_type==2) 
             ? 
@@ -121,6 +122,14 @@ class QuizDetail extends Component {
   }
 
   componentDidMount() {
+    // get_data(`/api/quiz_question/${this.props.match.params.quizid}`, true)
+    //   .then(res => res.json())
+    //   .then(resutl => {
+    //     console.log(result);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   })
     get_quiz_detail(this.props.match.params.quizid).then((data) => {
       this.setState({
         total: data.questions.length,
