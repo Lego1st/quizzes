@@ -52,6 +52,11 @@ class Question(models.Model):
 		unique_together = ('quiz', 'index')
 		ordering = ['index']
 
+class DoQuiz(models.Model):
+	quiz = models.ForeignKey(Quiz, related_name='done_quizzes', on_delete=models.CASCADE)
+	user = models.ForeignKey(User, related_name='done_quizzes', on_delete=models.CASCADE)
+	user_submission = models.TextField() #json string
+
 class User_Action_Quiz(models.Model):
 	quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
 	user = models.ForeignKey(Profile, on_delete=models.CASCADE)
