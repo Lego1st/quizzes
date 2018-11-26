@@ -27,7 +27,7 @@ class FullQuizDetail(generics.RetrieveUpdateDestroyAPIView):
     
 class QuizCreate(generics.CreateAPIView):
     
-    # permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.AllowAny,)
     queryset = Quiz.objects.all()
     serializer_class = FullQuizSerializer
 
