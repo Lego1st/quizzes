@@ -1,5 +1,11 @@
 import React from "react";
 import ReactMdeDemo from "./ReactMdeDemo";
+import {CODE_CATEGORY} from "./Constants";
+import {QUESTION_TYPE} from "./Constants";
+import {QUIZ_STATUS} from "./Constants";
+
+
+var Config = require('Config');
 
 class QuestHolder extends React.Component {
 	constructor(props) {
@@ -10,7 +16,7 @@ class QuestHolder extends React.Component {
 			type: 0,
 			matchings: [],
 			options: [],
-			answers: []
+			answer: []
 		};
 
 	}
@@ -25,22 +31,24 @@ class QuestHolder extends React.Component {
 	}
 
 	handleSave() {
-		this.props.savingQuestion({
-			content: this.state.content,
-			type: this.state.type,
-			matchings: this.state.matchings,
-			options: this.state.options,
-			answers: this.state.answers
-		},
-		this.state.index)
+		this.props.savingQuestion(this.state, this.state.index)
 	}
 
 	handleChangeOption(index, event) {
-		const new_options =  this.state.options;
-		new_options[index] = event.target.value;
-		this.setState({options: new_options})
+		if (this.state.type != 2) {
+			const new_options =  this.state.options;
+			new_options[index] = event.target.value;
+			this.setState({options: new_options})			
+			console.log('Change option to ', this.state.options);
+		}
 
-		console.log('Change option to ', this.state.options);
+		else {
+			const new_answer =  this.state.answer;
+			new_answer[index] = event.target.value;
+			this.setState({answer: new_answer})			
+			console.log('Change answer to ', this.state.answer);	
+		}
+
 	}
 
 	handleChangeMatching(index, event) {
@@ -52,7 +60,7 @@ class QuestHolder extends React.Component {
 	}
 
 	handleChangeType(_type, event) {
-		this.setState({type: _type, options: [], matchings: [], answers: []});
+		this.setState({type: _type, options: [], matchings: [], answer: []});
 		this.refs.input1.value = "";
 		this.refs.input2.value = "";
 		this.refs.input3.value = "";
@@ -73,20 +81,21 @@ class QuestHolder extends React.Component {
 
 	handleChangeAnswer(index, event) {
 		if (this.state.type == 0) {
-			this.setState({answers: [index]});
+			this.setState({answer: [index]});
 		}
 		else if (this.state.type == 1) {
-			const new_answers = this.state.answers;
-			if (!new_answers.includes(index)) {
-				new_answers.push(index);
+			const new_answer = this.state.answer;
+			if (!new_answer.includes(index)) {
+				new_answer.push(index);
 			}
 			else {
-				new_answers = new_answers.slice(0, index).concat(new_answers.slice(index + 1));
+				console.log(new_answer);
+				new_answer = new_answer.slice(0, index).concat(new_answer.slice(index + 1));
 			}
-			this.setState({answers: new_answers});
+			this.setState({answer: new_answer});
 		}
 
-		console.log("Change answers of question " + this.state.index + " to ", this.state.answers);
+		console.log("Change answer of question " + this.state.index + " to ", this.state.answer);
 	}
 
 	render() {
@@ -121,7 +130,7 @@ class QuestHolder extends React.Component {
 				
 				        <hr/>
 								{this.state.type < 3 ? (
-						        	<form className = 'options&answers'>
+						        	<form className = 'options&answer'>
 							        	<input ref = 'input1' type="text" className="form-control" placeholder="Options 1"
 											style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
 									  		onChange = {this.handleChangeOption.bind(this, 0)}/> 
@@ -164,7 +173,7 @@ class QuestHolder extends React.Component {
 							  					 
 							  		</form>
 						      	) : (
-							      	<div className = 'options&answers'>
+							      	<div className = 'options&answer'>
 						        	<input ref = 'input1' type="text" className="form-control" placeholder="Quest 1"
 										style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
 								  		onChange = {this.handleChangeMatching.bind(this, 0)}/>
@@ -220,8 +229,10 @@ class AddQuiz extends React.Component {
 		super(props);
 		this.state = {
 			title: "This is a title, click to edit.",
+			brief: 'This is a brief',
+			shuffle: false,
 			category : "Category",
-			rating : null,
+			rating : 1.0,
 			questions: [],
 			deletions: []
 		};
@@ -254,7 +265,7 @@ class AddQuiz extends React.Component {
 			type: 0,
 			matchings: [],
 			options: [],
-			answers: []
+			answer: []
 		})
 
 		this.setState({questions: new_questions});
@@ -268,6 +279,49 @@ class AddQuiz extends React.Component {
 		console.log(this.state.deletions);
 	}
 
+	convertState() {
+		const converted_state = Object.assign({}, this.state);
+		converted_state['category'] = CODE_CATEGORY[converted_state['category']];
+
+		for (var i = 0; i < converted_state.deletions.length; i++) {
+		}
+
+		for (var i = 0; i < converted_state.questions.length; i++) {
+			if (converted_state.deletions.includes(converted_state.questions[i]['index'])) {
+				delete converted_state.questions[i];
+				continue;
+			}
+			if (converted_state.questions[i]['type'] == 3) {
+				converted_state.questions[i]['answer'] = converted_state.questions[i]['options'];
+			}
+			if (converted_state.questions[i]['type'] < 2) {
+				converted_state.questions[i]['answer'] = converted_state.questions[i]['answer'].map((item) => converted_state.questions[i]['options'][item]); 
+			}
+			converted_state.questions[i]['type'] = QUESTION_TYPE[converted_state.questions[i]['type']];
+		}
+		delete converted_state['deletions'];
+		delete converted_state['rating'];
+
+		return converted_state;
+	}
+
+	handleSubmit(e) {
+		const converted_state = this.convertState();
+
+		console.log('Final state: ', JSON.stringify(converted_state));
+		fetch(Config.serverUrl + '/api/create_quiz/', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': 'Token ' + localStorage.getItem('token'),
+			},
+			body: JSON.stringify(converted_state)
+		})
+		.then((result) => {
+			console.log(result);
+		});
+	}
+
 	render() {
 		const buttons = [];
 		for (var i = 0; i < this.state.questions.length; i++) {
@@ -278,20 +332,29 @@ class AddQuiz extends React.Component {
 										brief = {this.state.questions[i].content.substring(0, 20) + '...'}/>)
 			}
 		}
+
 		buttons.push(<Adder index = {this.state.questions.length} key = {this.state.questions.length}
 						handleChangeQuestion = {this.handleChangeQuestion}
 						handleAddQuestion = {this.handleAddQuestion}> </Adder>)
+
+		const categories = Object.keys(CODE_CATEGORY);
+		console.log(CODE_CATEGORY);
+		const cate_dropdown = [];
+		for (var i = 0; i < categories.length; i++) {
+			cate_dropdown.push(<a key = {categories[i]} className="dropdown-item" onClick = {this.handleChangeCategory.bind(this)} href="#">{categories[i]}</a>)
+		}
+
 		return (
-			<div className = 'container' style ={{marginTop: '3%'}}>
+			<div className = 'container' style ={{marginTop: '3%', textAlign: 'center'}}>
 				<div className="jumbotron" style = {{backgroundColor: 'white'}}>
 				  <h1 className="display-4">
 					    <div className="input-group mb-3">
 						  <div className="input-group-prepend">
 						    <button className="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{this.state.category}</button>
 						    <div className="dropdown-menu">
-						      <a className="dropdown-item" onClick = {this.handleChangeCategory.bind(this)} href="#">Math</a>
-						      <a className="dropdown-item" onClick = {this.handleChangeCategory.bind(this)} href="#">Logic</a>
-						      <a className="dropdown-item" onClick = {this.handleChangeCategory.bind(this)} href="#">Computer Science</a>
+						      {
+						      	cate_dropdown
+						      }
 						      <div role="separator" className="dropdown-divider"></div>
 						      <a className="dropdown-item" onClick = {this.handleChangeCategory.bind(this)} href="#">Other</a>
 						    </div>
@@ -299,6 +362,9 @@ class AddQuiz extends React.Component {
 						  <input type="text" className="form-control" 
 					  		placeholder={this.state.title}
 					  		onChange = {this.handleChangeTitle.bind(this)}/>
+						  <div className="input-group-append ">
+						  <button className="btn btn-outline-secondary" type="button" onClick={() => console.log(this.convertState())}>Check state</button>
+						  </div> 
 						</div>
 				  </h1>
 
@@ -310,6 +376,7 @@ class AddQuiz extends React.Component {
 				  	}
 
 				</div>
+			  <button className="btn btn-outline-success" type="button" onClick = {this.handleSubmit.bind(this)}>Submit</button>
 			</div>
 		);
 	}
