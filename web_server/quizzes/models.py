@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+from userprofile.models import Profile
 # Create your models here.
 
 
@@ -20,6 +22,11 @@ QUESTION_TYPE = (
 	('fi', 'Filling in the blank')
 )
 
+QUIZ_ACTIONS = (
+	('li', 'like'),
+	('an', 'answer')
+)
+
 ## Quiz and Question models
 class Quiz(models.Model):
 	title = models.CharField(max_length=100)
@@ -29,6 +36,7 @@ class Quiz(models.Model):
 	status = models.CharField(max_length=1, choices=QUIZ_STATUS, default='p')
 	category = models.CharField(max_length=2, choices=CATEGORIES)
 	shuffle = models.BooleanField(default=False)
+	author = models.ForeignKey(Profile, on_delete=models.CASCADE)
 	#author = ....
 
 class Question(models.Model):
@@ -43,3 +51,11 @@ class Question(models.Model):
 	class Meta:
 		unique_together = ('quiz', 'index')
 		ordering = ['index']
+
+class User_Action_Quiz(models.Model):
+	quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+	user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+	action = models.CharField(max_length=2, choices=QUIZ_ACTIONS)
+	class Meta:
+		unique_together = ("quiz", "user", "action")
+		

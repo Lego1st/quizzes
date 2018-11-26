@@ -33,6 +33,22 @@ class QuizCreate(generics.CreateAPIView):
     queryset = Quiz.objects.all()
     serializer_class = FullQuizSerializer
 
+class AnsweredQuiz(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+    serializer_class = UserActionQuizSerializer
+    
+    def get_queryset(self):
+        user = self.request.user
+        return User_Action_Quiz.objects.filter(user=user.profile, action='an')
+
+class FavoriteQuiz(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+    serializer_class = UserActionQuizSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return User_Action_Quiz.objects.filter(user=user.profile, action='li')
+
 #Pagination class
 class StandardPaginationResult(PageNumberPagination):
     page_size = 10
