@@ -47,7 +47,7 @@ class FavoriteQuiz(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return User_Action_Quiz.objects.filter(user=user, action='li')
+        return User_Action_Quiz.objects.filter(user=user.profile, action='li')
 
 #Pagination class
 class StandardPaginationResult(PageNumberPagination):
