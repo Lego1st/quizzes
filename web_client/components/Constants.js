@@ -14,6 +14,6 @@ export const QUIZ_STATUS = {
 export const QUESTION_TYPE = {
 	0: 'si',
 	1: 'mu',
-	2: 'ma',
-	3: 'fi'
+	2: 'fi',
+	3: 'ma'
 }

@@ -4,6 +4,9 @@ import {CODE_CATEGORY} from "./Constants";
 import {QUESTION_TYPE} from "./Constants";
 import {QUIZ_STATUS} from "./Constants";
 
+
+var Config = require('Config');
+
 class QuestHolder extends React.Component {
 	constructor(props) {
 		super(props);
@@ -32,11 +35,20 @@ class QuestHolder extends React.Component {
 	}
 
 	handleChangeOption(index, event) {
-		const new_options =  this.state.options;
-		new_options[index] = event.target.value;
-		this.setState({options: new_options})
+		if (this.state.type != 2) {
+			const new_options =  this.state.options;
+			new_options[index] = event.target.value;
+			this.setState({options: new_options})			
+			console.log('Change option to ', this.state.options);
+		}
 
-		console.log('Change option to ', this.state.options);
+		else {
+			const new_answer =  this.state.answer;
+			new_answer[index] = event.target.value;
+			this.setState({answer: new_answer})			
+			console.log('Change answer to ', this.state.answer);	
+		}
+
 	}
 
 	handleChangeMatching(index, event) {
@@ -275,16 +287,22 @@ class AddQuiz extends React.Component {
 			if (converted_state.questions[i]['type'] == 3) {
 				converted_state.questions[i]['answer'] = converted_state.questions[i]['options'];
 			}
+			if (converted_state.questions[i]['type'] < 2) {
+				converted_state.questions[i]['answer'] = converted_state.questions[i]['answer'].map((item) => converted_state.questions[i]['options'][item]); 
+			}
 			converted_state.questions[i]['type'] = QUESTION_TYPE[converted_state.questions[i]['type']];
 		}
-		console.log('Final state: ', converted_state);
+		delete converted_state['deletions'];
+		delete converted_state['rating'];
+
+		console.log('Final state: ', JSON.stringify(converted_state));
 		fetch(Config.serverUrl + '/api/create_quiz/', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 				'Authorization': 'Token ' + localStorage.getItem('token'),
 			},
-			body: JSON.stringify(this.state)
+			body: JSON.stringify(converted_state)
 		})
 		.then((result) => {
 			console.log(result);
