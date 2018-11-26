@@ -13,7 +13,8 @@ function get_quiz_detail(quiz_id) {
       ({
         id: x,
         title: "Question " + x,
-        statement: "Description here. Something is long enought to make this Question" + x + " look beautiful",
+        content: "Description here. Something is long enought to make this Question" + x + " look beautiful",
+        question_type: Math.floor((Math.random() * 4) + 1),
         options: [
           "1st Opt",
           "2nd Opt",
@@ -25,10 +26,83 @@ function get_quiz_detail(quiz_id) {
       title: "Quiz " + quiz_id,
       description: "Brief description " + quiz_id,
       category: 'Math',      
-      ques_list: ques_list
+      questions: ques_list
     }
     resolve(resJSON);
   })
+}
+
+class QuestDetail extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    var x = this.props.quest_detail;
+    return (
+      <div key={x.id} className="row">
+      <div className="col-lg-8">
+        <div className="row">
+          <h2>{x.title}</h2>
+        </div>
+        <br/>
+        <div className="text-center">
+          <img src={"/static/quizzes/images/cat.png"} className="rounded-circle avatar align-middle"/>
+        </div>
+        <br/>
+        <br/>
+        <p>{x.content}</p>
+      </div>
+      <div className="col-lg-4">
+        <p className="font-weight-bold">And your answer is:</p>
+          <ul style={{"list-style-type": "none"}} id="answer-list">
+          {
+            (x.question_type==1 || x.question_type==2) 
+            ? 
+            x.options.map((y, idx) => (<li key={idx} className="btn btn-info" style={{"display":"block"}}>{y}</li>))
+            :
+            x.options.map((y, idx) => (<li key={idx}><input key={idx} className="form-control" placeholder="test"/></li>))
+          }
+          </ul>
+      </div>
+      </div>
+    );
+  }
+}
+
+class QuizResult extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div>
+      <button type="button" className="btn btn-warning float-right" data-toggle="modal" data-target="#quizResultModal">
+        Submit
+      </button>
+      <div className="modal fade" id="quizResultModal" tabIndex="-1" role="dialog" aria-labelledby="quizResultModalTitle" aria-hidden="true">
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="quizResultModalTitle">Modal title</h5>
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              ...
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" className="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    );
+  }
 }
 
 class QuizDetail extends Component {
@@ -41,7 +115,7 @@ class QuizDetail extends Component {
         title: null,
         description: null,
         category: null,
-        ques_list: []
+        questions: []
       }
     };
   }
@@ -49,7 +123,7 @@ class QuizDetail extends Component {
   componentDidMount() {
     get_quiz_detail(this.props.match.params.quizid).then((data) => {
       this.setState({
-        total: data.ques_list.length,
+        total: data.questions.length,
         dataQuiz: data
       });
     })
@@ -63,29 +137,7 @@ class QuizDetail extends Component {
 
   render() {
     // const { currentPage } = this.state;
-    const ques = this.state.dataQuiz.ques_list.map((x) => (
-      <div key={x.id} className="row">
-      <div className="col-lg-8">
-        <div className="row">
-          <h2>{x.title}</h2>
-        </div>
-        <br/>
-        <div className="text-center">
-          <img src={"/static/quizzes/images/cat.png"} className="rounded-circle avatar align-middle"/>
-        </div>
-        <br/>
-        <br/>
-        <p>{x.statement}</p>
-      </div>
-      <div className="col-lg-4">
-        <p className="font-weight-bold">And your answer is:</p>
-        <ul id="answer-list">
-          {x.options.map((y, idx) => (<li key={idx} className="btn btn-info" style={{"display":"block"}}>{y}</li>))}
-        </ul>
-        
-      </div>
-      </div>
-    ))
+    const ques = this.state.dataQuiz.questions.map((x) =>  <QuestDetail quest_detail={x}/>)
     return (
       <div className="container" id="quiz-page">
         <Pagination
@@ -154,7 +206,7 @@ class QuizDetail extends Component {
               <p>{this.state.dataQuiz.description} </p>
             </div>
             <div className="col-sm-6">
-              <div className="btn btn-warning float-right"> Submit </div>
+              <QuizResult />
             </div>
           </div>
           <div className="row">
