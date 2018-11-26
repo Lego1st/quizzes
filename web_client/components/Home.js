@@ -37,7 +37,6 @@ class Home extends Component {
         return res.json();
       })
       .then((result) => {
-        console.log(result);
         this.setState({
           recent_quizzes: result.results || []
         })

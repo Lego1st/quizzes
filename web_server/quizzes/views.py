@@ -26,6 +26,13 @@ class FullQuizDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.AllowAny,)
     queryset = Quiz.objects.all()
     serializer_class = FullQuizSerializer
+
+class QuizCategory(generics.ListAPIView):
+    permission_classes = (permissions.IsAuthenticated, )
+    serializer_class = BriefQuizSerializer
+
+    def get_queryset(self):
+        return Quiz.objects.filter(category=self.kwargs['cate'])
     
 class QuizCreate(generics.CreateAPIView):
     
