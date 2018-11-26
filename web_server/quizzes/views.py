@@ -7,6 +7,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.filters import OrderingFilter
 
 
 def index(request):
@@ -15,13 +17,13 @@ def index(request):
 ## Quiz and Question api
 class QuizQuestionDetail(generics.RetrieveAPIView):
 
-    # permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.AllowAny,)
     queryset = Quiz.objects.all()
     serializer_class = QuizQuestionReadOnlySerializer
 
 class FullQuizDetail(generics.RetrieveUpdateDestroyAPIView):
 
-    # permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.AllowAny,)
     queryset = Quiz.objects.all()
     serializer_class = FullQuizSerializer
     
@@ -31,4 +33,18 @@ class QuizCreate(generics.CreateAPIView):
     queryset = Quiz.objects.all()
     serializer_class = FullQuizSerializer
 
-# class QuizBrief(generics.)
+#Pagination class
+class StandardPaginationResult(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
+class RecentQuiz(generics.ListAPIView):
+
+    permission_classes = (permissions.AllowAny,)
+    queryset = Quiz.objects.all()
+    serializer_class = BriefQuizSerializer
+    pagination_class = StandardPaginationResult
+    filter_backends = (OrderingFilter,)
+    ordering_fields = '__all__'
+    ordering = ('-created_at',)
