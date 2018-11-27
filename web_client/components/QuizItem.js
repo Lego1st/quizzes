@@ -17,7 +17,7 @@ class QuizItem extends Component {
   render() {
     return (
       <div className="qz_quiz_item">
-        <Link to="/quiz/1997">
+        <Link to={`/quiz/${this.props.info.id}`}>
           <div className="qz_quiz_title">{this.props.info.title}</div>
           <div className="qz_quiz_desc" style={{textOverflow: "ellipsis", "whiteSpace": "nowrap"}}>{
             this.props.info.brief}</div>
