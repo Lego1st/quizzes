@@ -2,7 +2,9 @@ import React from 'react';
 import ProfileSideBar from './ProfileSideBar';
 import get_data from './Utils';
 import {CATEGORY_CODE, STATUS_QUIZ} from './Constants';
+import {Link} from 'react-router-dom';
 
+var Config = require('Config');
 class Post extends React.Component {
 	constructor(props) {
 	    super(props);
@@ -19,6 +21,7 @@ class Post extends React.Component {
 				return res.json();
 			})
 			.then((result) => {
+				console.log(result);
 				this.setState({
 					posts: result.results || []
 				})
@@ -37,8 +40,9 @@ class Post extends React.Component {
 		const posts = [];
 		for (var i = this.state.posts.length - 1; i >= 0; i--) {
 			let post = this.state.posts[i];
+			console.log(post);
 			posts.push(
-				<div className="userPost" key = {i}>
+				<div className="userPost" key={post.id} onClick={() => window.location.replace(Config.serverUrl + "/editquiz/" + post.id + "/")}>
 					<h2 style = {{display: 'inline-block', margin: '0px'}}> {post['title']} </h2>
 					<p style = {{float:'right', margin: '0px'}}> {CATEGORY_CODE[post['category']]} </p>
 					
@@ -59,7 +63,22 @@ class Post extends React.Component {
 		      <div className="row">
 		        <ProfileSideBar/>
 		        <div className="col-md-8">
-		            {posts}
+		        { (posts.length == 0) ? (
+		        	<div style={{textAlign: 'center'}}>
+			        	<h3>You currently do not have any post yet ^^</h3>
+
+			        	<h4>Click 
+				        	<Link to="/addquiz">
+		                      <i className="fas fa-plus-circle" style={{margin: '1%'}}></i>
+		                    </Link>
+		                    to add one!
+		                </h4>
+	                </div>
+		        	) : (
+		            posts
+		        		)
+		        }
+		        
 		        </div>
 		        
 		      </div>

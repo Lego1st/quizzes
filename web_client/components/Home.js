@@ -67,13 +67,26 @@ class Home extends Component {
             </ul>
           </div>
 
-          <div className="col-sm-6" id="main-body" style={{padding: "0 10px 20px 15px"}}>
+          <div className="col-md-8" id="main-body" style={{padding: "0 10px 20px 15px"}}>
 
             <div id="qz_pending_list" style={{padding: "20px", height: "auto"}}>
               <div className="qz_list_title">
                 Recent quizzes
               </div>
-              {this.renderQuizList(this.state.recent_quizzes)}
+              {(this.state.recent_quizzes.length == 0) ? (
+                  <div style={{textAlign: 'center'}}>
+                    <h3>It looks like we currently do not have any post yet ^^</h3>
+
+                    <h4>Click 
+                      <Link to="/addquiz">
+                              <i className="fas fa-plus-circle" style={{margin: '1%'}}></i>
+                            </Link>
+                            to add one!
+                        </h4>
+                  </div>
+                ) : (
+                this.renderQuizList(this.state.recent_quizzes)
+                )}
 
             </div>
 

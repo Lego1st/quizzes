@@ -107,27 +107,37 @@ class QuestHolder extends React.Component {
 		const inputs_match = [];
 
 		for (var i = 0; i < 4; i++) {
-			inputs.push(<input ref = {'input' + i + 1} key = {'input' + i + 1} type="text" className="form-control" placeholder= {this.state.options[i]}
-										style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
-								  		onChange = {this.handleChangeOption.bind(this, i)}/> )
+			inputs.push(<input ref = {'input' + (i + 1).toString()} 
+							key = {'input' + (i + 1).toString()} 
+							type="text" 
+							className="form-control" placeholder= {this.state.options[i]}
+							style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
+					  		onChange = {this.handleChangeOption.bind(this, i)}/> )
+
 			if (this.state.type == 0){ 
 				if (this.state.answer.includes(i)) {
 		  			inputs.push(<input key = {i} style = {{display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%'}} 
-		  				 onChange = {this.handleChangeAnswer.bind(this, i)} type="radio" name="optradio" checked/>)	
+				  				 onChange = {this.handleChangeAnswer.bind(this, i)} 
+				  				 type="radio" 
+				  				 name="optradio" checked/>)	
 				}
 				else {
 					inputs.push(<input key = {i} style = {{display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%'}} 
-		  				 onChange = {this.handleChangeAnswer.bind(this, i)} type="radio" name="optradio"/>)		
+				  				 onChange = {this.handleChangeAnswer.bind(this, i)} 
+				  				 type="radio" 
+				  				 name="optradio" />)		
 				}
 			}
 			else if (this.state.type == 1){
 				if (this.state.answer.includes(i)) {
 					inputs.push(<input key = {i} style = {{display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%'}} 
-  					 onChange = {this.handleChangeAnswer.bind(this, i)} type="checkbox" checked/>)
+				  					 onChange = {this.handleChangeAnswer.bind(this, i)} 
+				  					 type="checkbox" checked/>)
 				}
   				else {
   					inputs.push(<input key = {i} style = {{display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%'}} 
-  					 onChange = {this.handleChangeAnswer.bind(this, i)} type="checkbox"/>)
+				  					 onChange = {this.handleChangeAnswer.bind(this, i)} 
+				  					 type="checkbox" />)
   				}
 
 			}
@@ -136,13 +146,19 @@ class QuestHolder extends React.Component {
 
 		if (this.state.type == 3) {
 			for (var i = 0; i < 4; i++) {
-				inputs_match.push(<input ref = {'input' + i + 1} key = {'input' + i + 1} type="text" className="form-control" placeholder={this.state.matchings[i]}
+				inputs_match.push(<input ref = {'input' + (i*2).toString()} 
+										key = {'input' + (i*2).toString()} 
+										type="text" 
+										className="form-control" placeholder={this.state.matchings[i]}
 										style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
 								  		onChange = {this.handleChangeMatching.bind(this, i)}/>)
 
-			  	inputs_match.push(<input ref = {'input' + i + 2} key = {'input' + i + 2} type="text" className="form-control" placeholder={this.state.answer[i]}
-					style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
-			  		onChange = {this.handleChangeOption.bind(this, i)}/>)
+			  	inputs_match.push(<input ref = {'input' + (i*2 + 1).toString()} 
+								  		key = {'input' + (i*2 + 1).toString()} 
+									  	type="text" 
+									  	className="form-control" placeholder={this.state.answer[i]}
+										style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
+								  		onChange = {this.handleChangeOption.bind(this, i)}/>)
 			}
 		}
 
@@ -172,7 +188,9 @@ class QuestHolder extends React.Component {
 				        </button>
 				      </div>
 				      <div className="modal-body" style = {{display: 'inline', textAlign: 'center'}}>
-				        <ReactMdeDemo handleOnChange = {this.handleChangeContent.bind(this)} index = {this.state.index} initialContent = {this.state.content}/>
+				        <ReactMdeDemo handleOnChange = {this.handleChangeContent.bind(this)} 
+				        			index = {this.state.index} 
+				        			initialContent = {this.state.content}/>
 				
 				        <hr/>
 								{this.state.type < 3 ? (
@@ -343,7 +361,7 @@ class EditQuiz extends React.Component {
 		.then((result) => {
 			if (result.ok) {
 				console.log(result);	
-				window.location.reload();				
+				window.location.replace(Config.serverUrl + '/myquizzes');				
 				console.log(result);
 			}
 			else {
@@ -356,7 +374,8 @@ class EditQuiz extends React.Component {
 		const buttons = [];
 		for (var i = 0; i < this.state.questions.length; i++) {
 			if (! this.state.deletions.includes(i)) {
-				buttons.push( <QuestHolder index = {this.state.questions[i].index} key = {i}
+				buttons.push( <QuestHolder index = {this.state.questions[i].index}
+										key = {this.state.questions[i].index}
 										intial_state = {this.state.questions[i]}
 										savingQuestion = {this.handleChangeQuestion}
 										handleDeleteQuestion = {this.handleDeleteQuestion}
@@ -364,7 +383,8 @@ class EditQuiz extends React.Component {
 			}
 		}
 
-		buttons.push(<Adder index = {this.state.questions.length} key = {this.state.questions.length}
+		buttons.push(<Adder index = {this.state.questions.length} 
+						key = {this.state.questions.length}
 						handleChangeQuestion = {this.handleChangeQuestion}
 						handleAddQuestion = {this.handleAddQuestion}> </Adder>)
 

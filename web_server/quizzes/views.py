@@ -76,10 +76,20 @@ class SearchQuiz(generics.ListAPIView):
 
     def get_queryset(self):
         return Question.objects.filter(content__contains=self.kwargs['search_text'])
+        
+class UserSubmit(generics.CreateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    queryset = UserSubmission.objects.all()
+    serializer_class = UserSubmissionSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
 @api_view(['POST'])
 def upload_file_quiz(request):
     file = request.FILES['quiz_file']
     quizzes = pandas.read_excel(file)
+    quizzes = quizzes.fillna('')
+    print(quizzes)
     return Response({"quizz" : quizzes.to_dict()}, status=status.HTTP_201_CREATED)
