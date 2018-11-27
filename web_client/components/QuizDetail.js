@@ -89,20 +89,23 @@ class QuizDetail extends Component {
   }
 
   componentDidMount() {
-    // get_data(`/api/quiz_question/${this.props.match.params.quizid}`, true)
-    //   .then(res => res.json())
-    //   .then(resutl => {
-    //     console.log(result);
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   })
-    get_quiz_detail(this.props.match.params.quizid).then((data) => {
-      this.setState({
-        total: data.questions.length,
-        dataQuiz: data
-      });
-    })
+    get_data(`/api/quiz_question/${this.props.match.params.quizid}/`, true)
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          total: data.questions.length,
+          dataQuiz: data
+        });  
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    // get_quiz_detail(this.props.match.params.quizid).then((data) => {
+    //   this.setState({
+    //     total: data.questions.length,
+    //     dataQuiz: data
+    //   });
+    // })
   }
 
   handlePageChange = page => {
