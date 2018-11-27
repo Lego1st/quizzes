@@ -1,7 +1,6 @@
 node_modules/
 .vscode
 *.pyc
-web_server/quizzes/static/quizzes/js/main.js
 package-lock.json
 web_server/db.sqlite3
 **/migrations/**
