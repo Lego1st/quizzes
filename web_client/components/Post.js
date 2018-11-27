@@ -64,12 +64,12 @@ class Post extends React.Component {
 		        <ProfileSideBar/>
 		        <div className="col-md-8">
 		        { (posts.length == 0) ? (
-		        	<div>
-			        	<h3>You currently do not have any post ^^</h3>
+		        	<div style={{textAlign: 'center'}}>
+			        	<h3>You currently do not have any post yet ^^</h3>
 
 			        	<h4>Click 
 				        	<Link to="/addquiz">
-		                      <i className="fas fa-plus-circle"></i>
+		                      <i className="fas fa-plus-circle" style={{margin: '1%'}}></i>
 		                    </Link>
 		                    to add one!
 		                </h4>
