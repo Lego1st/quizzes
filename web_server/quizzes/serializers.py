@@ -184,11 +184,12 @@ class AnswerSerializer(serializers.BaseSerializer):
         question_type = question.question_type
         options = json.loads(question.options)
 
-        if len(answer) > len(options):
-            raise serializers.ValidationError(
-                {'answer|index {}'.format(index): "answer's length exceeds question's options' length"}
+        if question_type != 'fi':
+            if len(answer) > len(options):
+                raise serializers.ValidationError(
+                    {'answer|index {}'.format(index): "answer's length exceeds question's options' length"}
             )
-        if question_type != 'si':
+        if question_type != 'si' and question_type != 'fi':
             for a in answer:
                 if a not in options:
                     raise serializers.ValidationError(

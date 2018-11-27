@@ -187,7 +187,7 @@ class FillingQuest extends Component {
   }
 
   handleOnChange(event) {
-    updateQuizAnswer.apply(this, [event.target.value]);
+    updateQuizAnswer.apply(this, [[event.target.value]]);
   }
 
   render() {
