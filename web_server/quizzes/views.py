@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.filters import OrderingFilter
-
+import pandas
 
 def index(request):
     return render(request, 'index.html')
@@ -58,3 +58,10 @@ class RecentQuiz(generics.ListAPIView):
     filter_backends = (OrderingFilter,)
     ordering_fields = '__all__'
     ordering = ('-created_at',)
+
+
+@api_view(['POST'])
+def upload_file_quiz(request):
+    file = request.FILES['quiz_file']
+    quizzes = pandas.read_excel(file)
+    return Response({"quizz" : quizzes.to_dict()}, status=status.HTTP_201_CREATED)

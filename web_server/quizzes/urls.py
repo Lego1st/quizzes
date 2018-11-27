@@ -8,5 +8,7 @@ urlpatterns = [
     path('api/quiz_category/<cate>/', views.QuizCategory.as_view()),
     path('api/create_quiz/', views.QuizCreate.as_view()),
     path('api/recent_quiz/', views.RecentQuiz.as_view()),
+    path('api/posted_quiz/', views.PostedQuiz.as_view()),
+    path('api/upfile/',views.upload_file_quiz),
     re_path(r'^.*$', views.index),
 ]

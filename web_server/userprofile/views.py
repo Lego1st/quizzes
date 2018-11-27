@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from rest_framework import permissions, status
+from rest_framework import permissions, status, parsers
 from rest_framework.decorators import api_view,permission_classes
 from .models import Profile
-from .serializers import PSSerializer, UserSerializer, UserSerializerWithToken
+from .serializers import PSSerializer, UserSerializer, UserSerializerWithToken, PSAvatarSerializer
 from rest_framework import generics
 from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 
 
 # Create your views here.
@@ -32,6 +33,16 @@ class PSListUpdate(generics.ListCreateAPIView):
             return Response({"profile" : 'susscess'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+@api_view(['POST'])
+def upload_avatar(request):
+    # profile = PSAvatarUpdate()
+    im = request.FILES['avatar']
+    profile = Profile.objects.get(pk=request.user.id)
+    profile.avatar = im
+    profile.save()
+    return Response({"profile" : 'susscess'}, status=status.HTTP_201_CREATED)
+
 @api_view(['GET'])
 def current_profile(request):
     """
@@ -40,19 +51,6 @@ def current_profile(request):
     
     profile = Profile.objects.get(pk=request.GET.get('profileid'))
     return Response(PSSerializer(profile).data)
-
-
-
-# @api_view(['POST'])
-# def update_profile(request):
-#     if request.method == 'POST':
-#         user= UserSerializer(request.POST, instance=request.user)
-#         pf = PSSerializer(request.POST,instance=request.user.profile)
-#         if user.is_valid() and pf.is_valid():
-#             user.save()
-#             pf.save()
-#             return Response({"user" : pf.data}, status=status.HTTP_201_CREATED)
-#         return Response(pf.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 def my_jwt_response_handler(token, user=None, request=None):

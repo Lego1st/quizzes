@@ -4,6 +4,34 @@ from userprofile.models import Profile
 from quizzes.constants import *
 # Create your models here.
 
+<<<<<<< HEAD
+=======
+
+CATEGORIES = (
+	('ma', "Math"),
+	('cs', "Computer Science"),
+	('lg', "Logic")
+)
+
+QUIZ_STATUS = (
+	('p', 'Pending'),
+	('r', 'Rejected'),
+	('a', 'Approved')
+)
+
+QUESTION_TYPE = (
+	('si', 'Single choice'),
+	('mu', 'Multiple choice'),
+	('ma', 'Matching'),
+	('fi', 'Filling in the blank')
+)
+
+QUIZ_ACTIONS = (
+	('li', 'like'),
+	('an', 'answer')
+)
+
+>>>>>>> a3cbda573e5d6db5c2b75f1651212fd2cd24597c
 ## Quiz and Question models
 class Quiz(models.Model):
 	title = models.CharField(max_length=100)

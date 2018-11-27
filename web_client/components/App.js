@@ -11,6 +11,7 @@ import QuizApproval from './QuizApproval';
 import QuizDetail from './QuizDetail';
 import LoginSignUp from './LoginSignUp';
 import AddQuiz from './AddQuiz';
+import EditQuiz from './EditQuiz';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 import {history} from 'history';
 
@@ -51,6 +52,7 @@ class App extends Component {
               <Route path='/quiz/:quizid' component={QuizDetail}/>
               <Route path='/quiz' component={QuizDetail}/>
               <Route path='/addquiz' component={AddQuiz}/>
+              <Route path='/editquiz/:quizid' component={EditQuiz}/>
               <Route path='/login' component={(props) => <LoginSignUp 
                 setLoginState={this.setLoginState.bind(this)} {...props}/>}/>
               <Redirect to='/'/>
