@@ -16,6 +16,12 @@ export const QUIZ_STATUS = {
 	'Approved': 'a'
 }
 
+export const STATUS_QUIZ = {
+	'p': 'Pending',
+	'r': 'Rejected',
+	'a': 'Approved'
+}
+
 
 export const QUESTION_TYPE = {
 	0: 'si',
