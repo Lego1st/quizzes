@@ -31,6 +31,7 @@ class Question(models.Model):
 class UserSubmission(models.Model):
 	quiz = models.ForeignKey(Quiz, related_name='submissions', on_delete=models.CASCADE)
 	user = models.ForeignKey(User, related_name='submissions', on_delete=models.CASCADE)
+	mark = models.FloatField(default=0.0)
 
 	class Meta:
 		unique_together = ('quiz', 'user')
@@ -39,3 +40,4 @@ class Answer(models.Model):
 	submission = models.ForeignKey(UserSubmission, related_name='answers', on_delete=models.CASCADE)
 	question = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE)
 	answer = models.TextField() #json string
+	correct = models.BooleanField(default=False)

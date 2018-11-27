@@ -14,6 +14,12 @@ import pandas
 def index(request):
     return render(request, 'index.html')
 
+#Pagination class
+class StandardPaginationResult(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
 ## Quiz and Question api
 class QuizQuestionDetail(generics.RetrieveAPIView):
 
@@ -33,6 +39,17 @@ class QuizCategory(generics.ListAPIView):
 
     def get_queryset(self):
         return Quiz.objects.filter(category=self.kwargs['cate'])
+
+class PostedQuiz(generics.ListAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = BriefQuizSerializer
+    pagination_class = StandardPaginationResult
+    filter_backends = (OrderingFilter,)
+    ordering_fields = '__all__'
+    ordering = ('-created_at',)
+
+    def get_queryset(self):
+        return Quiz.objects.filter(author=self.request.user)
     
 class QuizCreate(generics.CreateAPIView):
     
@@ -42,12 +59,6 @@ class QuizCreate(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
-
-#Pagination class
-class StandardPaginationResult(PageNumberPagination):
-    page_size = 10
-    page_size_query_param = 'page_size'
-    max_page_size = 100
 
 class RecentQuiz(generics.ListAPIView):
 
