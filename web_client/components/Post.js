@@ -3,6 +3,7 @@ import ProfileSideBar from './ProfileSideBar';
 import get_data from './Utils';
 import {CATEGORY_CODE, STATUS_QUIZ} from './Constants';
 
+var Config = require('Config');
 class Post extends React.Component {
 	constructor(props) {
 	    super(props);
@@ -19,6 +20,7 @@ class Post extends React.Component {
 				return res.json();
 			})
 			.then((result) => {
+				console.log(result);
 				this.setState({
 					posts: result.results || []
 				})
@@ -37,8 +39,9 @@ class Post extends React.Component {
 		const posts = [];
 		for (var i = this.state.posts.length - 1; i >= 0; i--) {
 			let post = this.state.posts[i];
+			console.log(post);
 			posts.push(
-				<div className="userPost" key = {i}>
+				<div className="userPost" key={post.id} onClick={() => window.location.replace(Config.serverUrl + "/editquiz/" + post.id + "/")}>
 					<h2 style = {{display: 'inline-block', margin: '0px'}}> {post['title']} </h2>
 					<p style = {{float:'right', margin: '0px'}}> {CATEGORY_CODE[post['category']]} </p>
 					
