@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import { render } from "react-dom";
 import Pagination from "react-paginating";
 import QuestDetail from "./QuestDetail";
+import QuizResult from "./QuizResult";
 import { CATEGORY_FROM_CODE } from './Constants';
 import get_data from './Utils';
 
@@ -40,64 +41,29 @@ function get_quiz_detail(quiz_id) {
       "shuffle": false,
       "questions": [
         {
-          "type": "si",
-          "index": 0,
-          "content": "What is django based on?",
-          "options": ["java", "python", "c++", "ruby"]
-        },
-        {
-          "index": 1,
-          "type": "ma",
-          "content": "Matching this statements",
-          "options": ["3", "2", "4"],
-          "matchings": ["1+1", "1+2", "1+3"]
-        },
-        {
           "index": 2,
           "type": "fi",
           "content": "3 + 3 = ???",
           "options": []
+        },
+        {
+          "type": "si",
+          "index": 1,
+          "content": "What is django based on?",
+          "options": ["java", "python", "c++", "ruby"]
+        },
+        {
+          "index": 0,
+          "type": "ma",
+          "content": "Matching this statements",
+          "options": ["3", "2", "4"],
+          "matchings": ["1+1", "1+2", "1+3"]
         }
+
       ]
     }
     resolve(resJSON);
   })
-}
-
-
-class QuizResult extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div>
-      <button type="button" className="btn btn-warning float-right" data-toggle="modal" data-target="#quizResultModal">
-        Submit
-      </button>
-      <div className="modal fade" id="quizResultModal" tabIndex="-1" role="dialog" aria-labelledby="quizResultModalTitle" aria-hidden="true">
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="quizResultModalTitle">Modal title</h5>
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div className="modal-body">
-              ...
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      </div>
-    );
-  }
 }
 
 class QuizDetail extends Component {
@@ -111,8 +77,15 @@ class QuizDetail extends Component {
         brief: null,
         category: null,
         questions: []
-      }
+      },
+      doQuiz : {}
     };
+  }
+
+  handleQuestAnswered = (questAnswered) => {
+    this.setState({
+      doQuiz: {...this.state.doQuiz, ...questAnswered}
+    });
   }
 
   componentDidMount() {
@@ -140,7 +113,7 @@ class QuizDetail extends Component {
 
   render() {
     // const { currentPage } = this.state;
-    const ques = this.state.dataQuiz.questions.map((x) =>  <QuestDetail quest_detail={x}/>)
+    const ques = this.state.dataQuiz.questions.map((x) =>  <QuestDetail quest_detail={x} callbackQuiz={this.handleQuestAnswered}/>)
     return (
       <div className="container" id="quiz-page">
         <Pagination
@@ -209,7 +182,10 @@ class QuizDetail extends Component {
               <p>{this.state.dataQuiz.brief} </p>
             </div>
             <div className="col-sm-6">
-              <QuizResult />
+              <QuizResult 
+                submission={this.state.doQuiz} 
+                quizId={this.props.match.params.quizid} 
+                questions={this.state.dataQuiz.questions}/>
             </div>
           </div>
           <div className="row">
