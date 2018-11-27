@@ -1,24 +1,28 @@
 import React from "react";
 import ReactMdeDemo from "./ReactMdeDemo";
 import {CODE_CATEGORY} from "./Constants";
+import {CATEGORY_CODE} from "./Constants";
 import {QUESTION_TYPE} from "./Constants";
+import {TYPE_QUESTION} from "./Constants";
 import {QUIZ_STATUS} from "./Constants";
-
+import get_data from './Utils'
 
 var Config = require('Config');
 
 class QuestHolder extends React.Component {
 	constructor(props) {
 		super(props);
+		const intial_state = props.intial_state;
 		this.state = {
-			index: this.props.index,
-			content: "",
-			type: 0,
-			matchings: [],
-			options: [],
-			answer: []
+			index: intial_state.index,
+			content: intial_state.content,
+			type: intial_state.type,
+			matchings: intial_state.matchings ? intial_state.matchings : [],
+			options: intial_state.options,
+			answer: intial_state.answer
 		};
 
+		console.log("Loaded state of question " + props.index + ":", this.state);
 	}
 
 	handleDelete() {
@@ -99,6 +103,49 @@ class QuestHolder extends React.Component {
 
 	render() {
 		const types = ['Single-choice', 'Multiple-choice', 'Filling', 'Matching'];
+		const inputs = [];
+		const inputs_match = [];
+
+		for (var i = 0; i < 4; i++) {
+			inputs.push(<input ref = {'input' + i + 1} key = {'input' + i + 1} type="text" className="form-control" placeholder= {this.state.options[i]}
+										style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
+								  		onChange = {this.handleChangeOption.bind(this, i)}/> )
+			if (this.state.type == 0){ 
+				if (this.state.answer.includes(i)) {
+		  			inputs.push(<input key = {i} style = {{display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%'}} 
+		  				 onChange = {this.handleChangeAnswer.bind(this, i)} type="radio" name="optradio" checked/>)	
+				}
+				else {
+					inputs.push(<input key = {i} style = {{display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%'}} 
+		  				 onChange = {this.handleChangeAnswer.bind(this, i)} type="radio" name="optradio"/>)		
+				}
+			}
+			else if (this.state.type == 1){
+				if (this.state.answer.includes(i)) {
+					inputs.push(<input key = {i} style = {{display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%'}} 
+  					 onChange = {this.handleChangeAnswer.bind(this, i)} type="checkbox" checked/>)
+				}
+  				else {
+  					inputs.push(<input key = {i} style = {{display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%'}} 
+  					 onChange = {this.handleChangeAnswer.bind(this, i)} type="checkbox"/>)
+  				}
+
+			}
+
+		}
+
+		if (this.state.type == 3) {
+			for (var i = 0; i < 4; i++) {
+				inputs_match.push(<input ref = {'input' + i + 1} key = {'input' + i + 1} type="text" className="form-control" placeholder={this.state.matchings[i]}
+										style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
+								  		onChange = {this.handleChangeMatching.bind(this, i)}/>)
+
+			  	inputs_match.push(<input ref = {'input' + i + 2} key = {'input' + i + 2} type="text" className="form-control" placeholder={this.state.answer[i]}
+					style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
+			  		onChange = {this.handleChangeOption.bind(this, i)}/>)
+			}
+		}
+
 		return (
 			<div className = {'whatever-' + this.props.index} style = {{display: 'inline', textAlign: 'center'}}>
 				<button type="button" className="btn btn-default" style = {{width: "40%", marginLeft: '5%', marginRight: '5%', marginBottom: '2%'}} 
@@ -125,78 +172,21 @@ class QuestHolder extends React.Component {
 				        </button>
 				      </div>
 				      <div className="modal-body" style = {{display: 'inline', textAlign: 'center'}}>
-				        <ReactMdeDemo handleOnChange = {this.handleChangeContent.bind(this)} index = {this.state.index}/>
+				        <ReactMdeDemo handleOnChange = {this.handleChangeContent.bind(this)} index = {this.state.index} initialContent = {this.state.content}/>
 				
 				        <hr/>
 								{this.state.type < 3 ? (
 						        	<form className = 'options&answer'>
-							        	<input ref = 'input1' type="text" className="form-control" placeholder="Options 1"
-											style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
-									  		onChange = {this.handleChangeOption.bind(this, 0)}/> 
-									  		{this.state.type == 0 && 
-									  			<input style = {{display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%'}} 
-									  				 onChange = {this.handleChangeAnswer.bind(this, 0)} type="radio" name="optradio"/>}										  		
-								  			{this.state.type == 1 && 
-								  				<input style = {{display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%'}} 
-								  					 onChange = {this.handleChangeAnswer.bind(this, 0)} type="checkbox" value = ""/>}
-
-									  	<input ref = 'input2' type="text" className="form-control" placeholder="Options 2"
-											style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
-									  		onChange = {this.handleChangeOption.bind(this, 1)}/>
-									  		{this.state.type == 0 && 
-									  			<input style = {{display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%'}} 
-									  				 onChange = {this.handleChangeAnswer.bind(this, 1)} type="radio" name="optradio"/>}										  		
-								  			{this.state.type == 1 && 
-								  				<input style = {{display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%'}} 
-								  					 onChange = {this.handleChangeAnswer.bind(this, 1)} type="checkbox" value = ""/>}
-
-									  	<input ref = 'input3' type="text" className="form-control" placeholder="Options 3"
-											style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
-									  		onChange = {this.handleChangeOption.bind(this, 2)}/>
-									  		{this.state.type == 0 && 
-									  			<input style = {{display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%'}} 
-									  				 onChange = {this.handleChangeAnswer.bind(this, 2)} type="radio" name="optradio"/>}										  		
-								  			{this.state.type == 1 && 
-								  				<input style = {{display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%'}} 
-								  					 onChange = {this.handleChangeAnswer.bind(this, 2)} type="checkbox" value = ""/>}
-
-									  	<input ref = 'input4' type="text" className="form-control" placeholder="Options 4"
-											style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
-									  		onChange = {this.handleChangeOption.bind(this, 3)}/>
-									  		{this.state.type == 0 && 
-									  			<input style = {{display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%'}} 
-									  				 onChange = {this.handleChangeAnswer.bind(this, 3)} type="radio" name="optradio"/>}										  		
-								  			{this.state.type == 1 && 
-								  				<input style = {{display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%'}} 
-								  					 onChange = {this.handleChangeAnswer.bind(this, 3)} type="checkbox" value = ""/>}
+							        	{
+							        		inputs
+							        	}
 							  					 
 							  		</form>
 						      	) : (
 							      	<div className = 'options&answer'>
-						        	<input ref = 'input1' type="text" className="form-control" placeholder="Quest 1"
-										style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
-								  		onChange = {this.handleChangeMatching.bind(this, 0)}/>
-								  	<input ref = 'input2' type="text" className="form-control" placeholder="Options 1"
-										style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
-								  		onChange = {this.handleChangeOption.bind(this, 0)}/>
-								  	<input ref = 'input3' type="text" className="form-control" placeholder="Quest 2"
-										style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
-								  		onChange = {this.handleChangeMatching.bind(this, 1)}/>
-								  	<input ref = 'input4' type="text" className="form-control" placeholder="Options 2"
-										style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
-								  		onChange = {this.handleChangeOption.bind(this, 1)}/>
-								  	<input ref = 'input5' type="text" className="form-control" placeholder="Quest 3"
-										style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
-								  		onChange = {this.handleChangeMatching.bind(this, 2)}/>
-								  	<input ref = 'input6' type="text" className="form-control" placeholder="Options 3"
-										style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
-								  		onChange = {this.handleChangeOption.bind(this, 2)}/>
-								  	<input ref = 'input7' type="text" className="form-control" placeholder="Quest 4"
-										style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
-								  		onChange = {this.handleChangeMatching.bind(this, 3)}/>
-								  	<input ref = 'input8' type="text" className="form-control" placeholder="Options 4"
-										style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
-								  		onChange = {this.handleChangeOption.bind(this, 3)}/>
+						        		{
+						        			inputs_match
+						        		}
 								    </div>
 							    )}
 							
@@ -223,14 +213,15 @@ function Adder(props) {
 	);
 }
 
-class AddQuiz extends React.Component {
+class EditQuiz extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			id: null,
 			title: "This is a title, click to edit.",
 			brief: 'This is a brief',
-			shuffle: false,
 			category : "Category",
+			shuffle: false,
 			rating : 1.0,
 			questions: [],
 			deletions: []
@@ -238,6 +229,36 @@ class AddQuiz extends React.Component {
 		this.handleChangeQuestion = this.handleChangeQuestion.bind(this);
 		this.handleAddQuestion = this.handleAddQuestion.bind(this);
 		this.handleDeleteQuestion = this.handleDeleteQuestion.bind(this);
+	}
+
+	componentDidMount() {
+		console.log(this.props.match.params.quizid);
+		get_data("/api/full_quiz/" + this.props.match.params.quizid + "/", false).then((res) => res.json())
+			.catch(
+				(error) => {
+					console.log(error);
+				})
+			.then(
+				(result) => {
+					console.log('fetch quiz', result);
+					const questions = [];
+					for (var i = 0; i < result.questions.length; i++){
+						var q = result.questions[i];
+						q.type = TYPE_QUESTION[q.type];
+						q.answer = q.answer.map((item) => q.options.indexOf(item));
+						questions.push(q);
+					}
+					this.setState(result);
+					this.setState({questions : questions})
+				},
+				// Note: it's important to handle errors here
+				// instead of a catch() block so that we don't swallow
+				// exceptions from actual bugs in components.
+				(error) => {
+					
+					console.log(error);
+				}
+			)
 	}
 
 	handleChangeTitle(event) {
@@ -281,8 +302,6 @@ class AddQuiz extends React.Component {
 
 	convertState() {
 		const converted_state = Object.assign({}, this.state);
-		converted_state['category'] = CODE_CATEGORY[converted_state['category']];
-
 		const converted_questions = [];
 		console.log("Delete: ", converted_state.deletions);
 		for (var i = 0; i < converted_state.questions.length; i++) {
@@ -292,9 +311,10 @@ class AddQuiz extends React.Component {
 			}
 						
 			if (question['type'] == 3) {
-				question[i]['answer'] = question['options'];
+				question['answer'] = question['options'];
 			}
 			if (question['type'] < 2) {
+				console.log("answer of question " + i, question['answer']);
 				question['answer'] = question['answer'].map((item) => question['options'][item]); 
 			}
 			question['type'] = QUESTION_TYPE[question['type']];
@@ -312,8 +332,8 @@ class AddQuiz extends React.Component {
 		const converted_state = this.convertState();
 
 		console.log('Final state: ', JSON.stringify(converted_state));
-		fetch(Config.serverUrl + '/api/create_quiz/', {
-			method: 'POST',
+		fetch(Config.serverUrl + '/api/full_quiz/'  + this.props.match.params.quizid + "/", {
+			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
 				'Authorization': 'Token ' + localStorage.getItem('token'),
@@ -329,7 +349,8 @@ class AddQuiz extends React.Component {
 		const buttons = [];
 		for (var i = 0; i < this.state.questions.length; i++) {
 			if (! this.state.deletions.includes(i)) {
-				buttons.push( <QuestHolder index = {i} key = {i}
+				buttons.push( <QuestHolder index = {this.state.questions[i].index} key = {i}
+										intial_state = {this.state.questions[i]}
 										savingQuestion = {this.handleChangeQuestion}
 										handleDeleteQuestion = {this.handleDeleteQuestion}
 										brief = {this.state.questions[i].content.substring(0, 20) + '...'}/>)
@@ -353,7 +374,7 @@ class AddQuiz extends React.Component {
 				  <h1 className="display-4">
 					    <div className="input-group mb-3">
 						  <div className="input-group-prepend">
-						    <button className="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{this.state.category}</button>
+						    <button className="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{CATEGORY_CODE[this.state.category]}</button>
 						    <div className="dropdown-menu">
 						      {
 						      	cate_dropdown
@@ -379,10 +400,10 @@ class AddQuiz extends React.Component {
 				  	}
 
 				</div>
-			  <button className="btn btn-outline-success" type="button" onClick = {this.handleSubmit.bind(this)}>Submit</button>
+			  <button className="btn btn-outline-primary" type="button" onClick = {this.handleSubmit.bind(this)}>Update</button>
 			</div>
 		);
 	}
 }
 
-export default AddQuiz;
+export default EditQuiz;

@@ -4,6 +4,12 @@ export const CODE_CATEGORY = {
 	'Logic': 'lg'
 }
 
+export const CATEGORY_CODE = {
+	'ma':'Math',
+	'cs':'Computer Science',
+	'lg': 'Logic'
+}
+
 export const QUIZ_STATUS = {
 	'Pending': 'p',
 	'Rejected': 'r',
@@ -16,4 +22,11 @@ export const QUESTION_TYPE = {
 	1: 'mu',
 	2: 'fi',
 	3: 'ma'
+}
+
+export const TYPE_QUESTION = {
+	'si': 0,
+	'mu': 1,
+	'fi': 2,
+	'ma': 3
 }
