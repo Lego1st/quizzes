@@ -4,6 +4,12 @@ export const CODE_CATEGORY = {
 	'Logic': 'lg'
 }
 
+export const CATEGORY_CODE = {
+	'ma':'Math',
+	'cs':'Computer Science',
+	'lg': 'Logic'
+}
+
 export const QUIZ_STATUS = {
 	'Pending': 'p',
 	'Rejected': 'r',
@@ -18,8 +24,16 @@ export const QUESTION_TYPE = {
 	3: 'ma'
 }
 
+export const TYPE_QUESTION = {
+	'si': 0,
+	'mu': 1,
+	'fi': 2,
+	'ma': 3
+}
 export const CATEGORY_FROM_CODE = {
 	'ma' : 'Math',
 	'cs' : 'Computer Science',
 	'lg' : 'Logic'
 }
+export const UPLOAD_AVATAR_API = '/profile/api/avatar/'
+export const UPLOAD_FILE_API = '/api/upfile/'

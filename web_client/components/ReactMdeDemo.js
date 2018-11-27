@@ -11,8 +11,9 @@ const myProps = {
 class ReactMdeDemo extends React.Component{
 		constructor(props) {
 			super(props);
+			const ic = props.initialContent ? props.initialContent  : '# This is a Markdown Editor';
 			this.state = {
-				intialContent: '# This is a Markdown Editor',
+				intialContent: ic,
 			};
 		}
 

@@ -1,9 +1,10 @@
 from rest_framework import serializers
-from quizzes.models import Quiz, Question, User_Action_Quiz
+from quizzes.models import *
 from userprofile.serializers import PSSerializer
 from rest_framework_jwt.settings import api_settings
 import json
 from random import shuffle
+from quizzes.constants import *
 
 
 ## Quiz and Question serializers
@@ -11,6 +12,14 @@ class BriefQuizSerializer(serializers.ModelSerializer):
     class Meta:
         model = Quiz
         exclude = ('shuffle',)
+
+    def to_representation(self, obj):
+        ret = super().to_representation(obj)
+        author_id = ret['author']
+        author_username = User.objects.get(pk=author_id).username
+        ret['author'] = author_username
+        return ret
+
 
 class QuestionReadOnlySerializer(serializers.BaseSerializer):
     
@@ -28,11 +37,10 @@ class QuestionReadOnlySerializer(serializers.BaseSerializer):
 
 class QuizQuestionReadOnlySerializer(serializers.ModelSerializer):
     questions = QuestionReadOnlySerializer(many=True, read_only=True)
-    author = PSSerializer(read_only=True)
 
     class Meta:
         model = Quiz
-        fields = ('id' ,'title', 'brief', 'category', 'shuffle', 'questions', 'author')
+        fields = ('id' ,'title', 'brief', 'category', 'shuffle', 'questions')
 
 class FullQuestionSerializer(serializers.BaseSerializer):
 
@@ -47,13 +55,13 @@ class FullQuestionSerializer(serializers.BaseSerializer):
             if not logic:
                 raise serializers.ValidationError(message)
         
-        index = str(data.get('index'))
+        index = str(data.get('index', ''))
         question_type = data.get('type')
         content = data.get('content')
         options = data.get('options')
         matchings = data.get('matchings')
         answer = data.get('answer')
-        print(options)
+        # print(options)
 
         # validate fields
         _validate(index, {'index': 'This field is required.'})
@@ -153,11 +161,45 @@ class FullQuizSerializer(serializers.ModelSerializer):
         for question_data in questions_data:
             Question.objects.create(quiz=quiz, **question_data)
         return instance
-        
 
-class UserActionQuizSerializer(serializers.ModelSerializer):
-    quiz = QuizQuestionReadOnlySerializer(read_only=True)
+class AnswerSerializer(serializers.BaseSerializer):
+    def to_internal_value(self, data):
+        answer = data.get('answer', [])
+        index = str(data.get('index', ''))
+        quiz_id = str(data.get('quiz_id', ''))
+        print(quiz_id)
+
+        if type(answer) != list:
+            raise serializers.ValidationError({'answer': 'This fields must be a list'})
+
+        if not index:
+            raise serializers.ValidationError({'index': 'This fields is required'})
+
+        return {
+            'index': int(index),
+            'answer': json.dumps(answer)
+        }
+        
+    def to_representation(self, obj):
+        return {
+            'index': obj.question.index,
+            'answer': json.loads(obj.answer),
+            'solution': json.loads(obj.question.answer),
+            'correct': obj.correct
+        }
+
+class UserSubmissionSerializer(serializers.ModelSerializer):
+    answers = AnswerSerializer(many=True)
 
     class Meta:
-        model = User_Action_Quiz
-        fields = ('quiz',)
+        model = UserSubmission
+        fields = ('id', 'quiz', 'mark' 'answers')
+
+    def to_internal_value(self, data):
+        quiz_id = data.get('quiz_id')
+        print(quiz_id)
+        quiz = Quiz.objects.get(pk=quiz_id)
+        data['mark'] = 0
+        data['quiz'] = quiz
+        data = super().to_internal_value(data)
+        return data

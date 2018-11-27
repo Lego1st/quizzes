@@ -18,6 +18,14 @@
 	border: 2px solid;
 	border-color: rgb(240, 240, 240);
 }
+.btn-upload {
+	border: 1px solid #cacaca;
+	padding: 5px;
+	width: 204px;
+	border-radius: 3px;
+	cursor: pointer;
+	text-align: center;
+}
 
 .badge {
 	float: right;

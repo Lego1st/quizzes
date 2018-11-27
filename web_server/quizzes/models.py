@@ -1,31 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from userprofile.models import Profile
+from quizzes.constants import *
 # Create your models here.
-
-
-CATEGORIES = (
-	('ma', "Math"),
-	('cs', "Computer Science")
-)
-
-QUIZ_STATUS = (
-	('p', 'Pending'),
-	('r', 'Rejected'),
-	('a', 'Approved')
-)
-
-QUESTION_TYPE = (
-	('si', 'Single choice'),
-	('mu', 'Multiple choice'),
-	('ma', 'Matching'),
-	('fi', 'Filling in the blank')
-)
-
-QUIZ_ACTIONS = (
-	('li', 'like'),
-	('an', 'answer')
-)
 
 ## Quiz and Question models
 class Quiz(models.Model):
@@ -36,8 +13,7 @@ class Quiz(models.Model):
 	status = models.CharField(max_length=1, choices=QUIZ_STATUS, default='p')
 	category = models.CharField(max_length=2, choices=CATEGORIES)
 	shuffle = models.BooleanField(default=False)
-	# author = models.ForeignKey(Profile, on_delete=models.CASCADE)
-	#author = ....
+	author = models.ForeignKey(User, related_name='created_quizzes', on_delete=models.CASCADE)
 
 class Question(models.Model):
 	quiz = models.ForeignKey(Quiz, related_name='questions', on_delete=models.CASCADE)
@@ -52,15 +28,16 @@ class Question(models.Model):
 		unique_together = ('quiz', 'index')
 		ordering = ['index']
 
-class DoQuiz(models.Model):
-	quiz = models.ForeignKey(Quiz, related_name='done_quizzes', on_delete=models.CASCADE)
-	user = models.ForeignKey(User, related_name='done_quizzes', on_delete=models.CASCADE)
-	user_submission = models.TextField() #json string
+class UserSubmission(models.Model):
+	quiz = models.ForeignKey(Quiz, related_name='submissions', on_delete=models.CASCADE)
+	user = models.ForeignKey(User, related_name='submissions', on_delete=models.CASCADE)
+	mark = models.FloatField(default=0.0)
 
-class User_Action_Quiz(models.Model):
-	quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
-	user = models.ForeignKey(Profile, on_delete=models.CASCADE)
-	action = models.CharField(max_length=2, choices=QUIZ_ACTIONS)
 	class Meta:
-		unique_together = ("quiz", "user", "action")
-		
+		unique_together = ('quiz', 'user')
+
+class Answer(models.Model):
+	submission = models.ForeignKey(UserSubmission, related_name='answers', on_delete=models.CASCADE)
+	question = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE)
+	answer = models.TextField() #json string
+	correct = models.BooleanField(default=False)

@@ -11,7 +11,7 @@ COURSES = [
 		"computer science"
 	]
 COUNTRIES = [
-		'Undefined'
+		'Undefined',
 		'Vietnam',
 		'England',
 		'America',
@@ -28,6 +28,7 @@ class Profile(models.Model):
 	country = models.CharField(choices = COUNTRIES, max_length = 100, blank=True, default = "undefined")
 	education = models.CharField(max_length = 40, blank=True, default = "undefined")
 	bio = models.CharField(max_length = 200, blank=True, default = "undefined")
+	avatar = models.ImageField(upload_to='user_avatar/')
 	
 	@property
 	def name(self):
