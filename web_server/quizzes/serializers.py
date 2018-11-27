@@ -35,6 +35,30 @@ class QuestionReadOnlySerializer(serializers.BaseSerializer):
 
         return output
 
+class QuestionAndQuizSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Question
+        fields = ('quiz', 'index', 'question_type', 'options', 'content', 'matchings', 'answer')
+    
+    def to_representation(self, obj):
+        ret = super().to_representation(obj)
+        output = {
+            'index': obj.index,
+            'type': obj.question_type,
+            'content': obj.content,
+            'options': json.loads(obj.options),
+            'quiz_id': Quiz.objects.get(id=ret['quiz']).id,
+            'quiz_brief': Quiz.objects.get(id=ret['quiz']).brief,
+            'quiz_title': Quiz.objects.get(id=ret['quiz']).title,
+            'quiz_rating': Quiz.objects.get(id=ret['quiz']).rating,
+            'quiz_status': Quiz.objects.get(id=ret['quiz']).status,
+            'quiz_category': Quiz.objects.get(id=ret['quiz']).category
+        }
+        if obj.question_type == 'ma':
+            output['matchings'] = json.loads(obj.matchings)
+
+        return output
+
 class QuizQuestionReadOnlySerializer(serializers.ModelSerializer):
     questions = QuestionReadOnlySerializer(many=True, read_only=True)
 

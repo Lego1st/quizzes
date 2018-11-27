@@ -12,6 +12,11 @@ class Navigation extends Component {
     localStorage.removeItem('token');
   };
 
+  handleSubmitSearch(e) {
+    e.preventDefault();
+    window.location.href = '/search/' + $("#search").val();
+  }
+
   render() {
     return (
       <div>
@@ -23,8 +28,8 @@ class Navigation extends Component {
               </div>
               <div className="navbar-mid" role="search">
                 <div className="navbar-mid-row">
-                  <form className="input-group" id="searcher">
-                    <input type="search" className="form-control" placeholder="What are you looking for?"/>
+                  <form className="input-group" id="searcher" onSubmit={this.handleSubmitSearch.bind(this)}>
+                    <input id="search" type="search" className="form-control" placeholder="What are you looking for?"/>
                   </form>
                   <li className="dropdown nav-category">
                     <a className="dropdown-toggle" data-toggle="dropdown" href="#">Category

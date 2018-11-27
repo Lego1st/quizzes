@@ -11,6 +11,7 @@ import QuizApproval from './QuizApproval';
 import QuizDetail from './QuizDetail';
 import LoginSignUp from './LoginSignUp';
 import AddQuiz from './AddQuiz';
+import Search  from './Search';
 import EditQuiz from './EditQuiz';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 import {history} from 'history';
@@ -43,6 +44,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Home}/>
               <Route path='/profile' component={Profile}/>
+              <Route path='/search/:search_text' component={Search} />
               <Route path='/category/:cate' component={QuizCategory}/>
               <Route path='/myquizzes' component={Post}/>
               <Route path='/favorite' component={Favorite}/>

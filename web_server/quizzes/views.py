@@ -70,6 +70,13 @@ class RecentQuiz(generics.ListAPIView):
     ordering_fields = '__all__'
     ordering = ('-created_at',)
 
+class SearchQuiz(generics.ListAPIView):
+    permission_classes = (permissions.IsAuthenticated, )
+    serializer_class = QuestionAndQuizSerializer
+
+    def get_queryset(self):
+        return Question.objects.filter(content__contains=self.kwargs['search_text'])
+
 
 @api_view(['POST'])
 def upload_file_quiz(request):
