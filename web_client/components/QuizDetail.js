@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import { render } from "react-dom";
 import Pagination from "react-paginating";
+import QuestDetail from "./QuestDetail";
 import { CATEGORY_FROM_CODE } from './Constants';
 import get_data from './Utils';
 
@@ -50,6 +51,12 @@ function get_quiz_detail(quiz_id) {
           "content": "Matching this statements",
           "options": ["3", "2", "4"],
           "matchings": ["1+1", "1+2", "1+3"]
+        },
+        {
+          "index": 2,
+          "type": "fi",
+          "content": "3 + 3 = ???",
+          "options": []
         }
       ]
     }
@@ -57,46 +64,6 @@ function get_quiz_detail(quiz_id) {
   })
 }
 
-class QuestDetail extends Component {
-  constructor(props) {
-    super(props);
-  }
- 
-  render() {
-    var x = this.props.quest_detail;
-    return (
-      <div key={x.index} className="row">
-      <div className="col-lg-8">
-        <div className="row">
-          <h2> Quesiton {x.index}</h2>
-        </div>
-        <br/>
-        <div className="text-center">
-          <img src={"/static/quizzes/images/cat.png"} className="rounded-circle avatar align-middle"/>
-        </div>
-        <br/>
-        <br/>
-        <p>{x.content}</p>
-        <ul style={{"list-style-type" : "none"}}>
-          {x.type == 'ma' && x.options.map((y, idx) => (<li key={idx}>{y} ?</li>))}
-        </ul>
-      </div>
-      <div className="col-lg-4">
-        <p className="font-weight-bold">And your answer is:</p>
-          <ul style={{"listStyleType": "none"}} id="answer-list">
-          {
-            (x.type=='si' || x.type=='mu') 
-            ? 
-            x.options.map((y, idx) => (<li key={idx} className="btn btn-info" style={{"display":"block"}}>{y}</li>))
-            :
-            x.options.map((y, idx) => (<li key={idx}><input key={idx} className="form-control" placeholder="test"/></li>))
-          }
-          </ul>
-      </div>
-      </div>
-    );
-  }
-}
 
 class QuizResult extends Component {
   constructor(props) {
