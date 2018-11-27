@@ -6,40 +6,7 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      quiz_pending_list: [
-        {
-          title: "Get started wit Quizzes",
-          description: "Brief description 1 here...",
-          category: "Test_Category",
-          rated: 3
-        },
-        {
-          title: "How Quizzes rank you ?",
-          description: "Brief description 2 here...",
-          category: "Test_Category",
-          rated: 2
-        }
-      ],
-      top_quiz_list: [
-        {
-          title: "Quiz 1",
-          description: "Brief description 1 here...",
-          category: "Math",
-          rated: 3
-        },
-        {
-          title: "Quiz 2",
-          description: "Brief description 2 here...",
-          category: "Kid",
-          rated: 2
-        },
-        {
-          title: "Quiz 3",
-          description: "Brief description 3 here...",
-          category: "Fun",
-          rated: 1
-        }
-      ]
+      recent_quizzes: []
     }
   }
 
@@ -51,7 +18,6 @@ class Home extends Component {
     return quizzes;
   }
   componentDidMount() {
-    console.log(localStorage.getItem('token'));
     get_data('/profile/current_user/', true)
       .then(res => {
         if (res.ok) {
@@ -66,6 +32,23 @@ class Home extends Component {
             localStorage.setItem('id', result['id']);
           }
         })
+    get_data("/api/recent_quiz/", true)
+      .then(res => {
+        return res.json();
+      })
+      .then((result) => {
+        this.setState({
+          recent_quizzes: result.results || []
+        })
+      },
+      (error) => {
+        console.log(error);
+        this.setState({
+          isLoaded: true,
+          error
+        });
+      }
+    )
   }
 
 
@@ -84,22 +67,22 @@ class Home extends Component {
             </ul>
           </div>
 
-          <div className="col-sm-6" id="main-body">
+          <div className="col-sm-6" id="main-body" style={{padding: "0 10px 20px 15px"}}>
 
-            <div id="qz_pending_list">
+            <div id="qz_pending_list" style={{padding: "20px", height: "auto"}}>
               <div className="qz_list_title">
-                Quiz for you
+                Recent quizzes
               </div>
-              {this.renderQuizList(this.state.quiz_pending_list)}
+              {this.renderQuizList(this.state.recent_quizzes)}
 
             </div>
 
-            <div id="qz_pending_list">
+            {/* <div id="qz_pending_list">
               <div className="qz_list_title">
                 Top quiz
               </div>
               {this.renderQuizList(this.state.top_quiz_list)}
-            </div>
+            </div> */}
 
           </div>
           <div className="col-sm-3" id="right-body"></div>
