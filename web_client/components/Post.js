@@ -2,6 +2,7 @@ import React from 'react';
 import ProfileSideBar from './ProfileSideBar';
 import get_data from './Utils';
 import {CATEGORY_CODE, STATUS_QUIZ} from './Constants';
+import {Link} from 'react-router-dom';
 
 var Config = require('Config');
 class Post extends React.Component {
@@ -62,7 +63,22 @@ class Post extends React.Component {
 		      <div className="row">
 		        <ProfileSideBar/>
 		        <div className="col-md-8">
-		            {posts}
+		        { (posts.length == 0) ? (
+		        	<div>
+			        	<h3>You currently do not have any post ^^</h3>
+
+			        	<h4>Click 
+				        	<Link to="/addquiz">
+		                      <i className="fas fa-plus-circle"></i>
+		                    </Link>
+		                    to add one!
+		                </h4>
+	                </div>
+		        	) : (
+		            posts
+		        		)
+		        }
+		        
 		        </div>
 		        
 		      </div>

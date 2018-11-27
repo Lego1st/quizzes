@@ -147,7 +147,7 @@ class GeneralInfo extends React.Component {
 								<input id='bio'ref='bio' disabled onChange={e => this.setState({bio: e.target.value }) } value={this.state.bio}/>
 							</span></li>
 					</ul>
-					<button onClick={e => this.handle_click(e,this.state)}>  Change profile</button>
+					<button className='btn btn-default' onClick={e => this.handle_click(e,this.state)}>Save</button>
 				</div >
 			);
 		}
