@@ -167,7 +167,6 @@ class AnswerSerializer(serializers.BaseSerializer):
         answer = data.get('answer', [])
         index = str(data.get('index', ''))
         quiz_id = str(data.get('quiz_id', ''))
-        print(quiz_id)
 
         if type(answer) != list:
             raise serializers.ValidationError({'answer': 'This fields must be a list'})
@@ -175,6 +174,27 @@ class AnswerSerializer(serializers.BaseSerializer):
         if not index:
             raise serializers.ValidationError({'index': 'This fields is required'})
 
+        if not quiz_id:
+            raise serializers.ValidationError({'quiz_id': 'This fields is required'})
+
+
+        quiz = Quiz.objects.get(pk=int(quiz_id))
+        question = Question.objects.get(quiz=quiz, index=int(index))
+
+        question_type = question.question_type
+        options = json.loads(question.options)
+
+        if len(answer) > len(options):
+            raise serializers.ValidationError(
+                {'answer|index {}'.format(index): "answer's length exceeds question's options' length"}
+            )
+        if question_type != 'si':
+            for a in answer:
+                if a not in options:
+                    raise serializers.ValidationError(
+                        {'answer|index {}'.format(index): "answer does not match options"}
+                    )
+        
         return {
             'index': int(index),
             'answer': json.dumps(answer)
@@ -193,13 +213,60 @@ class UserSubmissionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserSubmission
-        fields = ('id', 'quiz', 'mark' 'answers')
+        fields = ('id', 'quiz', 'mark', 'answers')
 
     def to_internal_value(self, data):
         quiz_id = data.get('quiz_id')
-        print(quiz_id)
         quiz = Quiz.objects.get(pk=quiz_id)
-        data['mark'] = 0
-        data['quiz'] = quiz
+        answers_data = data.pop('answers')
+        new_answers_data = []
+        for answer_data in answers_data:
+            answer_data['quiz_id'] = quiz_id
+            new_answers_data.append(answer_data)
+        data['answers'] = new_answers_data
+        data['mark'] = 0.0
+        data['quiz'] = quiz_id
         data = super().to_internal_value(data)
         return data
+
+    def create(self, validated_data):
+        def is_correct(question, answer):
+            if len(answer) == 0:
+                return False
+            solution = json.loads(question.answer)
+            if question.question_type in ['si', 'fi']:
+                return answer[0] == solution[0]
+            if question.question_type == 'mu':
+                if len(answer) != len(solution):
+                    return False
+                for a in answer:
+                    if a not in solution:
+                        return False
+                return True
+            if question.question_type == 'ma':
+                if len(answer) != len(solution):
+                    return False
+                for i, a in enumerate(answer):
+                    if a != solution[i]:
+                        return False
+                return True
+
+        answers_data = validated_data.pop('answers')
+        user_submission = UserSubmission.objects.create(**validated_data)
+        quiz = validated_data['quiz']
+        total_question = Question.objects.filter(quiz=quiz).count()
+        correct_question = 0
+
+        #add user's answer
+        for answer_data in answers_data:
+            index = answer_data.pop('index')
+            question = Question.objects.get(quiz=quiz, index=index)
+            correct = is_correct(question, json.loads(answer_data['answer']))
+            correct_question += correct
+            Answer.objects.create(question=question, submission=user_submission, correct=correct, **answer_data)
+
+        #caculate mark
+        mark = round(correct_question/total_question, 2)
+        UserSubmission.objects.filter(pk=user_submission.id).update(mark=mark)
+        user_submission = UserSubmission.objects.get(pk=user_submission.id)
+        return user_submission  

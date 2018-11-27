@@ -20,7 +20,7 @@ class ProfileSideBar extends React.Component {
         }
     }
     componentDidMount(){
-        get_data("/profile/api/get/?profileid=" + localStorage.getItem('id'), true)
+        get_data("/profile/api/current_avatar/", true)
         .then((res) => res.json())
         .then(
             (result) => {
