@@ -99,6 +99,70 @@ class QuestHolder extends React.Component {
 
 	render() {
 		const types = ['Single-choice', 'Multiple-choice', 'Filling', 'Matching'];
+		const inputs = [];
+		const inputs_match = [];
+
+		for (var i = 0; i < 4; i++) {
+			inputs.push(<input ref = {'input' + (i + 1).toString()} 
+								key = {'input' + (i + 1).toString()} 
+								type="text" 
+								className="form-control" 
+								placeholder= {"Option " + (i + 1).toString()}
+								style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
+								onChange = {this.handleChangeOption.bind(this, i)}/> )
+
+			if (this.state.type == 0){ 
+				if (this.state.answer.includes(i)) {
+		  			inputs.push(<input key = {i} 
+		  								style = {{display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%'}} 
+		  				 				onChange = {this.handleChangeAnswer.bind(this, i)} 
+		  				 				type="radio"
+		  				  				name="optradio" checked/>)	
+				}
+				else {
+					inputs.push(<input key = {i} 
+										style = {{display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%'}} 
+		  				 				onChange = {this.handleChangeAnswer.bind(this, i)} 
+		  				 				type="radio" 
+		  				 				name="optradio"/>)		
+				}
+			}
+			else if (this.state.type == 1){
+				if (this.state.answer.includes(i)) {
+					inputs.push(<input key = {i} 
+										style = {{display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%'}} 
+  					 					onChange = {this.handleChangeAnswer.bind(this, i)} 
+  					 					type="checkbox" checked/>)
+				}
+  				else {
+  					inputs.push(<input key = {i} 
+										style = {{display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%'}} 
+  					 					onChange = {this.handleChangeAnswer.bind(this, i)} 
+  					 					type="checkbox" />)
+  				}
+			}
+		}
+
+		if (this.state.type == 3) {
+			for (var i = 0; i < 4; i++) {
+				inputs_match.push(<input ref = {'input' + (i + 1).toString()} 
+										key = {'input' + (i + 1).toString()} 
+										type="text" 
+										className="form-control" 
+										placeholder={"Quest " + (i + 1).toString()}
+										style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
+								  		onChange = {this.handleChangeMatching.bind(this, i)}/>)
+
+			  	inputs_match.push(<input ref = {'input' + i + 2} 
+								  		key = {'input' + i + 2} 
+								  		type="text" 
+								  		className="form-control" 
+								  		placeholder={"Option " + (i + 1).toString()}
+										style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
+								  		onChange = {this.handleChangeOption.bind(this, i)}/>)
+			}
+		}
+
 		return (
 			<div className={'whatever-' + this.props.index} style={{ display: 'inline', textAlign: 'center' }}>
 				<button type="button" className="btn btn-default" style={{ width: "40%", marginLeft: '5%', marginRight: '5%', marginBottom: '2%' }}
@@ -130,73 +194,16 @@ class QuestHolder extends React.Component {
 								<hr />
 								{this.state.type < 3 ? (
 									<form className='options&answer'>
-										<input ref='input1' type="text" className="form-control" placeholder="Options 1"
-											style={{ display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%' }}
-											onChange={this.handleChangeOption.bind(this, 0)} />
-										{this.state.type == 0 &&
-											<input style={{ display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%' }}
-												onChange={this.handleChangeAnswer.bind(this, 0)} type="radio" name="optradio" />}
-										{this.state.type == 1 &&
-											<input style={{ display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%' }}
-												onChange={this.handleChangeAnswer.bind(this, 0)} type="checkbox" value="" />}
-
-										<input ref='input2' type="text" className="form-control" placeholder="Options 2"
-											style={{ display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%' }}
-											onChange={this.handleChangeOption.bind(this, 1)} />
-										{this.state.type == 0 &&
-											<input style={{ display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%' }}
-												onChange={this.handleChangeAnswer.bind(this, 1)} type="radio" name="optradio" />}
-										{this.state.type == 1 &&
-											<input style={{ display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%' }}
-												onChange={this.handleChangeAnswer.bind(this, 1)} type="checkbox" value="" />}
-
-										<input ref='input3' type="text" className="form-control" placeholder="Options 3"
-											style={{ display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%' }}
-											onChange={this.handleChangeOption.bind(this, 2)} />
-										{this.state.type == 0 &&
-											<input style={{ display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%' }}
-												onChange={this.handleChangeAnswer.bind(this, 2)} type="radio" name="optradio" />}
-										{this.state.type == 1 &&
-											<input style={{ display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%' }}
-												onChange={this.handleChangeAnswer.bind(this, 2)} type="checkbox" value="" />}
-
-										<input ref='input4' type="text" className="form-control" placeholder="Options 4"
-											style={{ display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%' }}
-											onChange={this.handleChangeOption.bind(this, 3)} />
-										{this.state.type == 0 &&
-											<input style={{ display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%' }}
-												onChange={this.handleChangeAnswer.bind(this, 3)} type="radio" name="optradio" />}
-										{this.state.type == 1 &&
-											<input style={{ display: 'inline', width: '2%', marginLeft: '-4%', marginRight: '0%' }}
-												onChange={this.handleChangeAnswer.bind(this, 3)} type="checkbox" value="" />}
+										{
+											inputs
+										}
 
 									</form>
 								) : (
 										<div className='options&answer'>
-											<input ref='input1' type="text" className="form-control" placeholder="Quest 1"
-												style={{ display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%' }}
-												onChange={this.handleChangeMatching.bind(this, 0)} />
-											<input ref='input2' type="text" className="form-control" placeholder="Options 1"
-												style={{ display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%' }}
-												onChange={this.handleChangeOption.bind(this, 0)} />
-											<input ref='input3' type="text" className="form-control" placeholder="Quest 2"
-												style={{ display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%' }}
-												onChange={this.handleChangeMatching.bind(this, 1)} />
-											<input ref='input4' type="text" className="form-control" placeholder="Options 2"
-												style={{ display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%' }}
-												onChange={this.handleChangeOption.bind(this, 1)} />
-											<input ref='input5' type="text" className="form-control" placeholder="Quest 3"
-												style={{ display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%' }}
-												onChange={this.handleChangeMatching.bind(this, 2)} />
-											<input ref='input6' type="text" className="form-control" placeholder="Options 3"
-												style={{ display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%' }}
-												onChange={this.handleChangeOption.bind(this, 2)} />
-											<input ref='input7' type="text" className="form-control" placeholder="Quest 4"
-												style={{ display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%' }}
-												onChange={this.handleChangeMatching.bind(this, 3)} />
-											<input ref='input8' type="text" className="form-control" placeholder="Options 4"
-												style={{ display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%' }}
-												onChange={this.handleChangeOption.bind(this, 3)} />
+											{
+												inputs_match
+											}
 										</div>
 									)}
 
@@ -292,7 +299,7 @@ class AddQuiz extends React.Component {
 			}
 
 			if (question['type'] == 3) {
-				question[i]['answer'] = question['options'];
+				question['answer'] = question['options'];
 			}
 			if (question['type'] < 2) {
 				question['answer'] = question['answer'].map((item) => question['options'][item]);
@@ -321,9 +328,20 @@ class AddQuiz extends React.Component {
 			body: JSON.stringify(converted_state)
 		})
 			.then((result) => {
-				console.log(result);
+				if (result.ok) {
+					console.log(result);	
+					window.location.reload();				
+				}
+				else {
+					alert('Oops! Something went wrong :( Please re-check your form!')
+				}
+			})
+			.catch(
+				(error) => {
+					alert('Oops!')
 			});
 	}
+
 	handleFileUpload(e) {
         e.preventDefault();
         let reader = new FileReader();
@@ -399,6 +417,7 @@ class AddQuiz extends React.Component {
 		return (
 			<div className='container' style={{ marginTop: '3%', textAlign: 'center' }}>
 				<div className="jumbotron" style={{ backgroundColor: 'white' }}>
+
 					<h1 className="display-4">
 						<div className="input-group mb-3">
 							<div className="input-group-prepend">
@@ -411,20 +430,16 @@ class AddQuiz extends React.Component {
 									<a className="dropdown-item" onClick={this.handleChangeCategory.bind(this)} href="#">Other</a>
 								</div>
 							</div>
-							<label className='btn btn-outline-secondary' disabled={this.state.category == 'Category'}>
-								File Upload
-						  		<input type="file" accept="excel/xlsx" onChange={this.handleFileUpload.bind(this)} style={{ display: "none" }} />
-							</label>
+							
 							<input type="text" className="form-control"
 								placeholder={this.state.title}
 								onChange={this.handleChangeTitle.bind(this)} />
 							<div className="input-group-append ">
 								<button className="btn btn-outline-secondary" type="button" onClick={() => console.log(this.convertState())}>Check state</button>
+								
 							</div>
 						</div>
 					</h1>
-
-
 
 					<hr className="my-4" />
 					{
@@ -433,6 +448,7 @@ class AddQuiz extends React.Component {
 
 				</div>
 				<button className="btn btn-outline-success" type="button" onClick={this.handleSubmit.bind(this)}>Submit</button>
+		  		<input type="file" style = {{width: '10%'}} accept="excel/xlsx" onChange={this.handleFileUpload.bind(this)}/>
 			</div>
 		);
 	}
