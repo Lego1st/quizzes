@@ -10,6 +10,7 @@ class LoginSignUp extends React.Component {
     state = {
         username: "",
         password: "",
+        repassword: "",
         email: "",
         errors: {}
     }
@@ -24,12 +25,6 @@ class LoginSignUp extends React.Component {
             errors["username"] = "Name field cannot be empty";
         }
 
-        if (typeof fields["username"] !== "undefined" && !fields["username"] === false) {
-            if (!fields["username"].match(/^[a-zA-Z]+$/)) {
-                formIsValid = false;
-                errors["username"] = "Only letters";
-            }
-        }
 
         if (!fields["email"]) {
             formIsValid = false;
@@ -45,7 +40,10 @@ class LoginSignUp extends React.Component {
                 errors["email"] = "Email is not valid";
             }
         }
-
+        if( fields['password'] != fields['repassword']){
+            errors["repassword"] = "Retype password doesn't match!";
+            formIsValid = false;
+        }
         this.setState({ errors: errors });
         console.log(formIsValid)
         return formIsValid;
@@ -110,9 +108,11 @@ class LoginSignUp extends React.Component {
                         });
                     }
                     else {
+                        console.log('regis ok');
                         localStorage.setItem('token', json['user']['token']);
 
                         this.props.setLoginState(true);
+                        window.location.href = '/';
                     }
                 });
         }
@@ -146,11 +146,14 @@ class LoginSignUp extends React.Component {
                         <div className='inputs'>
                             <input id='repassword' placeholder="Type password" type='password'
                                 onChange={e => this.setState({ password: e.target.value })} />
+                                <br></br>
                             <span style={{ color: "red" }}>{this.state.errors["password"]}</span>
                         </div>
 
                         <div className='inputs'>
-                            <input id='retypepass' placeholder="Retype password" type='password' />
+                            <input id='retypepass' placeholder="Retype password" type='password'
+                            onChange={e => this.setState({ repassword: e.target.value })}  />
+                            <br></br>
                             <span style={{ color: "red" }}>{this.state.errors["repassword"]}</span>
 
                         </div>
