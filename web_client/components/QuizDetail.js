@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 // import { render } from "react-dom";
 import Pagination from "react-paginating";
+import QuestDetail from "./QuestDetail";
+import { CATEGORY_FROM_CODE } from './Constants';
+import get_data from './Utils';
 
 const limit = 1;
 const pageCount = 5;
@@ -9,26 +12,92 @@ const pageCount = 5;
 function get_quiz_detail(quiz_id) {
   /* TODO: get quiz regraded with id API */
   return new Promise((resolve, reject) => {
-    const ques_list = [...Array(20).keys()].map((x) => 
-      ({
-        id: x,
-        title: "Question " + x,
-        statement: "Description here. Something is long enought to make this Question" + x + " look beautiful",
-        options: [
-          "1st Opt",
-          "2nd Opt",
-          "3rd Opt"
-        ]
-      })
-    );
+    // const ques_list = [...Array(20).keys()].map((x) => 
+    //   ({
+    //     id: x,
+    //     title: "Question " + x,
+    //     content: "Description here. Something is long enought to make this Question" + x + " look beautiful",
+    //     question_type: Math.floor((Math.random() * 4) + 1),
+    //     options: [
+    //       "1st Opt",
+    //       "2nd Opt",
+    //       "3rd Opt"
+    //     ]
+    //   })
+    // );
+    // const resJSON = {
+    //   title: "Quiz " + quiz_id,
+    //   brief: "Brief brief " + quiz_id,
+    //   category: 'Math',      
+    //   questions: ques_list
+    // }
+
     const resJSON = {
-      title: "Quiz " + quiz_id,
-      description: "Brief description " + quiz_id,
-      category: 'Math',      
-      ques_list: ques_list
+      "id": 3,
+      "title": "Third quiz",
+      "brief": "This is the third quiz",
+      "category": "ma",
+      "shuffle": false,
+      "questions": [
+        {
+          "type": "si",
+          "index": 0,
+          "content": "What is django based on?",
+          "options": ["java", "python", "c++", "ruby"]
+        },
+        {
+          "index": 1,
+          "type": "ma",
+          "content": "Matching this statements",
+          "options": ["3", "2", "4"],
+          "matchings": ["1+1", "1+2", "1+3"]
+        },
+        {
+          "index": 2,
+          "type": "fi",
+          "content": "3 + 3 = ???",
+          "options": []
+        }
+      ]
     }
     resolve(resJSON);
   })
+}
+
+
+class QuizResult extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div>
+      <button type="button" className="btn btn-warning float-right" data-toggle="modal" data-target="#quizResultModal">
+        Submit
+      </button>
+      <div className="modal fade" id="quizResultModal" tabIndex="-1" role="dialog" aria-labelledby="quizResultModalTitle" aria-hidden="true">
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="quizResultModalTitle">Modal title</h5>
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              ...
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" className="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    );
+  }
 }
 
 class QuizDetail extends Component {
@@ -39,17 +108,25 @@ class QuizDetail extends Component {
       currentPage: 1,
       dataQuiz: {
         title: null,
-        description: null,
+        brief: null,
         category: null,
-        ques_list: []
+        questions: []
       }
     };
   }
 
   componentDidMount() {
+    // get_data(`/api/quiz_question/${this.props.match.params.quizid}`, true)
+    //   .then(res => res.json())
+    //   .then(resutl => {
+    //     console.log(result);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   })
     get_quiz_detail(this.props.match.params.quizid).then((data) => {
       this.setState({
-        total: data.ques_list.length,
+        total: data.questions.length,
         dataQuiz: data
       });
     })
@@ -63,29 +140,7 @@ class QuizDetail extends Component {
 
   render() {
     // const { currentPage } = this.state;
-    const ques = this.state.dataQuiz.ques_list.map((x) => (
-      <div key={x.id} className="row">
-      <div className="col-lg-8">
-        <div className="row">
-          <h2>{x.title}</h2>
-        </div>
-        <br/>
-        <div className="text-center">
-          <img src={"/static/quizzes/images/cat.png"} className="rounded-circle avatar align-middle"/>
-        </div>
-        <br/>
-        <br/>
-        <p>{x.statement}</p>
-      </div>
-      <div className="col-lg-4">
-        <p className="font-weight-bold">And your answer is:</p>
-        <ul id="answer-list">
-          {x.options.map((y, idx) => (<li key={idx} className="btn btn-info" style={{"display":"block"}}>{y}</li>))}
-        </ul>
-        
-      </div>
-      </div>
-    ))
+    const ques = this.state.dataQuiz.questions.map((x) =>  <QuestDetail quest_detail={x}/>)
     return (
       <div className="container" id="quiz-page">
         <Pagination
@@ -151,10 +206,10 @@ class QuizDetail extends Component {
           <div className="row">
             <div className="col-sm-6">
               <h2>{this.state.dataQuiz.title}</h2>
-              <p>{this.state.dataQuiz.description} </p>
+              <p>{this.state.dataQuiz.brief} </p>
             </div>
             <div className="col-sm-6">
-              <div className="btn btn-warning float-right"> Submit </div>
+              <QuizResult />
             </div>
           </div>
           <div className="row">
@@ -162,10 +217,10 @@ class QuizDetail extends Component {
                   <div className="text-center">
                       <img id="quiz-category" src={"/static/quizzes/images/tsc.png"}/>
                   </div>
-                  <h1 className="text-center"> {this.state.dataQuiz.category}</h1>
+                  <h1 className="text-center"> {CATEGORY_FROM_CODE[this.state.dataQuiz.category]}</h1>
               </div>
               <div className="col-lg-9" >
-                {ques[this.state.currentPage]}
+                {ques[this.state.currentPage-1]}
               </div>
           </div>
       </div>

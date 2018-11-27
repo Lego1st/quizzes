@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 // import QuizItem from "./QuizItem";
 import TableView from './TableView';
-import { CODE_CATEGORY } from './Constants';
+import { CATEGORY_FROM_CODE } from './Constants';
+import get_data from './Utils';
 
 function get_quiz_by_category(cate, num_page) {
   /* TODO: get quizzes regraded with API */
@@ -13,7 +14,7 @@ function get_quiz_by_category(cate, num_page) {
       ({
         title: "Quiz " + (x + 10*num_page),
         description: "Brief description " + (x + 10*num_page),
-        category: CODE_CATEGORY[cate],
+        category: CATEGORY_FROM_CODE[cate],
         rated: Math.floor((Math.random() * 3) + 1)
       })
     );
@@ -32,12 +33,23 @@ class QuizCategory extends Component {
   }
 
   fetchQuizList() {
-    get_quiz_by_category(this.props.match.params.cate, 0).then((data) => {
-      this.setState({
-        num_page: 0,
-        quiz_cate_list : data
+    get_data(`/api/quiz_category/${this.props.match.params.cate}/`, true)
+      .then(res => res.json())
+      .then(result => {
+        this.setState({
+          num_page: 0,
+          quiz_cate_list : result
+        });
       })
-    })
+      .catch(err => {
+        console.log(err);
+      })
+    // get_quiz_by_category(this.props.match.params.cate, 0).then((data) => {
+    //   this.setState({
+    //     num_page: 0,
+    //     quiz_cate_list : data
+    //   })
+    // })
   }
 
   componentDidMount() {
@@ -75,14 +87,14 @@ class QuizCategory extends Component {
         <div className="row">
 
           <div className="col-sm-3" id="left-body">
-            <div className="category-name"> {CODE_CATEGORY[this.props.match.params.cate]} </div>
+            <div className="category-name"> {CATEGORY_FROM_CODE[this.props.match.params.cate]} </div>
           </div>
 
           <div className="col-sm-6" id="main-body">
             <TableView
               ref="qz_pending_list" 
               dataSource={this.state.quiz_cate_list}
-              onScrollToBottom={this.handleScrollToBottom.bind(this)}
+              // onScrollToBottom={this.handleScrollToBottom.bind(this)}
             />
           </div>
           <div className="col-sm-3" id="right-body"></div>

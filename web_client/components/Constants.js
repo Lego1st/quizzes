@@ -30,3 +30,8 @@ export const TYPE_QUESTION = {
 	'fi': 2,
 	'ma': 3
 }
+export const CATEGORY_FROM_CODE = {
+	'ma' : 'Math',
+	'cs' : 'Computer Science',
+	'lg' : 'Logic'
+}

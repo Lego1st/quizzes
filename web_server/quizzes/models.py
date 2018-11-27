@@ -37,8 +37,7 @@ class Quiz(models.Model):
 	status = models.CharField(max_length=1, choices=QUIZ_STATUS, default='p')
 	category = models.CharField(max_length=2, choices=CATEGORIES)
 	shuffle = models.BooleanField(default=False)
-	# author = models.ForeignKey(Profile, on_delete=models.CASCADE)
-	#author = ....
+	author = models.ForeignKey(User, related_name='created_quizzes', on_delete=models.CASCADE)
 
 class Question(models.Model):
 	quiz = models.ForeignKey(Quiz, related_name='questions', on_delete=models.CASCADE)
@@ -57,11 +56,3 @@ class DoQuiz(models.Model):
 	quiz = models.ForeignKey(Quiz, related_name='done_quizzes', on_delete=models.CASCADE)
 	user = models.ForeignKey(User, related_name='done_quizzes', on_delete=models.CASCADE)
 	user_submission = models.TextField() #json string
-
-class User_Action_Quiz(models.Model):
-	quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
-	user = models.ForeignKey(Profile, on_delete=models.CASCADE)
-	action = models.CharField(max_length=2, choices=QUIZ_ACTIONS)
-	class Meta:
-		unique_together = ("quiz", "user", "action")
-		

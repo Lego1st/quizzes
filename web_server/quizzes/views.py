@@ -17,45 +17,31 @@ def index(request):
 ## Quiz and Question api
 class QuizQuestionDetail(generics.RetrieveAPIView):
 
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = Quiz.objects.all()
     serializer_class = QuizQuestionReadOnlySerializer
 
 class FullQuizDetail(generics.RetrieveUpdateDestroyAPIView):
 
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Quiz.objects.all()
     serializer_class = FullQuizSerializer
+
+class QuizCategory(generics.ListAPIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+    serializer_class = BriefQuizSerializer
+
+    def get_queryset(self):
+        return Quiz.objects.filter(category=self.kwargs['cate'])
     
 class QuizCreate(generics.CreateAPIView):
     
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = Quiz.objects.all()
     serializer_class = FullQuizSerializer
 
-class AnsweredQuiz(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated, ]
-    serializer_class = UserActionQuizSerializer
-    
-    def get_queryset(self):
-        user = self.request.user
-        return User_Action_Quiz.objects.filter(user=user.profile, action='an')
-
-class FavoriteQuiz(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated, ]
-    serializer_class = UserActionQuizSerializer
-
-    def get_queryset(self):
-        user = self.request.user
-        return User_Action_Quiz.objects.filter(user=user.profile, action='li')
-
-class PostedQuiz(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated, ]
-    serializer_class = QuizQuestionReadOnlySerializer
-
-    def get_queryset(self):
-        user = self.request.user
-        return Quiz.objects.filter(author=user.profile)
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
 
 #Pagination class
 class StandardPaginationResult(PageNumberPagination):
@@ -65,7 +51,7 @@ class StandardPaginationResult(PageNumberPagination):
 
 class RecentQuiz(generics.ListAPIView):
 
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Quiz.objects.all()
     serializer_class = BriefQuizSerializer
     pagination_class = StandardPaginationResult
