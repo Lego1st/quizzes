@@ -70,6 +70,14 @@ class RecentQuiz(generics.ListAPIView):
     ordering_fields = '__all__'
     ordering = ('-created_at',)
 
+class UserSubmit(generics.CreateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    queryset = UserSubmission.objects.all()
+    serializer_class = UserSubmissionSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 
 @api_view(['POST'])
 def upload_file_quiz(request):
