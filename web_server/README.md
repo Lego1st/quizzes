@@ -9,7 +9,7 @@ api/create_quiz/
 api/recent_quiz/
 ```
 
-### `api/quiz_question/<quiz_id>`
+### `api/quiz_question/<quiz_id>/`
 **Method:** `GET`
 
 **Descriptions:** Response a quiz with its questions, solutions is not included
@@ -148,7 +148,9 @@ Response: 204 No Content
 ```
 ### `api/create_quiz/`
 **Method:** `POST`
+
 **Descriptions:** Use for create a new quiz and its questions
+
 **Parameters:**
 - `id`: int
 - `title`: string

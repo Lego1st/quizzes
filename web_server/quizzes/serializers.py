@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from quizzes.models import Quiz, Question, User_Action_Quiz
+from quizzes.models import Quiz, Question
 from userprofile.serializers import PSSerializer
 from rest_framework_jwt.settings import api_settings
 import json
@@ -53,7 +53,7 @@ class FullQuestionSerializer(serializers.BaseSerializer):
         options = data.get('options')
         matchings = data.get('matchings')
         answer = data.get('answer')
-        print(options)
+        # print(options)
 
         # validate fields
         _validate(index, {'index': 'This field is required.'})
@@ -153,11 +153,3 @@ class FullQuizSerializer(serializers.ModelSerializer):
         for question_data in questions_data:
             Question.objects.create(quiz=quiz, **question_data)
         return instance
-        
-
-class UserActionQuizSerializer(serializers.ModelSerializer):
-    quiz = QuizQuestionReadOnlySerializer(read_only=True)
-
-    class Meta:
-        model = User_Action_Quiz
-        fields = ('quiz',)

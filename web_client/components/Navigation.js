@@ -29,7 +29,7 @@ class Navigation extends Component {
                   <li className="dropdown nav-category">
                     <a className="dropdown-toggle" data-toggle="dropdown" href="#">Category
                     <span className="caret"></span></a>
-                    <ul className="dropdown-menu">
+                    <ul className="dropdown-menu" style={{minWidth: "12rem"}}>
                       <li><Link to='/category/ma'>Math</Link></li>
                       <li><Link to='/category/cs'>Computer Science</Link></li>
                       <li><Link to='/category/lg'>Logic</Link></li>

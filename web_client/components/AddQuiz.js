@@ -84,12 +84,11 @@ class QuestHolder extends React.Component {
 			this.setState({ answer: [index] });
 		}
 		else if (this.state.type == 1) {
-			const new_answer = this.state.answer;
+			var new_answer = this.state.answer;
 			if (!new_answer.includes(index)) {
 				new_answer.push(index);
 			}
 			else {
-				console.log(new_answer);
 				new_answer = new_answer.slice(0, index).concat(new_answer.slice(index + 1));
 			}
 			this.setState({ answer: new_answer });
