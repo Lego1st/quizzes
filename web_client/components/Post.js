@@ -1,7 +1,7 @@
 import React from 'react';
 import ProfileSideBar from './ProfileSideBar';
 import get_data from './Utils';
-import {CATEGORY_FROM_CODE} from './Constants';
+import {CATEGORY_CODE, STATUS_QUIZ} from './Constants';
 
 class Post extends React.Component {
 	constructor(props) {
@@ -20,7 +20,7 @@ class Post extends React.Component {
 			})
 			.then((result) => {
 				this.setState({
-				posts: result || []
+					posts: result.results || []
 				})
 			},
 			(error) => {
@@ -40,7 +40,7 @@ class Post extends React.Component {
 			posts.push(
 				<div className="userPost" key = {i}>
 					<h2 style = {{display: 'inline-block', margin: '0px'}}> {post['title']} </h2>
-					<p style = {{float:'right', margin: '0px'}}> {CATEGORY_FROM_CODE[post['category']]} </p>
+					<p style = {{float:'right', margin: '0px'}}> {CATEGORY_CODE[post['category']]} </p>
 					
 					<div style={{marginTop: "2%"}}>
 						<p> {post['brief']} </p>
@@ -48,8 +48,8 @@ class Post extends React.Component {
 					<hr/>
 					<div>
 						{/* <div id="head-ava" style={{transform: "scale(0.5)", display: "inline-block"}}>N</div> */}
-						<p style={{display: 'inline', fontSize: '15px'}}>by {post.author.user.username}   <i className="fas fa-heart"></i> {post['likes']}</p>
-						<p style={{float: 'right', margin: '0px', fontSize: '15px'}}>{post['status']}</p>
+						<p style={{display: 'inline', fontSize: '15px'}}>by {post.author}   <i className="fas fa-heart"></i> {post['likes']}</p>
+						<p style={{float: 'right', margin: '0px', fontSize: '15px'}}>{STATUS_QUIZ[post['status']]}</p>
 					</div>
 				</div>
 			);

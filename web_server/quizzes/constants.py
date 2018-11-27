@@ -1,6 +1,7 @@
 CATEGORIES = (
 	('ma', "Math"),
-	('cs', "Computer Science")
+	('cs', "Computer Science"),
+	('lg', 'Logic')
 )
 
 QUIZ_STATUS = (

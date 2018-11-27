@@ -83,4 +83,6 @@ class UserSubmit(generics.CreateAPIView):
 def upload_file_quiz(request):
     file = request.FILES['quiz_file']
     quizzes = pandas.read_excel(file)
+    quizzes = quizzes.fillna('')
+    print(quizzes)
     return Response({"quizz" : quizzes.to_dict()}, status=status.HTTP_201_CREATED)
