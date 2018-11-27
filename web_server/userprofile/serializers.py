@@ -15,7 +15,7 @@ class PSSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     class Meta:
         model = Profile
-        fields = ('user', 'age','country','education','bio','fullname','avatar')
+        fields = ('user', 'age','country','education','bio','fullname')
 
 class PSAvatarSerializer(serializers.ModelSerializer):
     class Meta:

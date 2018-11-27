@@ -10,5 +10,6 @@ urlpatterns = [
     path('api/register/', views.UserList.as_view()),
     path('api/update/',views.PSListUpdate.as_view()),
     path('api/avatar/',views.upload_avatar),
+    path('api/current_avatar/',views.current_profile_avatar)
 
 ] 

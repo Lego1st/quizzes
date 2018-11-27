@@ -52,6 +52,10 @@ def current_profile(request):
     profile = Profile.objects.get(pk=request.GET.get('profileid'))
     return Response(PSSerializer(profile).data)
 
+@api_view(['GET'])
+def current_profile_avatar(request):
+    profile = Profile.objects.get(pk=request.user.id)
+    return Response(PSAvatarSerializer(profile).data)
 
 def my_jwt_response_handler(token, user=None, request=None):
     return {
