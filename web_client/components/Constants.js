@@ -23,3 +23,5 @@ export const CATEGORY_FROM_CODE = {
 	'cs' : 'Computer Science',
 	'lg' : 'Logic'
 }
+export const UPLOAD_AVATAR_API = '/profile/api/avatar/'
+export const UPLOAD_FILE_API = '/api/upfile/'

@@ -124,7 +124,13 @@ class GeneralInfo extends React.Component {
 							<button className="edit-btn" onClick={e => this.refs.ct.removeAttribute('disabled')} > <i className="fas fa-edit"></i>
 							</button>
 							<span className="info">
-								<input id='country' ref='ct' disabled onChange={e => this.setState({country: e.target.value }) } value={this.state.country}/>
+								<input id='country' list="countries" ref='ct' disabled onFocus={e => e.target.value=''} onChange={e => this.setState({country: e.target.value }) } value={this.state.country}/>
+								<datalist id="countries">
+								  <option value="Vietnam"/>
+								  <option value="England"/>
+								  <option value="America"/>
+								  <option value="Japan"/>
+								</datalist>
 							</span>
 						</li>
 						<li className="list-group-item"><strong>Education</strong>
@@ -138,7 +144,7 @@ class GeneralInfo extends React.Component {
 							<button className="edit-btn" onClick={e => this.refs.bio.removeAttribute('disabled')} ><i className="fas fa-edit"> </i>
 							</button>
 							<span className="info">
-								<input id='bio' ref='bio' disabled onChange={e => this.setState({bio: e.target.value }) } value={this.state.bio}/>
+								<input id='bio'ref='bio' disabled onChange={e => this.setState({bio: e.target.value }) } value={this.state.bio}/>
 							</span></li>
 					</ul>
 					<button onClick={e => this.handle_click(e,this.state)}>  Change profile</button>

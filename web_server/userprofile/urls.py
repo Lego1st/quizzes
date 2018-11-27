@@ -6,5 +6,9 @@ urlpatterns = [
     path('api/get/',views.current_profile),
     path('current_user/', views.current_user),
     path('api/register/', views.UserList.as_view()),
-    path('api/update/',views.PSListUpdate.as_view())
-]
+    path('api/update/',views.PSListUpdate.as_view()),
+    # path('api/avatar/',views.PSAvatarUpdate.as_view()),
+
+    path('api/avatar/',views.upload_avatar),
+
+]    
