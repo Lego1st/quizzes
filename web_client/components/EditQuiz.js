@@ -341,7 +341,14 @@ class EditQuiz extends React.Component {
 			body: JSON.stringify(converted_state)
 		})
 		.then((result) => {
-			console.log(result);
+			if (result.ok) {
+				console.log(result);	
+				window.location.reload();				
+				console.log(result);
+			}
+			else {
+				alert('Oops! Something went wrong :( Please re-check your form!')
+			}
 		});
 	}
 
