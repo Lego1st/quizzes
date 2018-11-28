@@ -1309,13 +1309,13 @@ module.exports = __webpack_require__(/*! ./web_client/index.js */"./web_client/i
 /***/ }),
 
 /***/ "Config":
-/*!************************************************************!*\
-  !*** external "{\"serverUrl\":\"http://127.0.0.1:8000\"}" ***!
-  \************************************************************/
+/*!***************************************************************!*\
+  !*** external "{\"serverUrl\":\"http://55efaa49.ngrok.io\"}" ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = {\"serverUrl\":\"http://127.0.0.1:8000\"};//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ29uZmlnLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vL2V4dGVybmFsIFwie1xcXCJzZXJ2ZXJVcmxcXFwiOlxcXCJodHRwOi8vMTI3LjAuMC4xOjgwMDBcXFwifVwiP2E5NDUiXSwic291cmNlc0NvbnRlbnQiOlsibW9kdWxlLmV4cG9ydHMgPSB7XCJzZXJ2ZXJVcmxcIjpcImh0dHA6Ly8xMjcuMC4wLjE6ODAwMFwifTsiXSwibWFwcGluZ3MiOiJBQUFBIiwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///Config\n");
+eval("module.exports = {\"serverUrl\":\"http://55efaa49.ngrok.io\"};//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ29uZmlnLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vL2V4dGVybmFsIFwie1xcXCJzZXJ2ZXJVcmxcXFwiOlxcXCJodHRwOi8vNTVlZmFhNDkubmdyb2suaW9cXFwifVwiP2E3NTkiXSwic291cmNlc0NvbnRlbnQiOlsibW9kdWxlLmV4cG9ydHMgPSB7XCJzZXJ2ZXJVcmxcIjpcImh0dHA6Ly81NWVmYWE0OS5uZ3Jvay5pb1wifTsiXSwibWFwcGluZ3MiOiJBQUFBIiwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///Config\n");
 
 /***/ })
 
