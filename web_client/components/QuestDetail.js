@@ -19,6 +19,9 @@ class SingleChoiceQuest extends Component {
     }
   }
 
+  componentDidMount() {
+    console.log(this.props.doQuiz[this.props.quest_detail.index])
+  }
   handleOnClick(event, option) {
     updateQuizAnswer.apply(this, [[option]]);
   }
@@ -41,7 +44,7 @@ class SingleChoiceQuest extends Component {
               x.options.map((option, idx) => 
                 <label 
                   key={idx} 
-                  className="btn btn-info" 
+                  className={"btn btn-info " + (option == this.props.doQuiz[x.index] ? "focus active" : "")}
                   onClick={event => this.handleOnClick(event, option)}
                   style={{"margin" : "10px 10px"}}>
                   <input type="radio" name="options" autoComplete="off" /> {option}
@@ -78,8 +81,14 @@ class MatchingQuest extends Component {
   }
 
   componentDidMount() {
+    let doQuiz = this.props.doQuiz[this.props.quest_detail.index];
+    let toBeMatched = doQuiz ? doQuiz.reduce((map, x, idx) => {
+      map[this.props.quest_detail.matchings[idx]] = x;
+      return map;
+    }, {}) : {};
     this.setState({
-      toMatchOptions: this.props.quest_detail.options
+      matchedOption: toBeMatched,
+      toMatchOptions: this.props.quest_detail.options,
     });
   }
 
@@ -184,6 +193,17 @@ class MatchingQuest extends Component {
 class FillingQuest extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      answer: ""
+    }
+  }
+
+  componentDidMount() {
+    var answerVal = this.props.doQuiz[this.props.quest_detail.index];
+    answerVal = answerVal ? answerVal : '';
+    this.setState ({
+      answer: answerVal
+    })
   }
 
   handleOnChange(event) {
@@ -202,7 +222,7 @@ class FillingQuest extends Component {
         </div>
         <div className="col-lg-4">
           <p className="font-weight-bold" style={{"textAlign" : "center"}}>Filling in the ???:</p>
-            <input className="form-control" placeholder="???" onChange={event => this.handleOnChange(event)}/>
+            <input className="form-control" type="text" placeholder="???" onChange={event => this.handleOnChange(event)} value={this.state.answer}/>
         </div>
       </div>
     );
@@ -220,10 +240,10 @@ class QuestDetail extends Component {
       <div>
         <h2> Quesiton {x.index}</h2>
         <br/>
-        {x.type=='si' && <SingleChoiceQuest quest_detail={x} callbackQuiz={this.props.callbackQuiz}/>}
-        {x.type=='mu' && <MultipleChoiceQuest quest_detail={x} callbackQuiz={this.props.callbackQuiz}/>}
-        {x.type=='ma' && <MatchingQuest quest_detail={x} callbackQuiz={this.props.callbackQuiz}/>}
-        {x.type=='fi' && <FillingQuest quest_detail={x} callbackQuiz={this.props.callbackQuiz}/>}
+        {x.type=='si' && <SingleChoiceQuest quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz}/>}
+        {x.type=='mu' && <MultipleChoiceQuest quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz}/>}
+        {x.type=='ma' && <MatchingQuest quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz}/>}
+        {x.type=='fi' && <FillingQuest quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz}/>}
       </div>
     );
   }

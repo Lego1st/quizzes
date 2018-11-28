@@ -85,7 +85,6 @@ class QuizResult extends Component {
             */}
             <div className="modal-body">
               Are you sure ?
-              {JSON.stringify(this.submitQuiz())}
             </div>
             <div className="modal-footer">
               <button type="button" ref="submit" className="btn btn-secondary" data-dismiss="modal">Nope</button>

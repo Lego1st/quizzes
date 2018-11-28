@@ -9,63 +9,6 @@ import get_data from './Utils';
 const limit = 1;
 const pageCount = 5;
 
-
-// function get_quiz_detail(quiz_id) {
-//   /* TODO: get quiz regraded with id API */
-//   return new Promise((resolve, reject) => {
-//     // const ques_list = [...Array(20).keys()].map((x) => 
-//     //   ({
-//     //     id: x,
-//     //     title: "Question " + x,
-//     //     content: "Description here. Something is long enought to make this Question" + x + " look beautiful",
-//     //     question_type: Math.floor((Math.random() * 4) + 1),
-//     //     options: [
-//     //       "1st Opt",
-//     //       "2nd Opt",
-//     //       "3rd Opt"
-//     //     ]
-//     //   })
-//     // );
-//     // const resJSON = {
-//     //   title: "Quiz " + quiz_id,
-//     //   brief: "Brief brief " + quiz_id,
-//     //   category: 'Math',      
-//     //   questions: ques_list
-//     // }
-
-//     const resJSON = {
-//       "id": 3,
-//       "title": "Third quiz",
-//       "brief": "This is the third quiz",
-//       "category": "ma",
-//       "shuffle": false,
-//       "questions": [
-//         {
-//           "index": 2,
-//           "type": "fi",
-//           "content": "3 + 3 = ???",
-//           "options": []
-//         },
-//         {
-//           "type": "si",
-//           "index": 1,
-//           "content": "What is django based on?",
-//           "options": ["java", "python", "c++", "ruby"]
-//         },
-//         {
-//           "index": 0,
-//           "type": "ma",
-//           "content": "Matching this statements",
-//           "options": ["3", "2", "4"],
-//           "matchings": ["1+1", "1+2", "1+3"]
-//         }
-
-//       ]
-//     }
-//     resolve(resJSON);
-//   })
-// }
-
 class QuizDetail extends Component {
   constructor(props) {
     super(props);
@@ -100,12 +43,6 @@ class QuizDetail extends Component {
       .catch(err => {
         console.log(err);
       })
-    // get_quiz_detail(this.props.match.params.quizid).then((data) => {
-    //   this.setState({
-    //     total: data.questions.length,
-    //     dataQuiz: data
-    //   });
-    // })
   }
 
   handlePageChange = page => {
@@ -116,7 +53,7 @@ class QuizDetail extends Component {
 
   render() {
     // const { currentPage } = this.state;
-    const ques = this.state.dataQuiz.questions.map((x) =>  <QuestDetail quest_detail={x} callbackQuiz={this.handleQuestAnswered}/>)
+    const ques = this.state.dataQuiz.questions.map((x) =>  <QuestDetail quest_detail={x} callbackQuiz={this.handleQuestAnswered} doQuiz={this.state.doQuiz}/>)
     return (
       <div className="container" id="quiz-page">
         <Pagination
