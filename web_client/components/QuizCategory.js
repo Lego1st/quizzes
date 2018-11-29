@@ -86,7 +86,7 @@ class QuizCategory extends Component {
       <div className="container" id="quizzes-page">
         <div className="row">
 
-          <div className="col-sm-3" id="left-body">
+          <div className="col-sm-3 left-body">
             <div className="category-name"> {CATEGORY_FROM_CODE[this.props.match.params.cate]} </div>
           </div>
 

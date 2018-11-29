@@ -69,7 +69,7 @@ class QuizResult extends Component {
     return (
       <div>
       <button type="button" className="btn btn-warning float-right" data-toggle="modal" data-target="#quizResultModal">
-        Submit
+        Submit Quiz
       </button>
       <ScoreAlert result={this.state.qresult}/>
       <div className="modal fade" id="quizResultModal" tabIndex="-1" role="dialog" aria-labelledby="quizResultModalTitle" aria-hidden="true">

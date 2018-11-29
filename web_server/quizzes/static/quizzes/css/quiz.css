@@ -42,11 +42,32 @@
 #ques_detail > button {
     background: white;
     border-style: solid;
-    border-radius: 20%;
+    border-radius: 5px;
 }
 
 #ques_detail {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.quest-box {
+    min-height: 500px;
+    padding: 50px 50px;
+    background-color: #fbfbfb;
+    border: 1px solid #d3d3d3;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.quest-category {
+    font-size: 30px;
+    font-family: 'Black Han Sans', sans-serif;
+    color: #393533;
+    position: absolute;
+    top: 50px;
+}
+
+.quest-wrapper {
+    margin-bottom: 50px;
 }

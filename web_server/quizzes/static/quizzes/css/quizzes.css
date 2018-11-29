@@ -6,7 +6,7 @@
   margin-top: 50px;
 }
 
-#left-body {
+.left-body {
 	position: relative;
 	display: inline-block;
 	/*background: #c7c7c7;*/

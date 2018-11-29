@@ -41,5 +41,12 @@ export const CATEGORY_FROM_CODE = {
 	'cs' : 'Computer Science',
 	'lg' : 'Logic'
 }
+
+export const CATEGORY_IMG = {
+	'ma' : '/static/quizzes/images/ma.png',
+	'cs' : '/static/quizzes/images/cs.png',
+	'lg' : '/static/quizzes/images/lg.png'
+}
+
 export const UPLOAD_AVATAR_API = '/profile/api/avatar/'
 export const UPLOAD_FILE_API = '/api/upfile/'

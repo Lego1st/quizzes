@@ -33,9 +33,6 @@ class SingleChoiceQuest extends Component {
         <div className="col-lg-8">
           <p>{x.content}</p>
           <br/>
-          <div className="text-center">
-            <img src={"/static/quizzes/images/cat.png"} className="rounded-circle avatar align-middle"/>
-          </div>
         </div>
         <div className="col-lg-4">
           <p className="font-weight-bold" style={{"textAlign" : "center"}}>Choose one option: </p>
@@ -44,7 +41,7 @@ class SingleChoiceQuest extends Component {
               x.options.map((option, idx) => 
                 <label 
                   key={idx} 
-                  className={"btn btn-info " + (option == this.props.doQuiz[x.index] ? "focus active" : "")}
+                  className={"btn " + (option == this.props.doQuiz[x.index] ? "active btn-warning" : "btn-info")}
                   onClick={event => this.handleOnClick(event, option)}
                   style={{"margin" : "10px 10px"}}>
                   <input type="radio" name="options" autoComplete="off" /> {option}
@@ -61,11 +58,51 @@ class SingleChoiceQuest extends Component {
 class MultipleChoiceQuest extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      answer : []
+    }
+  }
+
+  handleOnClick(event, option) {
+    let { answer } = this.state;
+    const idx = answer.indexOf(option);
+    if(idx > -1) {
+      answer.splice(idx, 1);
+    } else {
+      answer.push(option);
+    }
+    this.setState({
+      answer: answer
+    });
+    updateQuizAnswer.apply(this, [answer]);
   }
 
   render() {
     var x = this.props.quest_detail;
-    return(<div></div>)
+    return(
+      <div className="row">
+        <div className="col-lg-8">
+          <p>{x.content}</p>
+          <br/>
+        </div>
+        <div className="col-lg-4">
+          <p className="font-weight-bold" style={{"textAlign" : "center"}}>Choose all options that satisfy: </p>
+          <div className="btn-group btn-group-toggle btn-group-vertical" data-toggle="buttons" style={{"width" : "100%"}}>
+            {
+              x.options.map((option, idx) => 
+                <label 
+                  key={idx} 
+                  className={"btn " + (this.props.doQuiz[x.index] && this.props.doQuiz[x.index].includes(option) ? "active btn-warning" : "btn-info")}
+                  onClick={event => this.handleOnClick(event, option)}
+                  style={{"margin" : "10px 10px"}}>
+                  <input type="checkbox" name="options" autoComplete="off" /> {option}
+                </label>
+              )
+            }              
+          </div>  
+      </div>
+      </div>
+    )
   }
 }
 
@@ -194,16 +231,8 @@ class FillingQuest extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      answer: ""
+      answer: []
     }
-  }
-
-  componentDidMount() {
-    var answerVal = this.props.doQuiz[this.props.quest_detail.index];
-    answerVal = answerVal ? answerVal : '';
-    this.setState ({
-      answer: answerVal
-    })
   }
 
   handleOnChange(event) {
@@ -222,7 +251,7 @@ class FillingQuest extends Component {
         </div>
         <div className="col-lg-4">
           <p className="font-weight-bold" style={{"textAlign" : "center"}}>Filling in the ???:</p>
-            <input className="form-control" type="text" placeholder="???" onChange={event => this.handleOnChange(event)} value={this.state.answer}/>
+            <input className="form-control" type="text" placeholder="???" onChange={event => this.handleOnChange(event)} value={this.props.doQuiz[x.index] && this.props.doQuiz[x.index][0] ? this.props.doQuiz[x.index][0] : "" }/>
         </div>
       </div>
     );
@@ -237,7 +266,7 @@ class QuestDetail extends Component {
   render() {
     var x = this.props.quest_detail;
     return (
-      <div>
+      <div className="quest-box">
         <h2> Quesiton {x.index}</h2>
         <br/>
         {x.type=='si' && <SingleChoiceQuest quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz}/>}
