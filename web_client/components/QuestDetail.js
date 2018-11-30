@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+const ReactMarkdown = require('react-markdown');
 
 function updateQuizAnswer(user_answer) {
   const quest_detail = this.props.quest_detail;
@@ -31,7 +32,7 @@ class SingleChoiceQuest extends Component {
     return (
       <div className="row">
         <div className="col-lg-8">
-          <p>{x.content}</p>
+          <ReactMarkdown source={x.content}/>
           <br/>
         </div>
         <div className="col-lg-4">
@@ -82,7 +83,7 @@ class MultipleChoiceQuest extends Component {
     return(
       <div className="row">
         <div className="col-lg-8">
-          <p>{x.content}</p>
+          <ReactMarkdown source={x.content}/>
           <br/>
         </div>
         <div className="col-lg-4">
@@ -184,7 +185,7 @@ class MatchingQuest extends Component {
     return (
       <div className="row">
         <div className="col-md-8">
-          <p>{x.content}</p>
+          <ReactMarkdown source={x.content}/>
           <ul style={{"listStyleType" : "none"}}>
             {
               x.matchings.map((matching, idx) => 
@@ -244,7 +245,7 @@ class FillingQuest extends Component {
     return(
       <div className="row">
         <div className="col-lg-8">
-          <p>{x.content}</p>
+          <ReactMarkdown source={x.content}/>
           <ul style={{"listStypeType" : "none"}}>
             {x.options.map((y, idx) => (<li key={idx}>{y} ?</li>))}
           </ul>
