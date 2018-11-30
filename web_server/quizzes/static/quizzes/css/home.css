@@ -3,7 +3,7 @@
 }
 
 #home-category {
-  width: 140px;
+  /*width: 140px;*/
   font-size: 20px;
   text-align: center;
   background-color: #393533;
@@ -11,14 +11,20 @@
 }
 
 #home-cate-list {
-  margin-top: 20px;
+  background-color: #fbfbfb;
+  /*margin-top: 20px;*/
   list-style: none;
   color: #666666;
+  /*border: 1px solid #d3d3d3; */
+  /*text-align: center;*/
+  padding: 0px;
+  padding-top: 20px;
 }
 
 #home-cate-list li {
-  margin: 10px 0px;
+  padding: 10px;
   font-size: 16px;
+  /*border: 1px solid #d3d3d3;*/
 }
 
 .qz_list_title {

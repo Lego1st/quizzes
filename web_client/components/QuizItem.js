@@ -17,15 +17,28 @@ class QuizItem extends Component {
   render() {
     return (
       <div className="qz_quiz_item">
-        <Link to={`/quiz/${this.props.info.id}`}>
+        <Link to={`/quiz/${this.props.info.id}`} style={{ textDecoration: 'none' }}>
           <div className="qz_quiz_title">{this.props.info.title}</div>
-          <div className="qz_quiz_desc" style={{textOverflow: "ellipsis", "whiteSpace": "nowrap"}}>{
-            this.props.info.brief}</div>
-          <div className="qz_quiz_rating">
-            {this.renderRating()}
-          </div>
-          <div className="qz_quiz_cate">{CATEGORY_FROM_CODE[this.props.info.category]}</div>
         </Link>
+        <div className="qz_quiz_desc" style={{textOverflow: "ellipsis", "whiteSpace": "nowrap"}}>{
+          this.props.info.brief}</div>
+        <div className="qz_quiz_rating">
+          {this.renderRating()}
+        </div>
+        <div className="row">
+          <div className="col-sm-6"> 
+            Created by: 
+            <Link to={`/profile`} style={{ textDecoration : 'none'}}>
+              <span className="qz_quiz_author"> {this.props.info.author}</span>
+            </Link>
+          </div>
+          <div className="col-sm-6"> 
+            <Link to={`/category/${this.props.info.category}`}  style={{"float" : "right"}}>
+              <div className="qz_quiz_cate">{CATEGORY_FROM_CODE[this.props.info.category]}</div>
+            </Link>
+          </div>
+        </div>
+        
       </div>  
     );
   }

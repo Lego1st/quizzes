@@ -48,5 +48,7 @@ export const CATEGORY_IMG = {
 	'lg' : '/static/quizzes/images/lg.png'
 }
 
+export const QUIZDECO = '/static/quizzes/images/quizdeco.png'
+
 export const UPLOAD_AVATAR_API = '/profile/api/avatar/'
 export const UPLOAD_FILE_API = '/api/upfile/'

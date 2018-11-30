@@ -34,10 +34,10 @@
 }
 
 .qz_quiz_item {
-    height: 130px;
     border: 1px solid #cacaca;
-    padding: 15px 25px;
-    background-color: white;
+    padding: 25px 25px 25px 25px;
+    background-color: #fbfbfb;
+    margin: 10px 10px;
 }
 .qz_quiz_item:hover {
     cursor: pointer;
@@ -45,7 +45,7 @@
 
 .qz_quiz_title {
     font-weight: 600;
-    font-size: 17px;
+    font-size: 30px;
 }
 
 .qz_quiz_rating {
@@ -59,6 +59,10 @@
     width: 15px;
     height: 15px;
     display: inline-block;
+}
+
+.qz_quiz_author {
+    color: #666666;
 }
 
 .qz_quiz_cate {

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import QuizItem from "./QuizItem"
 import { Link } from 'react-router-dom';
 import get_data from './Utils';
+import { QUIZDECO } from './Constants';
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -58,17 +60,21 @@ class Home extends Component {
       <div className="container" id="home-page">
         <div className="row">
 
-          <div className="col-sm-3" id="left-body">
+          <div className="col-sm-1" id="left-body">
+          {/*
+            <div class="catelist">
             <div id="home-category"> Category </div>
             <ul id="home-cate-list">
               <li><Link to='/category/ma'>Math</Link></li>
               <li><Link to='/category/cs'>Computer Science</Link></li>
               <li><Link to='/category/lg'>Logic</Link></li>
             </ul>
+            </div>
+          */}
           </div>
 
-          <div className="col-md-8" id="main-body" style={{padding: "0 10px 20px 15px"}}>
-
+          <div className="col-md-10" id="main-body" style={{padding: "0 10px 20px 15px"}}>
+            <div align="center"> <img style={{"height": "300px"}} src={QUIZDECO} /> </div>
             <div id="qz_pending_list" style={{padding: "20px", height: "auto"}}>
               <div className="qz_list_title">
                 Recent quizzes
@@ -98,7 +104,6 @@ class Home extends Component {
             </div> */}
 
           </div>
-          <div className="col-sm-3" id="right-body"></div>
         </div>
       </div>
     );

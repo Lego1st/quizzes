@@ -86,18 +86,17 @@ class QuizCategory extends Component {
       <div className="container" id="quizzes-page">
         <div className="row">
 
-          <div className="col-sm-3 left-body">
+          <div className="col-sm-2 left-body">
             <div className="category-name"> {CATEGORY_FROM_CODE[this.props.match.params.cate]} </div>
           </div>
 
-          <div className="col-sm-6" id="main-body">
+          <div className="col-sm-9" id="main-body">
             <TableView
               ref="qz_pending_list" 
               dataSource={this.state.quiz_cate_list}
               // onScrollToBottom={this.handleScrollToBottom.bind(this)}
             />
           </div>
-          <div className="col-sm-3" id="right-body"></div>
         </div>
       </div>
     );
