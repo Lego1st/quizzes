@@ -1,55 +1,35 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-// import QuizItem from "./QuizItem";
 import TableView from './TableView';
 import { CATEGORY_FROM_CODE, CATEGORY_COLOR } from './Constants';
 import get_data from './Utils';
 
-function get_quiz_by_category(cate, num_page) {
-  /* TODO: get quizzes regraded with API */
-  console.log(cate);
-  console.log(num_page);
-  return new Promise((resolve, reject) => {
-    const quiz_cate_list = [...Array(10).keys()].map((x) => 
-      ({
-        title: "Quiz " + (x + 10*num_page),
-        description: "Brief description " + (x + 10*num_page),
-        category: CATEGORY_FROM_CODE[cate],
-        rated: Math.floor((Math.random() * 3) + 1)
-      })
-    );
-    resolve(quiz_cate_list);
-  })
-}
+var Config = require('Config');
+const page_size = 5
+
 
 class QuizCategory extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      num_page: 0,
+      next: null,
       quiz_cate_list : []
     }
-    // this.dom = ReactDOM.findDOMNode(this)
   }
 
   fetchQuizList() {
-    get_data(`/api/quiz_category/${this.props.match.params.cate}/`, true)
+    get_data(`/api/quiz_category/${this.props.match.params.cate}/?page_size=${page_size}&page=1`, true)
       .then(res => res.json())
       .then(result => {
+        // console.log(result)
         this.setState({
-          num_page: 0,
-          quiz_cate_list : result
+          next: result.next,
+          quiz_cate_list : result.results || []
         });
       })
       .catch(err => {
         console.log(err);
       })
-    // get_quiz_by_category(this.props.match.params.cate, 0).then((data) => {
-    //   this.setState({
-    //     num_page: 0,
-    //     quiz_cate_list : data
-    //   })
-    // })
   }
 
   componentDidMount() {
@@ -66,18 +46,20 @@ class QuizCategory extends Component {
 
   handleScrollToBottom(completed) {
     // load more
-
-    // var newData = this.moreData(this.state.quiz_cate_list)
-    var new_num_page = this.state.num_page+1;
-    get_quiz_by_category(this.props.match.params.cate, new_num_page).then((data) => {
+    console.log(this.state.next);
+    if(this.state.next == null) {
+      completed();
+      return;
+    }
+    get_data(this.state.next.replace(Config.serverUrl, ''), true).then(res => res.json()).then(result=> {
       var newData = Object.assign([], this.state.quiz_cate_list);
-      newData.push.apply(newData, data);
+      newData.push.apply(newData, result.results);
       completed();
       this.setState({
         quiz_cate_list: newData,
-        num_page: new_num_page
+        next: result.next
       })
-    })
+    });
   }
 
   render() {
@@ -94,9 +76,10 @@ class QuizCategory extends Component {
             <TableView
               ref="qz_pending_list" 
               dataSource={this.state.quiz_cate_list}
-              // onScrollToBottom={this.handleScrollToBottom.bind(this)}
+              onScrollToBottom={this.handleScrollToBottom.bind(this)}
             />
           </div>
+
         </div>
       </div>
     );
