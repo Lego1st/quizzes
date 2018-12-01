@@ -19,32 +19,32 @@ class ProfileSideBar extends React.Component {
 
         }
     }
-    componentDidMount(){
-        get_data("/profile/api/current_avatar/", true)
-        .then((res) => res.json())
-        .then(
-            (result) => {
-                console.log('general-info', result);
-                if (result['avatar']) {
-                    this.setState({
-                        avatar: '/static/' + result['avatar']					
-                    });
-                }
-            })
+    componentDidMount() {
+        get_data("/profile/api/current_avatar/?username="+ this.props.username, true)
+            .then((res) => res.json())
+            .then(
+                (result) => {
+                    console.log('general-info', result);
+                    if (result['avatar']) {
+                        this.setState({
+                            avatar: '/static/' + result['avatar']
+                        });
+                    }
+                })
     }
 
     handle_upload(e) {
         e.preventDefault();
         let reader = new FileReader();
         let file = e.target.files[0];
-        reader.onload = function() {
+        reader.onload = function () {
             document.getElementById('avatar').src = reader.result;
         };
         reader.readAsDataURL(file);
         this.setState({ loaded_ava: true, avatar: file });
     }
-    
-    handle_save(e,data) {
+
+    handle_save(e, data) {
         let formData = new FormData();
         formData.append('avatar', data);
         console.log(formData);
@@ -52,7 +52,7 @@ class ProfileSideBar extends React.Component {
             method: 'POST',
             headers: {
                 'Authorization': 'Token ' + localStorage.getItem('token'),
-                 Accept: 'application/json, text/plain, */*',
+                Accept: 'application/json, text/plain, */*',
             },
             body: formData,
         })
@@ -70,23 +70,24 @@ class ProfileSideBar extends React.Component {
 
             <div className="col-md-3">
 
-                <img id='avatar' src={this.state.avatar} alt="default avatar" className="img-circle avatar"/>
-
-                <div className="avatar-upload">
-                    <label className="btn-upload">
-                        Upload new picture
+                <img id='avatar' src={this.state.avatar} alt="default avatar" className="img-circle avatar" />
+                {this.props.username ? '' :
+                    <div className="avatar-upload">
+                        <label className="btn-upload">
+                            Upload new picture
                         <input type="file" accept="image/jpeg,image/png" onChange={e => this.handle_upload(e)} style={{ display: "none" }} />
-                    </label>
+                        </label>
 
-                    <div className="upload-state">
-                        <button type="button" hidden={!this.state.loaded_ava} onClick={e => {this.handle_save(e,this.state.avatar)}}>
-                            Save
+                        <div className="upload-state">
+                            <button type="button" hidden={!this.state.loaded_ava} onClick={e => { this.handle_save(e, this.state.avatar) }}>
+                                Save
                         </button>
-                        <button type="button" hidden={!this.state.loaded_ava} onClick={this.handle_cancel}>
-                            Cancel
+                            <button type="button" hidden={!this.state.loaded_ava} onClick={this.handle_cancel}>
+                                Cancel
                        </button>
+                        </div>
                     </div>
-                </div>
+                }
 
                 <br />
                 <br />
