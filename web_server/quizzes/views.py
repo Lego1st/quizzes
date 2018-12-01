@@ -74,6 +74,10 @@ class FullQuizDetail(generics.RetrieveUpdateDestroyAPIView):
 class QuizCategory(generics.ListAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
     serializer_class = BriefQuizSerializer
+    pagination_class = StandardPaginationResult
+    filter_backends = (OrderingFilter,)
+    ordering_fields = '__all__'
+    ordering = ('-created_at',)
 
     def get_queryset(self):
         return Quiz.objects.filter(category=self.kwargs['cate'])
@@ -90,7 +94,7 @@ class PostedQuiz(generics.ListAPIView):
         return Quiz.objects.filter(author=self.request.user)
 
 class PendingQuiz(generics.ListAPIView):
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAdminUser,)
     serializer_class = QuizQuestionReadOnlySerializer
 
     def get_queryset(self):
@@ -131,7 +135,7 @@ class UserSubmit(generics.CreateAPIView):
         serializer.save(user=self.request.user)
 
 class UpdateStatusQuiz(generics.UpdateAPIView):
-    permission_classes = (permissions.IsAuthenticated, )
+    permission_classes = (permissions.IsAdminUser,)
     serializer_class = BriefQuizSerializer
     queryset = Quiz.objects.all()
 
