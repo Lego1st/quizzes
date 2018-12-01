@@ -2,14 +2,15 @@
 
 ## Quiz and Question APIs
 List APIs:
-```
-api/quiz_question/<quiz_id>/
-api/full_quiz/<quiz_id>/
-api/create_quiz/
-api/recent_quiz/
-api/submit_quiz/
-api/posted_quiz/
-```
+
+- [`api/quiz_question/<quiz_id>/`](#`api/quiz_question/<quiz_id>/`)
+- [`api/full_quiz/<quiz_id>/`](#`api/full_quiz/<quiz_id>/`)
+- [`api/create_quiz/`](#`api/create_quiz/`)
+- [`api/recent_quiz/`](#`api/recent_quiz/`)
+- [`api/submit_quiz/`](#`api/submit_quiz/`)
+- [`api/posted_quiz/`](#`api/posted_quiz/`)
+- [`api/quiz_result/<quiz_id>/`](#`api/quiz_result/<quiz_id>/`)
+- [`api/quiz_category/<cate>/`](#`api/quiz_category/<cate>/`)
 
 ### `api/quiz_question/<quiz_id>/`
 **Method:** `GET`
@@ -45,6 +46,53 @@ Response: 200 OK
         }
     ]
 }
+```
+
+### `api/quiz_result/<quiz_id>/`
+**Method:** `GET`
+
+**Descriptions:** Response a submission of a quiz that user has done before.
+
+**Parameters:** None
+
+Example:
+```
+Link: http://127.0.0.1:8000/api/quiz_result/1/
+
+Response: 200 OK
+{
+    "id": 1,
+    "quiz": 1,
+    "mark": 1,
+    "answers": [
+        {
+            "solution": [
+                "Ha Noi"
+            ],
+            "index": 0,
+            "correct": true,
+            "answer": [
+                "Ha Noi"
+            ]
+        },
+        {
+            "solution": [
+                "ulis",
+                "uet",
+                "ueb"
+            ],
+            "index": 1,
+            "correct": true,
+            "answer": [
+                "uet",
+                "ulis",
+                "ueb"
+            ]
+        }
+    ]
+}
+
+If not exist: 404 Not Found
 ```
 
 ### `api/full_quiz/<quiz_id>/`
@@ -211,26 +259,80 @@ Response: 201 Created
 
 Example:
 ```
-Link: http://127.0.0.1:8000/api/recent_quiz/?page_size=1&page=2
+Link: http://127.0.0.1:8000/api/recent_quiz/?page_size=2&page=2
 
 Response: 200 OK
-
 {
     "count": 4,
-    "next": "http://127.0.0.1:8000/api/recent_quiz/?page=3&page_size=1",
-    "previous": "http://127.0.0.1:8000/api/recent_quiz/?page_size=1",
+    "next": null,
+    "previous": "http://127.0.0.1:8000/api/recent_quiz/?page_size=2",
     "results": [
         {
-            "id": 5,
-            "title": "quiz 5",
-            "brief": "This is 5th quiz",
+            "id": 2,
+            "title": "quiz 1",
+            "brief": "This is first quiz",
             "rating": 0,
-            "created_at": "2018-11-26T09:46:25.352971Z",
+            "created_at": "2018-12-01T10:52:01.028313Z",
             "status": "p",
-            "category": "ma"
+            "category": "ma",
+            "author": "minh"
+        },
+        {
+            "id": 1,
+            "title": "quiz 1",
+            "brief": "This is first quiz",
+            "rating": 0,
+            "created_at": "2018-12-01T09:49:56.069562Z",
+            "status": "p",
+            "category": "ma",
+            "author": "minh"
         }
     ]
 }
+```
+
+### `api/quiz_category/<cate>/`
+**Method:** `GET`
+
+**Descriptions:** Get a list of most recent in a category
+
+**Parameters:**
+- `page`: page index, start from 1
+- `page_size`: number of items to response per page
+
+Example:
+```
+Link: http://127.0.0.1:8000/api/quiz_category/ma/?page_size=2&page=2
+
+Response: 200 OK
+{
+    "count": 4,
+    "next": null,
+    "previous": "http://127.0.0.1:8000/api/quiz_category/ma/?page_size=2",
+    "results": [
+        {
+            "id": 2,
+            "title": "quiz 1",
+            "brief": "This is first quiz",
+            "rating": 0,
+            "created_at": "2018-12-01T10:52:01.028313Z",
+            "status": "p",
+            "category": "ma",
+            "author": "minh"
+        },
+        {
+            "id": 1,
+            "title": "quiz 1",
+            "brief": "This is first quiz",
+            "rating": 0,
+            "created_at": "2018-12-01T09:49:56.069562Z",
+            "status": "p",
+            "category": "ma",
+            "author": "minh"
+        }
+    ]
+}
+
 ```
 
 ### `api/posted_quiz/`
