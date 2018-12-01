@@ -186,6 +186,7 @@ class AddQuiz extends React.Component {
 			if (!this.state.deletions.includes(i)) {
 				buttons.push(<QuestHolder index={this.state.questions[i].index}
 										order={i}
+										numOptions={Math.max(4, this.state.questions[i].options.length, this.state.questions[i].answer.length)}
 										key={this.state.questions[i].index}
 										intial_state={this.state.questions[i]}
 										savingQuestion={this.handleChangeQuestion}

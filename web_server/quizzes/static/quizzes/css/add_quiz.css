@@ -1,3 +1,11 @@
 .md-editor-textarea {
 	height: 400px;
 }
+
+.fa-caret-up:hover {
+	color: rgb(0, 123, 255);
+}
+
+.fa-caret-down:hover {
+	color: rgb(0, 123, 255);
+}
