@@ -273,10 +273,10 @@ class QuestDetail extends Component {
       <div className="quest-box">
         <h2> Quesiton {x.index}</h2>
         <br/>
-        {x.type=='si' && <SingleChoiceQuest quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz} viewOnly={this.props.viewOnly}/>}
-        {x.type=='mu' && <MultipleChoiceQuest quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz} viewOnly={this.props.viewOnly}/>}
-        {x.type=='ma' && <MatchingQuest quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz} viewOnly={this.props.viewOnly}/>}
-        {x.type=='fi' && <FillingQuest quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz} viewOnly={this.props.viewOnly}/>}
+        {x.type=='si' && <SingleChoiceQuest key={x.index} quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz} viewOnly={this.props.viewOnly}/>}
+        {x.type=='mu' && <MultipleChoiceQuest key={x.index} quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz} viewOnly={this.props.viewOnly}/>}
+        {x.type=='ma' && <MatchingQuest key={x.index} quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz} viewOnly={this.props.viewOnly}/>}
+        {x.type=='fi' && <FillingQuest key={x.index} quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz} viewOnly={this.props.viewOnly}/>}
       </div>
     );
   }
