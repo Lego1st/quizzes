@@ -71,3 +71,8 @@
 .quest-wrapper {
     margin-bottom: 50px;
 }
+
+.quest-box img {
+    max-width: 400px;
+    height: auto;
+}
