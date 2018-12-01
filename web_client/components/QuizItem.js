@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-import {CATEGORY_FROM_CODE} from './Constants';
+import {CATEGORY_FROM_CODE, CATEGORY_COLOR} from './Constants';
 
 class QuizItem extends Component {
   constructor(props) {
@@ -34,7 +34,7 @@ class QuizItem extends Component {
           </div>
           <div className="col-sm-6"> 
             <Link to={`/category/${this.props.info.category}`}  style={{"float" : "right"}}>
-              <div className="qz_quiz_cate">{CATEGORY_FROM_CODE[this.props.info.category]}</div>
+              <div className="qz_quiz_cate" style={{"color" : CATEGORY_COLOR[this.props.info.category]}}><b>{CATEGORY_FROM_CODE[this.props.info.category]}</b></div>
             </Link>
           </div>
         </div>
