@@ -26,7 +26,7 @@ class QuestHolder extends React.Component {
 	}
 
 	handleSave() {
-		this.props.savingQuestion(this.state, this.state.index)
+		this.props.savingQuestion(this.state, this.props.order)
 	}
 
 	handleChangeOption(index, event) {
@@ -102,7 +102,7 @@ class QuestHolder extends React.Component {
 								key = {'input' + (i + 1).toString()} 
 								type="text" 
 								className="form-control" 
-								placeholder= {this.state.options[i] ? this.state.options[i] : "Options" + (i+1).toString() }
+								placeholder= {this.state.options[i] ? this.state.options[i] : "Option " + (i+1).toString() }
 								style = {{display: 'inline', width: '30%', marginLeft: '5%', marginRight: '5%'}}
 								onChange = {this.handleChangeOption.bind(this, i)}/> )
 
@@ -400,21 +400,25 @@ class AddQuiz extends React.Component {
 
 	render() {
 		const buttons = [];
+		const indices = [];
 		for (var i = 0; i < this.state.questions.length; i++) {
 			if (!this.state.deletions.includes(i)) {
 				buttons.push(<QuestHolder index={this.state.questions[i].index}
+										order={i}
 										key={this.state.questions[i].index}
 										intial_state={this.state.questions[i]}
 										savingQuestion={this.handleChangeQuestion}
 										handleDeleteQuestion={this.handleDeleteQuestion}
 										brief={this.state.questions[i].content.substring(0, 20) + '...'} />)
+				indices.push(this.state.questions[i].index);
 			}
 		}
 
-		buttons.push(<Adder index={this.state.questions.length} 
-			key={this.state.questions.length}
-			handleChangeQuestion={this.handleChangeQuestion}
-			handleAddQuestion={this.handleAddQuestion}> </Adder>)
+		buttons.push(<Adder index={indices.length > 0 ? Math.max.apply(null, indices) + 1 : 0} 
+							order={buttons.length} 
+							key={indices.length > 0 ? Math.max.apply(null, indices) + 1 : 0} 
+							handleChangeQuestion={this.handleChangeQuestion}
+							handleAddQuestion={this.handleAddQuestion}> </Adder>)
 
 		const categories = Object.keys(CODE_CATEGORY);
 		console.log(CODE_CATEGORY);

@@ -28,7 +28,7 @@ class QuizItem extends Component {
         <div className="row">
           <div className="col-sm-6"> 
             Created by: 
-            <Link to={`/profile`} style={{ textDecoration : 'none'}}>
+            <Link to={`/profile/${this.props.info.author}`} style={{ textDecoration : 'none'}}>
               <span className="qz_quiz_author"> {this.props.info.author}</span>
             </Link>
           </div>

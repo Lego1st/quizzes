@@ -32,6 +32,7 @@ class Home extends Component {
         (result) => {
           if(result){
             localStorage.setItem('id', result['id']);
+            localStorage.setItem('username',result['username']);
           }
         })
     get_data("/api/recent_quiz/", true)

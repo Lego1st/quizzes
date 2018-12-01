@@ -1,12 +1,14 @@
 from django.shortcuts import render
 from rest_framework import permissions, status, parsers
 from rest_framework.decorators import api_view,permission_classes
-from .models import Profile
+from .models import Profile,User
 from .serializers import PSSerializer, UserSerializer, UserSerializerWithToken, PSAvatarSerializer
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-
+from quizzes.models import UserSubmission, Quiz
+from itertools import chain
+from collections import defaultdict
 
 # Create your views here.
 class PSListCreate(generics.ListCreateAPIView):
@@ -33,6 +35,18 @@ class PSListUpdate(generics.ListCreateAPIView):
             return Response({"profile" : 'susscess'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class PSDetail(generics.RetrieveAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    queryset = User.objects.all()
+    lookup_field = 'username'
+    serializer_class = UserSerializer
+
+    def get(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        profile = Profile.objects.get(pk=serializer['id'].value)
+        return Response(PSSerializer(profile).data,status=status.HTTP_200_OK)
+        
 
 @api_view(['POST'])
 def upload_avatar(request):
@@ -43,14 +57,6 @@ def upload_avatar(request):
     profile.save()
     return Response({"profile" : 'susscess'}, status=status.HTTP_201_CREATED)
 
-@api_view(['GET'])
-def current_profile(request):
-    """
-    Determine the current profile by their id, and return their data
-    """
-    
-    profile = Profile.objects.get(pk=request.GET.get('profileid'))
-    return Response(PSSerializer(profile).data)
 
 @api_view(['GET'])
 def current_profile_avatar(request):
@@ -71,6 +77,34 @@ def current_user(request):
     
     serializer = UserSerializer(request.user)
     return Response(serializer.data)
+
+@api_view(['GET'])
+def ranking_counter(request):
+    users = User.objects.all()
+    scores = defaultdict()
+    user_mark = defaultdict(list)
+    for user in users: 
+        user_quiz  = UserSubmission.objects.filter(user=user)
+        mark  = defaultdict(float)
+        for quiz in user_quiz:
+            quiz = Quiz.objects.all().filter(quiz=quiz)
+            cate = quiz['category']
+            mark[cate] += quiz['mark']
+
+        for cate in mark:
+            user_mark[cate].append(mark[cate])
+
+        scores[user.username] = mark
+    for cate in user_mark:
+        sorted(user_mark[cate])
+
+    cur_user = request.GET.get('username')
+    print(cur_user)
+    ranking = defaultdict()
+    for cate in user_mark:
+        ranking[cur_user] = user_mark[cate].index(scores[cur_user][cate])
+            
+    return Response(ranking)
 
 class UserList(generics.GenericAPIView):
     """

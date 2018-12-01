@@ -45,7 +45,7 @@ class SingleChoiceQuest extends Component {
                   className={"btn " + (option == this.props.doQuiz[x.index] ? "active btn-warning" : "btn-info")}
                   onClick={event => this.handleOnClick(event, option)}
                   style={{"margin" : "10px 10px"}}>
-                  <input type="radio" name="options" autoComplete="off" /> {option}
+                  <input type="radio" name="options" autoComplete="off" disabled={this.props.viewOnly}/> {option}
                 </label>
               )
             }              
@@ -96,7 +96,7 @@ class MultipleChoiceQuest extends Component {
                   className={"btn " + (this.props.doQuiz[x.index] && this.props.doQuiz[x.index].includes(option) ? "active btn-warning" : "btn-info")}
                   onClick={event => this.handleOnClick(event, option)}
                   style={{"margin" : "10px 10px"}}>
-                  <input type="checkbox" name="options" autoComplete="off" /> {option}
+                  <input type="checkbox" name="options" autoComplete="off" disabled={this.props.viewOnly}/> {option}
                 </label>
               )
             }              
@@ -184,7 +184,7 @@ class MatchingQuest extends Component {
     const { toMatchOptions, matchedOption } = this.state;
     return (
       <div className="row">
-        <div className="col-md-8">
+        <div className="col-lg-8">
           <ReactMarkdown source={x.content}/>
           <ul style={{"listStyleType" : "none"}}>
             {
@@ -206,14 +206,14 @@ class MatchingQuest extends Component {
             }
           </ul>
         </div>
-        <div className="col-md-4">
+        <div className="col-lg-4">
           <p className="font-weight-bold" style={{"textAlign" : "center"}}>Match the following options into their right position:</p>
             <ul style={{"listStyleType": "none"}} id="answer-list">
             {
               toMatchOptions.map((option, idx) => 
                 <li 
                   key={idx} 
-                  draggable
+                  draggable={!this.props.viewOnly}
                   onDrag={(event) => this.onDrag(event, option)} 
                   className="btn btn-info" 
                   style={{"display" : "block"}}>
@@ -252,7 +252,10 @@ class FillingQuest extends Component {
         </div>
         <div className="col-lg-4">
           <p className="font-weight-bold" style={{"textAlign" : "center"}}>Filling in the ???:</p>
-            <input className="form-control" type="text" placeholder="???" onChange={event => this.handleOnChange(event)} value={this.props.doQuiz[x.index] && this.props.doQuiz[x.index][0] ? this.props.doQuiz[x.index][0] : "" }/>
+            <input className="form-control" type="text" placeholder="???" 
+                    onChange={event => this.handleOnChange(event)} 
+                    disabled={this.props.viewOnly}
+                    value={this.props.doQuiz[x.index] && this.props.doQuiz[x.index][0] ? this.props.doQuiz[x.index][0] : "" }/>
         </div>
       </div>
     );
@@ -270,10 +273,10 @@ class QuestDetail extends Component {
       <div className="quest-box">
         <h2> Quesiton {x.index}</h2>
         <br/>
-        {x.type=='si' && <SingleChoiceQuest quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz}/>}
-        {x.type=='mu' && <MultipleChoiceQuest quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz}/>}
-        {x.type=='ma' && <MatchingQuest quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz}/>}
-        {x.type=='fi' && <FillingQuest quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz}/>}
+        {x.type=='si' && <SingleChoiceQuest quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz} viewOnly={this.props.viewOnly}/>}
+        {x.type=='mu' && <MultipleChoiceQuest quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz} viewOnly={this.props.viewOnly}/>}
+        {x.type=='ma' && <MatchingQuest quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz} viewOnly={this.props.viewOnly}/>}
+        {x.type=='fi' && <FillingQuest quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz} viewOnly={this.props.viewOnly}/>}
       </div>
     );
   }

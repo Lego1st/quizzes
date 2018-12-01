@@ -10,7 +10,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username','id')
 
-
 class PSSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     class Meta:
