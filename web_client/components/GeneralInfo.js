@@ -22,8 +22,8 @@ class GeneralInfo extends React.Component {
 		};
 	}
 	componentDidMount() {
-		console.log(localStorage.getItem('id'));
-		get_data("/profile/api/get/?profileid=" + localStorage.getItem('id'), true)
+
+		get_data(`/profile/api/detail/${this.props.username}/`, true)
 			.then((res) => res.json())
 			.catch(
 				(error) => {
@@ -35,7 +35,7 @@ class GeneralInfo extends React.Component {
 						country: '',
 						education: '',
 						bio: ''
-						
+
 					});
 
 				})
@@ -49,7 +49,7 @@ class GeneralInfo extends React.Component {
 							age: result['age'],
 							country: result['country'],
 							education: result['education'],
-							bio: result['bio']						
+							bio: result['bio']
 						});
 					} else {
 						this.setState({
@@ -84,7 +84,7 @@ class GeneralInfo extends React.Component {
 				}
 			)
 	}
-	handle_click = (e,data) =>{
+	handle_click = (e, data) => {
 		fetch(Config.serverUrl + '/profile/api/update/', {
 			method: 'POST',
 			headers: {
@@ -93,11 +93,11 @@ class GeneralInfo extends React.Component {
 			},
 			body: JSON.stringify(data)
 		})
-		.then((result) => {
-			for(var j in this.refs){
-				this.refs[j].setAttribute('disabled','');
-			}
-		});
+			.then((result) => {
+				for (var j in this.refs) {
+					this.refs[j].setAttribute('disabled', '');
+				}
+			});
 	}
 	render() {
 		if (this.state.isLoaded) {
@@ -105,49 +105,46 @@ class GeneralInfo extends React.Component {
 				<div>
 					<ul className="list-group">
 
-
 						<li className="list-group-item"><strong>Full Name</strong>
-							<button className="edit-btn" onClick={e => this.refs.fn.removeAttribute('disabled')} ><i className="fas fa-edit"></i>
-							</button>
 							<span className="info">
-								<input id='fullname' ref='fn' disabled onChange={e => this.setState({ fullname : e.target.value }) } value={this.state.fullname}/>
+								<input id='fullname' ref='fn' disabled={!this.props.is_editing} onChange={e => this.setState({ fullname: e.target.value })} value={this.state.fullname} />
 							</span>
 						</li>
 						<li className="list-group-item"><strong>Age</strong>
-							<button className="edit-btn" onClick={e => this.refs.age.removeAttribute('disabled')} ><i className="fas fa-edit"></i>
-							</button>
 							<span className="info">
-								<input id='age' ref='age' disabled onChange={e => this.setState({age: e.target.value }) } value={this.state.age}/>
+								<input id='age' ref='age' disabled={!this.props.is_editing} onChange={e => this.setState({ age: e.target.value })} value={this.state.age} />
 							</span>
 						</li>
 						<li className="list-group-item"><strong>Country</strong>
-							<button className="edit-btn" onClick={e => this.refs.ct.removeAttribute('disabled')} > <i className="fas fa-edit"></i>
-							</button>
+
 							<span className="info">
-								<input id='country' list="countries" ref='ct' disabled onFocus={e => e.target.value=''} onChange={e => this.setState({country: e.target.value }) } value={this.state.country}/>
+								<input id='country' list="countries" ref='ct' disabled={!this.props.is_editing} onFocus={e => e.target.value = ''} onChange={e => this.setState({ country: e.target.value })} value={this.state.country} />
 								<datalist id="countries">
-								  <option value="Vietnam"/>
-								  <option value="England"/>
-								  <option value="America"/>
-								  <option value="Japan"/>
+									<option value="Vietnam" />
+									<option value="England" />
+									<option value="America" />
+									<option value="Japan" />
 								</datalist>
 							</span>
 						</li>
 						<li className="list-group-item"><strong>Education</strong>
-							<button className="edit-btn" onClick={e => this.refs.edu.removeAttribute('disabled')} ><i className="fas fa-edit"></i>
-							</button>
+
 							<span className="info">
-								<input id='education' ref='edu' disabled onChange={e => this.setState({education: e.target.value }) } value={this.state.education}/>
+								<input id='education' ref='edu' disabled={!this.props.is_editing} onChange={e => this.setState({ education: e.target.value })} value={this.state.education} />
 							</span>
 						</li>
 						<li className="list-group-item"><strong>Bio</strong>
-							<button className="edit-btn" onClick={e => this.refs.bio.removeAttribute('disabled')} ><i className="fas fa-edit"> </i>
-							</button>
+
 							<span className="info">
-								<input id='bio'ref='bio' disabled onChange={e => this.setState({bio: e.target.value }) } value={this.state.bio}/>
+								<input id='bio' ref='bio' disabled={!this.props.is_editing} onChange={e => this.setState({ bio: e.target.value })} value={this.state.bio} />
 							</span></li>
+
 					</ul>
-					<button className='btn btn-default' onClick={e => this.handle_click(e,this.state)}>Save</button>
+					<div style={{ marginTop: 5 + 'px' }}>
+						{this.props.username != localStorage.getItem('username') ? '' :
+							<button className='btn btn-primary btn-profile' id='savebtn' onClick={e => this.handle_click(e, this.state)}>Save</button>
+						}
+					</div>
 				</div >
 			);
 		}
