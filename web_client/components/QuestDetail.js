@@ -31,11 +31,11 @@ class SingleChoiceQuest extends Component {
     var x = this.props.quest_detail;
     return (
       <div className="row">
-        <div className="col-lg-8">
+        <div className={this.props.viewOnly ? "col-lg-12" : "col-lg-8"}>
           <ReactMarkdown source={x.content}/>
           <br/>
         </div>
-        <div className="col-lg-4">
+        <div className={this.props.viewOnly ? "col-lg-12" : "col-lg-4"}>
           <p className="font-weight-bold" style={{"textAlign" : "center"}}>Choose one option: </p>
           <div className="btn-group btn-group-toggle btn-group-vertical" data-toggle="buttons" style={{"width" : "100%"}}>
             {
@@ -82,11 +82,11 @@ class MultipleChoiceQuest extends Component {
     var x = this.props.quest_detail;
     return(
       <div className="row">
-        <div className="col-lg-8">
+        <div className={this.props.viewOnly ? "col-lg-12" : "col-lg-8"}>
           <ReactMarkdown source={x.content}/>
           <br/>
         </div>
-        <div className="col-lg-4">
+        <div className={this.props.viewOnly ? "col-lg-12" : "col-lg-4"}>
           <p className="font-weight-bold" style={{"textAlign" : "center"}}>Choose all options that satisfy: </p>
           <div className="btn-group btn-group-toggle btn-group-vertical" data-toggle="buttons" style={{"width" : "100%"}}>
             {
@@ -184,7 +184,7 @@ class MatchingQuest extends Component {
     const { toMatchOptions, matchedOption } = this.state;
     return (
       <div className="row">
-        <div className="col-lg-8">
+        <div className={this.props.viewOnly ? "col-lg-12" : "col-lg-8"}>
           <ReactMarkdown source={x.content}/>
           <ul style={{"listStyleType" : "none"}}>
             {
@@ -206,7 +206,7 @@ class MatchingQuest extends Component {
             }
           </ul>
         </div>
-        <div className="col-lg-4">
+        <div className={this.props.viewOnly ? "col-lg-12" : "col-lg-4"}>
           <p className="font-weight-bold" style={{"textAlign" : "center"}}>Match the following options into their right position:</p>
             <ul style={{"listStyleType": "none"}} id="answer-list">
             {
@@ -244,13 +244,13 @@ class FillingQuest extends Component {
     var x = this.props.quest_detail;
     return(
       <div className="row">
-        <div className="col-lg-8">
+        <div className={this.props.viewOnly ? "col-lg-12" : "col-lg-8"}>
           <ReactMarkdown source={x.content}/>
           <ul style={{"listStypeType" : "none"}}>
             {x.options.map((y, idx) => (<li key={idx}>{y} ?</li>))}
           </ul>
         </div>
-        <div className="col-lg-4">
+        <div className={this.props.viewOnly ? "col-lg-12" : "col-lg-4"}>
           <p className="font-weight-bold" style={{"textAlign" : "center"}}>Filling in the ???:</p>
             <input className="form-control" type="text" placeholder="???" 
                     onChange={event => this.handleOnChange(event)} 

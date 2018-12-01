@@ -92,6 +92,18 @@ class UserSubmit(generics.CreateAPIView):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
+class UpdateStatusQuiz(generics.UpdateAPIView):
+    permission_classes = (permissions.IsAuthenticated, )
+    serializer_class = BriefQuizSerializer
+    queryset = Quiz.objects.all()
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.status = request.data.get('status')
+        instance.save()
+
+        return Response({'status': 'success'})
+
 
 @api_view(['POST'])
 def upload_file_quiz(request):

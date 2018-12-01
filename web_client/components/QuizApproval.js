@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import QuestDetail from './QuestDetail';
 import { Link } from 'react-router-dom';
-import get_date from './Utils';
+import get_data from './Utils';
 import {CATEGORY_FROM_CODE} from './Constants';
 
 class QuizApproval extends Component {
@@ -15,7 +15,7 @@ class QuizApproval extends Component {
     }
 
     componentDidMount() {
-        get_date('/api/pending_quiz/', true)
+        get_data('/api/pending_quiz/', true)
             .then(res => res.json())
             .then(result => {
                 // console.log(result);
@@ -32,6 +32,30 @@ class QuizApproval extends Component {
     onSelectQuiz(quiz) {
         let selected_quiz = this.state.quiz_pending_list.filter(q => quiz.id == q.id);
         this.setState({selected: selected_quiz[0]});
+    }
+
+    handleUpdate(status) {
+        get_data(`/api/quiz_status_update/${this.state.selected.id}/`, true, 'PUT', {'status': status})
+            .then(res => res.json())
+            .then(result => {
+                let new_list = this.state.quiz_pending_list.map(q => {
+                    if (q.id == this.state.selected.id) {
+                        q.status = status;
+                        return q;
+                    } else {
+                        return q;
+                    }
+                });
+                let new_selected = this.state.selected;
+                new_selected.status = status;
+                this.setState({
+                    quiz_pending_list: new_list,
+                    selected: new_selected
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 
     renderQuizList(quiz_list) {
@@ -95,8 +119,12 @@ class QuizApproval extends Component {
                                 </div>
                             </div>
                             <div className="qz_detail_group_button">
-                                <button className="btn qz_approval_button btn-success">Approve</button>
-                                <button className="btn qz_approval_button btn-danger">Reject</button>
+                                <button className="btn qz_approval_button btn-success"
+                                        onClick={() => {this.handleUpdate('a')}}
+                                        disabled={selected.status=='a'}>Approve</button>
+                                <button className="btn qz_approval_button btn-danger"
+                                        onClick={() => {this.handleUpdate('r')}}
+                                        disabled={selected.status=='r'}>Reject</button>
                             </div>
                             <div>
                                 {this.renderQuestionList(selected.questions)}
