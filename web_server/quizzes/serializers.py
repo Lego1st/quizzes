@@ -64,7 +64,13 @@ class QuizQuestionReadOnlySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Quiz
-        fields = ('id' ,'title', 'brief', 'category', 'shuffle', 'questions')
+        fields = ('id' ,'title', 'brief', 'category', 'shuffle', 'questions', 'author')
+    def to_representation(self, obj):
+        ret = super().to_representation(obj)
+        author_id = ret['author']
+        author_username = User.objects.get(pk=author_id).username
+        ret['author'] = author_username
+        return ret
 
 class FullQuestionSerializer(serializers.BaseSerializer):
 
