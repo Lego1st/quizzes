@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import QuizItem from "./QuizItem"
 import TableView from './TableView';
-import { QUIZDECO } from './Constants';
+import { QUIZDECO, HOMEDECO } from './Constants';
 import get_data from './Utils';
 
 var Config = require('Config');
@@ -90,7 +90,7 @@ class Home extends Component {
           </div>
 
           <div className="col-md-10" id="main-body" style={{padding: "0 10px 20px 15px"}}>
-            <div align="center"> <img style={{"height": "300px"}} src={QUIZDECO} /> </div>
+            <div align="center"> <img style={{"height": "30%"}} src={HOMEDECO} /> </div>
             <div id="qz_pending_list" style={{padding: "20px", height: "auto"}}>
               <div className="qz_list_title">
                 Recent quizzes
