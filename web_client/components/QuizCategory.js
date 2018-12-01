@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 // import QuizItem from "./QuizItem";
 import TableView from './TableView';
-import { CATEGORY_FROM_CODE } from './Constants';
+import { CATEGORY_FROM_CODE, CATEGORY_COLOR } from './Constants';
 import get_data from './Utils';
 
 function get_quiz_by_category(cate, num_page) {
@@ -87,7 +87,7 @@ class QuizCategory extends Component {
         <div className="row">
 
           <div className="col-sm-2 left-body">
-            <div className="category-name"> {CATEGORY_FROM_CODE[this.props.match.params.cate]} </div>
+            <div className="category-name" style={{"color" : CATEGORY_COLOR[this.props.match.params.cate]}}> {CATEGORY_FROM_CODE[this.props.match.params.cate]} </div>
           </div>
 
           <div className="col-sm-9" id="main-body">

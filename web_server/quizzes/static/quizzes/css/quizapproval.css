@@ -79,13 +79,8 @@
     margin-top: 5px;
 }
 
-.qz_rating {
-    border-radius: 50%;
-    background-color: #393533;
-    margin-right: 10px;
-    width: 15px;
-    height: 15px;
-    display: inline-block;
+.checked {
+    color: orange;
 }
 
 .qz_quiz_author {

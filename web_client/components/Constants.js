@@ -48,6 +48,12 @@ export const CATEGORY_IMG = {
 	'lg' : '/static/quizzes/images/lg.png'
 }
 
+export const CATEGORY_COLOR = {
+	'ma' : '#4f5d73',
+	'cs' : '#019839',
+	'lg' : '#c25b5a'
+}
+
 export const QUIZDECO = '/static/quizzes/images/quizdeco.png'
 
 export const UPLOAD_AVATAR_API = '/profile/api/avatar/'
