@@ -33,7 +33,7 @@ class Ranking extends React.Component {
 	}
 
 	componentDidMount() {
-	    get_data("/api/profile/statistic/",true)
+	    get_data("/api/ranking/?username=",true)
 	      .then(res => res.json())
 	      .then(
 	        (result) => {
