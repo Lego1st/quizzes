@@ -60,7 +60,8 @@ def upload_avatar(request):
 
 @api_view(['GET'])
 def current_profile_avatar(request):
-    profile = Profile.objects.get(pk=request.user.id)
+    userid = User.objects.get(username=request.GET.get('username')).id
+    profile = Profile.objects.get(pk=userid)
     return Response(PSAvatarSerializer(profile).data)
 
 def my_jwt_response_handler(token, user=None, request=None):

@@ -17,7 +17,7 @@ class Profile extends React.Component {
     return (
       <div className="container" id="profile-page">
         <div className="row">
-          <ProfileSideBar />
+          <ProfileSideBar username={this.props.match.params.username}/>
           <div className="col-md-5">
             { this.props.match.params.username != localStorage.getItem('username') ? '' :
               <button className='btn btn-info btn-profile' id='editbtn' onClick={() => { this.setState({ is_editing: true }) }}> Edit </button>
