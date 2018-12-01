@@ -3,14 +3,14 @@
 ## Quiz and Question APIs
 List APIs:
 
-- [`api/quiz_question/<quiz_id>/`](#`api/quiz_question/<quiz_id>/`)
-- [`api/full_quiz/<quiz_id>/`](#`api/full_quiz/<quiz_id>/`)
-- [`api/create_quiz/`](#`api/create_quiz/`)
-- [`api/recent_quiz/`](#`api/recent_quiz/`)
-- [`api/submit_quiz/`](#`api/submit_quiz/`)
-- [`api/posted_quiz/`](#`api/posted_quiz/`)
-- [`api/quiz_result/<quiz_id>/`](#`api/quiz_result/<quiz_id>/`)
-- [`api/quiz_category/<cate>/`](#`api/quiz_category/<cate>/`)
+- [`api/quiz_question/<quiz_id>/`](#apiquiz_questionquiz_id)
+- [`api/full_quiz/<quiz_id>/`](#apifull_quizquiz_id)
+- [`api/create_quiz/`](#apicreate_quiz)
+- [`api/recent_quiz/`](#apirecent_quiz)
+- [`api/submit_quiz/`](#apisubmit_quiz)
+- [`api/posted_quiz/`](#apiposted_quiz)
+- [`api/quiz_result/<quiz_id>/`](#apiquiz_resultquiz_id)
+- [`api/quiz_category/<cate>/`](#apiquiz_categorycate)
 
 ### `api/quiz_question/<quiz_id>/`
 **Method:** `GET`
