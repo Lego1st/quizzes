@@ -21,3 +21,9 @@ QUIZ_ACTIONS = (
 	('li', 'like'),
 	('an', 'answer')
 )
+
+DIFFICULTY = (
+	(1, "Easy"),
+	(2, "Medium"),
+	(3, "Hard")
+)

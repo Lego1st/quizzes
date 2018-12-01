@@ -30,6 +30,7 @@ Response: 200 OK
     "brief": "This is the third quiz",
     "category": "ma",
     "shuffle": false,
+    "rating": 1,
     "questions": [
         {
             "type": "si",
@@ -113,6 +114,7 @@ Response: 200 OK
     "brief": "This is the third quiz",
     "category": "ma",
     "shuffle": false,
+    "rating": 2,
     "questions": [
         {
             "type": "si",
@@ -143,6 +145,7 @@ Response: 200 OK
 - `brief`: string
 - `category`: string, options: ('ma', 'cs')
 - `shuffle`: boolean
+- `rating`: int, quiz's difficulty, options: (1(easy), 2(medium), 3(hard))
 - `questions`: array, an array of questions with parameters:
     - `type`: string, options: ('si', 'mu', 'ma', 'fi')
     - `index`: int, index of question in quiz
@@ -161,6 +164,7 @@ data:
     "brief": "This is 4th quiz",
     "category": "ma",
     "shuffle": false,
+    "rating": 3,
     "questions": [
         {
             "content": "Where are you from?",
@@ -207,6 +211,7 @@ Response: 204 No Content
 - `brief`: string
 - `category`: string, options: ('ma', 'cs')
 - `shuffle`: boolean
+- `rating`: int, quiz's difficulty, options: (1(easy), 2(medium), 3(hard))
 - `questions`: array, an array of questions with parameters:
     - `type`: string, options: ('si', 'mu', 'ma', 'fi')
     - `index`: int, index of question in quiz
@@ -225,6 +230,7 @@ data:
     "brief": "This is 4th quiz",
     "category": "ma",
     "shuffle": false,
+    "rating": 2,
     "questions": [
         {
             "content": "Where are you from?",
@@ -271,7 +277,7 @@ Response: 200 OK
             "id": 2,
             "title": "quiz 1",
             "brief": "This is first quiz",
-            "rating": 0,
+            "rating": 1,
             "created_at": "2018-12-01T10:52:01.028313Z",
             "status": "p",
             "category": "ma",
@@ -281,7 +287,7 @@ Response: 200 OK
             "id": 1,
             "title": "quiz 1",
             "brief": "This is first quiz",
-            "rating": 0,
+            "rating": 1,
             "created_at": "2018-12-01T09:49:56.069562Z",
             "status": "p",
             "category": "ma",
@@ -314,7 +320,7 @@ Response: 200 OK
             "id": 2,
             "title": "quiz 1",
             "brief": "This is first quiz",
-            "rating": 0,
+            "rating": 1,
             "created_at": "2018-12-01T10:52:01.028313Z",
             "status": "p",
             "category": "ma",
@@ -324,7 +330,7 @@ Response: 200 OK
             "id": 1,
             "title": "quiz 1",
             "brief": "This is first quiz",
-            "rating": 0,
+            "rating": 1,
             "created_at": "2018-12-01T09:49:56.069562Z",
             "status": "p",
             "category": "ma",
@@ -358,7 +364,7 @@ Response: 200 OK
             "id": 1,
             "title": "quiz 1",
             "brief": "This is first quiz",
-            "rating": 0,
+            "rating": 1,
             "created_at": "2018-11-27T09:47:25.881746Z",
             "status": "p",
             "category": "ma",

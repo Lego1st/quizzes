@@ -8,7 +8,7 @@ from quizzes.constants import *
 class Quiz(models.Model):
 	title = models.CharField(max_length=100)
 	brief = models.TextField(max_length=200, null=True)
-	rating = models.FloatField(default=0.0)
+	rating = models.PositiveIntegerField(choices=DIFFICULTY, default=1)
 	created_at = models.DateTimeField(auto_now_add=True, null = True)
 	status = models.CharField(max_length=1, choices=QUIZ_STATUS, default='p')
 	category = models.CharField(max_length=2, choices=CATEGORIES)

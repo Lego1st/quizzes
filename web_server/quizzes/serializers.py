@@ -64,7 +64,7 @@ class QuizQuestionReadOnlySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Quiz
-        fields = ('id' ,'title', 'brief', 'category', 'shuffle', 'questions', 'author')
+        fields = ('id' ,'title', 'brief', 'category', 'shuffle', 'author', 'rating', 'questions')
     def to_representation(self, obj):
         ret = super().to_representation(obj)
         author_id = ret['author']
@@ -168,7 +168,7 @@ class FullQuizSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Quiz
-        fields = ('id' ,'title', 'brief', 'category', 'shuffle', 'questions')
+        fields = ('id' ,'title', 'brief', 'category', 'shuffle', 'rating', 'questions')
 
     def create(self, validated_data):
         questions_data = validated_data.pop('questions')
@@ -182,6 +182,7 @@ class FullQuizSerializer(serializers.ModelSerializer):
         instance.brief = validated_data.get('brief', instance.brief)
         instance.category = validated_data.get('category', instance.category)
         instance.shuffle = validated_data.get('shuffle', instance.shuffle)
+        instance.rating = validated_data.get('rating', instance.rating)
         instance.save()
         
         quiz_id = instance.id
