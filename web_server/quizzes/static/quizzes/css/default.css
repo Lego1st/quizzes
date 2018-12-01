@@ -135,5 +135,8 @@ li.nav-category {
   left: -50%;
 }
 
+.questholder:hover {
+  text-shadow: 2px 2px white;
+}
 
 /* CSS here */
