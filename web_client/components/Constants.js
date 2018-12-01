@@ -55,6 +55,6 @@ export const CATEGORY_COLOR = {
 }
 
 export const QUIZDECO = '/static/quizzes/images/quizdeco.png'
-
+export const HOMEDECO = '/static/quizzes/images/homedeco.png'
 export const UPLOAD_AVATAR_API = '/profile/api/avatar/'
 export const UPLOAD_FILE_API = '/api/upfile/'

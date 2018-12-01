@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import { QUIZDECO } from './Constants';
 
 class Navigation extends Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class Navigation extends Component {
           <div className="container navbar-container">
             <div className="navbar-row">
               <div className="navbar-head">
-                <span className="navbar-brand"><Link to='/'>? Quizzes</Link></span>
+                <span className="navbar-brand"><Link to='/'><img style={{"height": "50px"}} src={QUIZDECO} />es</Link></span>
               </div>
               <div className="navbar-mid" role="search">
                 <div className="navbar-mid-row">

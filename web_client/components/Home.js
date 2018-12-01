@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
-import QuizItem from "./QuizItem"
 import { Link } from 'react-router-dom';
+
+import QuizItem from "./QuizItem"
+import TableView from './TableView';
+import { QUIZDECO, HOMEDECO } from './Constants';
 import get_data from './Utils';
-import { QUIZDECO } from './Constants';
+
+var Config = require('Config');
+const page_size = 5;
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      next: null,
       recent_quizzes: []
     }
   }
@@ -19,6 +25,7 @@ class Home extends Component {
     }
     return quizzes;
   }
+  
   componentDidMount() {
     get_data('/profile/current_user/', true)
       .then(res => {
@@ -35,12 +42,13 @@ class Home extends Component {
             localStorage.setItem('username',result['username']);
           }
         })
-    get_data("/api/recent_quiz/", true)
+    get_data(`/api/recent_quiz/?page_size=${page_size}`, true)
       .then(res => {
         return res.json();
       })
       .then((result) => {
         this.setState({
+          next: result.next,
           recent_quizzes: result.results || []
         })
       },
@@ -54,6 +62,23 @@ class Home extends Component {
     )
   }
 
+  handleScrollToBottom(completed) {
+    // load more
+    if(this.state.next == null) {
+      completed();
+      return;
+    }
+    get_data(this.state.next.replace(Config.serverUrl, ''), true).then(res => res.json()).then(result=> {
+      var newData = Object.assign([], this.state.recent_quizzes);
+      newData.push.apply(newData, result.results);
+      completed();
+      this.setState({
+        recent_quizzes: newData,
+        next: result.next
+      })
+    });
+  }
+
 
   render() {
 
@@ -62,20 +87,10 @@ class Home extends Component {
         <div className="row">
 
           <div className="col-sm-1" id="left-body">
-          {/*
-            <div class="catelist">
-            <div id="home-category"> Category </div>
-            <ul id="home-cate-list">
-              <li><Link to='/category/ma'>Math</Link></li>
-              <li><Link to='/category/cs'>Computer Science</Link></li>
-              <li><Link to='/category/lg'>Logic</Link></li>
-            </ul>
-            </div>
-          */}
           </div>
 
           <div className="col-md-10" id="main-body" style={{padding: "0 10px 20px 15px"}}>
-            <div align="center"> <img style={{"height": "300px"}} src={QUIZDECO} /> </div>
+            <div align="center"> <img style={{"height": "30%"}} src={HOMEDECO} /> </div>
             <div id="qz_pending_list" style={{padding: "20px", height: "auto"}}>
               <div className="qz_list_title">
                 Recent quizzes
@@ -92,7 +107,11 @@ class Home extends Component {
                         </h4>
                   </div>
                 ) : (
-                this.renderQuizList(this.state.recent_quizzes)
+                  <TableView 
+                    ref="recent_quizzes"
+                    dataSource={this.state.recent_quizzes}
+                    onScrollToBottom={this.handleScrollToBottom.bind(this)}
+                  />
                 )}
 
             </div>
