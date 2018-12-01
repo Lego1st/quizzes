@@ -43,7 +43,7 @@ class App extends Component {
           {this.state.logged_in ? 
             <Switch>
               <Route exact path="/" component={Home}/>
-              <Route path='/profile' component={Profile}/>
+              <Route path='/profile/:username' component={Profile}/>
               <Route path='/search/:search_text' component={Search} />
               <Route path='/category/:cate' component={QuizCategory}/>
               <Route path='/myquizzes' component={Post}/>

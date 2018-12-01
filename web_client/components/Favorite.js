@@ -2,6 +2,7 @@ import React from 'react';
 import ProfileSideBar from './ProfileSideBar';
 import get_data from './Utils';
 import {CATEGORY_FROM_CODE} from './Constants';
+import {Link} from 'react-router-dom';
 
 
 class Favorite extends React.Component {
@@ -48,9 +49,11 @@ class Favorite extends React.Component {
           </div>
           <hr/>
           <div>
-            {/* <div id="head-ava" style={{transform: "scale(0.5)", display: "inline-block"}}>N</div> */}
-            <p style={{display: 'inline', fontSize: '15px'}}>by {post.author.user.username}   <i className="fas fa-heart"></i> {post['likes']}</p>
-          </div>
+            <Link to={`/profile/${post.author.user.username}`} style={{ textDecoration : 'none'}}>
+              <p style={{display: 'inline', fontSize: '15px'}}>by {post.author.user.username}   <i className="fas fa-heart"></i> {post['likes']}</p>
+            </Link>
+
+            </div>
         </div>
       );
     }

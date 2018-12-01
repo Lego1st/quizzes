@@ -35,7 +35,7 @@ class QuestHolder extends React.Component {
 	}
 
 	handleSave() {
-		this.props.savingQuestion(this.state, this.state.index)
+		this.props.savingQuestion(this.state, this.props.order)
 	}
 
 	handleChangeOption(index, event) {
@@ -226,7 +226,7 @@ function Adder(props) {
 	return (
 		<div className = {'whatever-' + props.index} style = {{display: 'inline', textAlign: 'center'}}>
 			<button type="button" className="btn btn-default" style = {{border: 'dashed', backgroundColor: 'white', width : "40%", marginLeft: '5%', marginRight: '5%', marginBottom: '2%'}} 
-					data-toggle="modal" data-target={"#adder-" + props.index}  onClick = {props.handleAddQuestion.bind(this, props.index)}>Adding question {props.index}</button>
+					data-toggle="modal" data-target={"#adder-" + props.index}  onClick = {props.handleAddQuestion.bind(this, props.index)}>Adding question {props.order}</button>
 		</div>
 	);
 }
@@ -372,19 +372,23 @@ class EditQuiz extends React.Component {
 
 	render() {
 		const buttons = [];
+		const indices = [];
 		for (var i = 0; i < this.state.questions.length; i++) {
 			if (! this.state.deletions.includes(i)) {
 				buttons.push( <QuestHolder index = {this.state.questions[i].index}
+										order = {i}
 										key = {this.state.questions[i].index}
 										intial_state = {this.state.questions[i]}
 										savingQuestion = {this.handleChangeQuestion}
 										handleDeleteQuestion = {this.handleDeleteQuestion}
 										brief = {this.state.questions[i].content.substring(0, 20) + '...'}/>)
+				indices.push(this.state.questions[i].index);
 			}
 		}
 
-		buttons.push(<Adder index = {this.state.questions.length} 
-						key = {this.state.questions.length}
+		buttons.push(<Adder index = {Math.max.apply(null, indices) + 1} 
+						order = {buttons.length}
+						key = {Math.max.apply(null, indices) + 1} 
 						handleChangeQuestion = {this.handleChangeQuestion}
 						handleAddQuestion = {this.handleAddQuestion}> </Adder>)
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 class Navigation extends Component {
@@ -21,7 +21,7 @@ class Navigation extends Component {
     return (
       <div>
         <nav className="navbar">
-          <div className="container navbar-container">      
+          <div className="container navbar-container">
             <div className="navbar-row">
               <div className="navbar-head">
                 <span className="navbar-brand"><Link to='/'>? Quizzes</Link></span>
@@ -29,12 +29,12 @@ class Navigation extends Component {
               <div className="navbar-mid" role="search">
                 <div className="navbar-mid-row">
                   <form className="input-group" id="searcher" onSubmit={this.handleSubmitSearch.bind(this)}>
-                    <input id="search" type="search" className="form-control" placeholder="What are you looking for?"/>
+                    <input id="search" type="search" className="form-control" placeholder="What are you looking for?" />
                   </form>
                   <li className="dropdown nav-category">
                     <a className="dropdown-toggle" data-toggle="dropdown" href="#">Category
                     <span className="caret"></span></a>
-                    <ul className="dropdown-menu" style={{minWidth: "12rem"}}>
+                    <ul className="dropdown-menu" style={{ minWidth: "12rem" }}>
                       <li><Link to='/category/ma'>Math</Link></li>
                       <li><Link to='/category/cs'>Computer Science</Link></li>
                       <li><Link to='/category/lg'>Logic</Link></li>
@@ -52,24 +52,24 @@ class Navigation extends Component {
                       <i className="fas fa-plus-circle"></i>
                     </Link>
                   </div>
-                  <li className="dropdown nav-category" style={{padding: 0}}>
+                  <li className="dropdown nav-category" style={{ padding: 0 }}>
                     <div id="head-ava" className="dropdown-toggle" data-toggle="dropdown">
                       <Link to="/profile">
                         <img src={"/static/quizzes/images/default_avatar.jpg"} alt="default avatar" />
                       </Link>
                     </div>
                     <ul className="dropdown-menu">
-                      <li><Link to='/profile'>Your Profile</Link></li>
-                      <li><Link to='/login' onClick={this.handle_logout}>Logout</Link></li>
+                      <li><Link to={`/profile/${localStorage.getItem('username')}`}>Your Profile</Link></li>
+                    <li><Link to='/login' onClick={this.handle_logout}>Logout</Link></li>
                     </ul>
                   </li>
-                </div>
-              </div>  
-              
-            </div>    
+              </div>
+            </div>
+
+          </div>    
           </div>
         </nav>
-      </div>
+      </div >
     );
   }
 }
