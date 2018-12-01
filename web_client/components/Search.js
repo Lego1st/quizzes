@@ -46,8 +46,8 @@ class Search extends Component {
     return (
         <div className="container" id="home-page">
             <div className="row">
-                <div className="col-sm-3" id="left-body"></div>
-                <div className="col-sm-6" id="main-body" style={{padding: "0 10px 20px 15px"}}>
+                <div className="col-sm-1" id="left-body"></div>
+                <div className="col-sm-10" id="main-body" style={{padding: "0 10px 20px 15px"}}>
                     <div id="qz_pending_list" style={{padding: "20px", height: "auto"}}>
                         <div className="qz_list_title">
                             Search result for:  <span style={{textDecoration: "underline"}}>{this.props.match.params.search_text}</span>

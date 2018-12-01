@@ -5,4 +5,3 @@ package-lock.json
 web_server/db.sqlite3
 **/migrations/**
 !**/migrations/__init__.py
-webpack.config.js

@@ -50,6 +50,13 @@ class PostedQuiz(generics.ListAPIView):
 
     def get_queryset(self):
         return Quiz.objects.filter(author=self.request.user)
+
+class PendingQuiz(generics.ListAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = QuizQuestionReadOnlySerializer
+
+    def get_queryset(self):
+        return Quiz.objects.filter(status='p')
     
 class QuizCreate(generics.CreateAPIView):
     

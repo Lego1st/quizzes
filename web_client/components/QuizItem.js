@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-import {CATEGORY_FROM_CODE} from './Constants';
+import {CATEGORY_FROM_CODE, CATEGORY_COLOR} from './Constants';
 
 class QuizItem extends Component {
   constructor(props) {
@@ -9,8 +9,8 @@ class QuizItem extends Component {
 
   renderRating() {
     var rate = [];
-    for(var i = 0; i < this.props.info.rating; i++)
-      rate.push(<span key={i} className="qz_rating"></span>)
+    for(var i = 0; i < 3; i++)
+      rate.push(<span key={i} className={i < this.props.info.rating ? "fa fa-star checked" : "fa fa-star"}></span>)
     return rate;
   }
 
@@ -34,7 +34,7 @@ class QuizItem extends Component {
           </div>
           <div className="col-sm-6"> 
             <Link to={`/category/${this.props.info.category}`}  style={{"float" : "right"}}>
-              <div className="qz_quiz_cate">{CATEGORY_FROM_CODE[this.props.info.category]}</div>
+              <div className="qz_quiz_cate" style={{"color" : CATEGORY_COLOR[this.props.info.category]}}><b>{CATEGORY_FROM_CODE[this.props.info.category]}</b></div>
             </Link>
           </div>
         </div>

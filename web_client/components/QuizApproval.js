@@ -1,93 +1,110 @@
 import React, { Component } from "react";
-import QuizItem from "./QuizItem";
-import {Link} from 'react-router-dom';
+import QuestDetail from './QuestDetail';
+import { Link } from 'react-router-dom';
+import get_date from './Utils';
+import {CATEGORY_FROM_CODE} from './Constants';
 
 class QuizApproval extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            quiz_pending_list: [
-                {
-                    title: "Get started wit Quizzes",
-                    description: "Brief description 1 here...",
-                    category: "Test_Category",
-                    rated: 3
-                },
-                {
-                    title: "How Quizzes rank you ?",
-                    description: "Brief description 2 here...",
-                    category: "Test_Category",
-                    rated: 2
-                },
-                {
-                    title: "Quiz 1",
-                    description: "Brief description 1 here...",
-                    category: "Math",
-                    rated: 3
-                  },
-                  {
-                    title: "Quiz 2",
-                    description: "Brief description 2 here...",
-                    category: "Kid",
-                    rated: 2
-                  },
-                  {
-                    title: "Quiz 3",
-                    description: "Brief description 3 here...",
-                    category: "Fun",
-                    rated: 1
-                  },
-                  {
-                    title: "Quiz 4",
-                    description: "Brief description 3 here...",
-                    category: "Fun",
-                    rated: 1
-                  },
-                  {
-                    title: "Quiz 5",
-                    description: "Brief description 3 here...",
-                    category: "Computer Science",
-                    rated: 4
-                  },
-                  {
-                    title: "Quiz 6",
-                    description: "Brief description 3 here...",
-                    category: "Math",
-                    rated: 5
-                  }
-            ]
+            selected: null,
+            quiz_pending_list: []
         }
     }
 
+    componentDidMount() {
+        get_date('/api/pending_quiz/', true)
+            .then(res => res.json())
+            .then(result => {
+                // console.log(result);
+                this.setState({
+                    quiz_pending_list: result,
+                    selected: result.length > 0 ? result[0] : null
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+    onSelectQuiz(quiz) {
+        let selected_quiz = this.state.quiz_pending_list.filter(q => quiz.id == q.id);
+        this.setState({selected: selected_quiz[0]});
+    }
+
     renderQuizList(quiz_list) {
-        var quizzes = [];
-        for (var i = 0; i < quiz_list.length; i++) {
-          quizzes.push(<QuizItem info={quiz_list[i]}/>)
+        let quizzes = [];
+        for (let i = 0; i < quiz_list.length; i++) {
+            quizzes.push(<div key={quiz_list[i].id} className={"qz_quiz_item" + 
+                    (this.state.selected.id == quiz_list[i].id ? " selected_quiz" : "")}
+                    onClick={() => {this.onSelectQuiz(quiz_list[i])}}>
+                <div className="qz_quiz_title">{quiz_list[i].title}</div>
+                <div className="qz_quiz_desc" style={{ textOverflow: "ellipsis", "whiteSpace": "nowrap" }}>{
+                    quiz_list[i].brief}</div>
+                <div className="row">
+                    <div className="col-sm-6">
+                        Created by: &nbsp;
+                        <Link to={`/profile`}>
+                            <span className="qz_quiz_author">{quiz_list[i].author}</span>
+                        </Link>
+                    </div>
+                    <div className="col-sm-6">
+                        <Link to={`/category/${quiz_list[i].category}`} style={{ "float": "right" }}>
+                            <div className="qz_quiz_cate">{CATEGORY_FROM_CODE[quiz_list[i].category]}</div>
+                        </Link>
+                    </div>
+                </div>
+
+            </div>)
         }
         return quizzes;
     }
 
+    renderQuestionList(questions) {
+        return questions.map(question => {
+            return <QuestDetail key={question.index} quest_detail={question} viewOnly={true}
+                                doQuiz={{}} callbackQuiz={() => {}}/>
+        });
+    }
+
     render() {
+        let selected = this.state.selected;
         return (
             <div className="container" id="qz_quiz_approval">
-                <div id="qz_pending_list">
+                <div id="qz_pending_list" style={{ height: "initial", width: "550px" }}>
                     {this.renderQuizList(this.state.quiz_pending_list)}
                 </div>
                 <div id="qz_detail_quiz">
-                <div className="qz_detail_title">QUIZ 1</div>
-                    <div className="qz_detail_figure"></div>
-                    <div className="qz_detail_desc">Description here, something is long enough to make this beautiful</div>
-                    <div>And your answer is:</div>
-                    <ul>
-                        <li>One</li>
-                        <li>Two</li>
-                        <li>Three</li>
-                    </ul>
-                    <div className="qz_detail_group_button">
-                        <div className="qz_approval_button">OK</div>
-                        <div className="qz_approval_button">DEL</div>
-                    </div>
+                    {selected ? 
+                        <div>
+                            <div className="qz_detail_title">{selected.title}</div>
+                            <div className="qz_detail_desc">{selected.brief}</div>
+                            <div className="row">
+                                <div className="col-sm-6">
+                                    Created by: &nbsp;
+                                    <Link to={`/profile`}>
+                                        <span className="qz_quiz_author">{selected.author}</span>
+                                    </Link>
+                                </div>
+                                <div className="col-sm-6">
+                                    <Link to={`/category/${selected.category}`} style={{ "float": "right" }}>
+                                        <div className="qz_quiz_cate">{CATEGORY_FROM_CODE[selected.category]}</div>
+                                    </Link>
+                                </div>
+                            </div>
+                            <div className="qz_detail_group_button">
+                                <button className="btn qz_approval_button btn-success">Approve</button>
+                                <button className="btn qz_approval_button btn-danger">Reject</button>
+                            </div>
+                            <div>
+                                {this.renderQuestionList(selected.questions)}
+                            </div>
+                        </div>
+                        :
+                        null
+                    }
                 </div>
             </div>
         );

@@ -64,7 +64,13 @@ class QuizQuestionReadOnlySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Quiz
-        fields = ('id' ,'title', 'brief', 'category', 'shuffle', 'questions')
+        fields = ('id' ,'title', 'brief', 'category', 'shuffle', 'questions', 'author')
+    def to_representation(self, obj):
+        ret = super().to_representation(obj)
+        author_id = ret['author']
+        author_username = User.objects.get(pk=author_id).username
+        ret['author'] = author_username
+        return ret
 
 class FullQuestionSerializer(serializers.BaseSerializer):
 
@@ -134,8 +140,8 @@ class FullQuestionSerializer(serializers.BaseSerializer):
             'index': int(index),
             'question_type': question_type,
             'content': content,
-            'options': json.dumps(options),
-            'answer': json.dumps(answer)
+            'options': json.dumps(options).replace("'", '"') ,
+            'answer': json.dumps(answer).replace("'", '"')
         }
         if question_type == 'ma':
             output['matchings'] = json.dumps(matchings)
