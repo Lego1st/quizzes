@@ -9,8 +9,8 @@ class QuizItem extends Component {
 
   renderRating() {
     var rate = [];
-    for(var i = 0; i < this.props.info.rating; i++)
-      rate.push(<span key={i} className="qz_rating"></span>)
+    for(var i = 0; i < 3; i++)
+      rate.push(<span key={i} className={i < this.props.info.rating ? "fa fa-star checked" : "fa fa-star"}></span>)
     return rate;
   }
 
