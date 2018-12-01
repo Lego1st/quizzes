@@ -13,10 +13,10 @@ class AddQuiz extends React.Component {
 		super(props);
 		this.state = {
 			title: "This is a title, click to edit.",
-			brief: 'This is a brief',
+			brief: 'This is a brief, click to edit.',
 			shuffle: false,
 			category: "Category",
-			rating: 1.0,
+			rating: 1,
 			questions: [],
 			deletions: []
 		};
@@ -27,6 +27,10 @@ class AddQuiz extends React.Component {
 
 	handleChangeTitle(event) {
 		this.setState({ title: event.target.value })
+	}
+
+	handleChangeBrief(event) {
+		this.setState({ brief: event.target.value })	
 	}
 
 	handleChangeCategory(event) {
@@ -40,6 +44,10 @@ class AddQuiz extends React.Component {
 
 		this.setState({ questions: new_questions });
 		console.log("Saving new question: ", this.state.questions);
+	}
+
+	handleChangeRating(_rate) {
+		this.setState({ rating: _rate});
 	}
 
 	handleAddQuestion(_index) {
@@ -88,8 +96,6 @@ class AddQuiz extends React.Component {
 
 		converted_state.questions = converted_questions;
 		delete converted_state['deletions'];
-		delete converted_state['rating'];
-
 		return converted_state;
 	}
 
@@ -179,6 +185,15 @@ class AddQuiz extends React.Component {
 
 	}
 
+	renderRating() {
+	    var rate = [];
+	    for(var i = 0; i < 3; i++)
+	      rate.push(<span key={i} className={i < this.state.rating ? "fa fa-star checked" : "fa fa-star"} 
+	      				onClick={this.handleChangeRating.bind(this, i+1)} 
+	      				style={{marginLeft: '1%', marginRight: '1%'}}></span>)
+	    return rate;
+	}
+
 	render() {
 		const buttons = [];
 		const indices = [];
@@ -229,14 +244,26 @@ class AddQuiz extends React.Component {
 							<input type="text" className="form-control"
 								placeholder={this.state.title}
 								onChange={this.handleChangeTitle.bind(this)} />
+							
+						</div>
+					</h1>
+
+					<h1 className="display-4">
+						<div className="input-group mb-3">
 							<div className="input-group-append ">
 								<button className="btn btn-outline-secondary" type="button" onClick={() => console.log(this.convertState())}>Check state</button>
 								
 							</div>
+							
+							<input type="text" className="form-control"
+								placeholder={this.state.brief}
+								onChange={this.handleChangeBrief.bind(this)} />
 						</div>
 					</h1>
 
+					{this.renderRating()}
 					<hr className="my-4" />
+
 					{
 						buttons
 					}

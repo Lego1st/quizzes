@@ -9,3 +9,7 @@
 .fa-caret-down:hover {
 	color: rgb(0, 123, 255);
 }
+
+.display-4 button {
+	width: 180px;
+}

@@ -63,6 +63,14 @@ class EditQuiz extends React.Component {
 		this.setState({title: event.target.value})
 	}
 
+	handleChangeBrief(event) {
+		this.setState({ brief: event.target.value })	
+	}
+
+	handleChangeCategory(event) {
+		this.setState({ category: event.currentTarget.textContent })
+	}
+
 	handleChangeCategory(event) {
 		this.setState({category: event.currentTarget.textContent})
 	}
@@ -74,6 +82,10 @@ class EditQuiz extends React.Component {
 
 		this.setState({questions: new_questions});
 		console.log("Saving new question: ", this.state.questions);
+	}
+
+	handleChangeRating(_rate) {
+		this.setState({ rating: _rate});
 	}
 
 	handleAddQuestion(_index) {
@@ -121,7 +133,6 @@ class EditQuiz extends React.Component {
 
 		converted_state.questions = converted_questions;
 		delete converted_state['deletions'];
-		delete converted_state['rating'];
 
 		return converted_state;
 	}
@@ -148,6 +159,15 @@ class EditQuiz extends React.Component {
 				alert('Oops! Something went wrong :( Please re-check your form!')
 			}
 		});
+	}
+
+	renderRating() {
+	    var rate = [];
+	    for(var i = 0; i < 3; i++)
+	      rate.push(<span key={i} className={i < this.state.rating ? "fa fa-star checked" : "fa fa-star"} 
+	      				onClick={this.handleChangeRating.bind(this, i+1)} 
+	      				style={{marginLeft: '1%', marginRight: '1%'}}></span>)
+	    return rate;
 	}
 
 	render() {
@@ -183,33 +203,45 @@ class EditQuiz extends React.Component {
 		return (
 			<div className = 'container' style ={{marginTop: '3%', textAlign: 'center'}}>
 				<div className="jumbotron" style = {{backgroundColor: 'white'}}>
-				  <h1 className="display-4">
-					    <div className="input-group mb-3">
-						  <div className="input-group-prepend">
-						    <button className="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{CATEGORY_CODE[this.state.category]}</button>
-						    <div className="dropdown-menu">
-						      {
-						      	cate_dropdown
-						      }
-						      <div role="separator" className="dropdown-divider"></div>
-						      <a className="dropdown-item" onClick = {this.handleChangeCategory.bind(this)} href="#">Other</a>
-						    </div>
-						  </div>
-						  <input type="text" className="form-control" 
-					  		placeholder={this.state.title}
-					  		onChange = {this.handleChangeTitle.bind(this)}/>
-						  <div className="input-group-append ">
-						  <button className="btn btn-outline-secondary" type="button" onClick={() => console.log(this.convertState())}>Check state</button>
-						  </div> 
+					<h1 className="display-4">
+						<div className="input-group mb-3">
+							<div className="input-group-prepend">
+								<button className="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{CATEGORY_CODE[this.state.category]}</button>
+								<div className="dropdown-menu">
+									{
+										cate_dropdown
+									}
+									<div role="separator" className="dropdown-divider"></div>
+									<a className="dropdown-item" onClick={this.handleChangeCategory.bind(this)} href="#">Other</a>
+								</div>
+							</div>
+							
+							<input type="text" className="form-control"
+								placeholder={this.state.title}
+								onChange={this.handleChangeTitle.bind(this)} />
+							
 						</div>
-				  </h1>
+					</h1>
 
+					<h1 className="display-4">
+						<div className="input-group mb-3">
+							<div className="input-group-append ">
+								<button className="btn btn-outline-secondary" type="button" onClick={() => console.log(this.convertState())}>Check state</button>
+								
+							</div>
+							
+							<input type="text" className="form-control"
+								placeholder={this.state.brief}
+								onChange={this.handleChangeBrief.bind(this)} />
+						</div>
+					</h1>
 
+					{this.renderRating()}
+					<hr className="my-4" />
 
-				  <hr className="my-4"/>
-				  	{
-				  		buttons
-				  	}
+					{
+						buttons
+					}
 
 				</div>
 			  <button className="btn btn-outline-primary" type="button" onClick = {this.handleSubmit.bind(this)}>Update</button>
