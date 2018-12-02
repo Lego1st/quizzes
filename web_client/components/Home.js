@@ -84,13 +84,18 @@ class Home extends Component {
 
     return (
       <div className="container" id="home-page">
+
+        
         <div className="row">
 
-          <div className="col-sm-1" id="left-body">
+          <div className="col-sm-2" id="left-body">
+            <div style={{marginTop : "100px"}}>
+            <img style={{"height": "200px"}} src={HOMEDECO} />
+            </div>
           </div>
 
-          <div className="col-md-10" id="main-body" style={{padding: "0 10px 20px 15px"}}>
-            <div align="center"> <img style={{"height": "30%"}} src={HOMEDECO} /> </div>
+          <div className="col-md-9" id="main-body" style={{padding: "0 10px 20px 15px"}}>
+              
             <div id="qz_pending_list" style={{padding: "20px", height: "auto"}}>
               <div className="qz_list_title">
                 Recent quizzes

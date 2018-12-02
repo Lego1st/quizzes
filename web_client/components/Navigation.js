@@ -25,7 +25,7 @@ class Navigation extends Component {
           <div className="container navbar-container">
             <div className="navbar-row">
               <div className="navbar-head">
-                <span className="navbar-brand"><Link to='/'><img style={{"height": "50px"}} src={QUIZDECO} />es</Link></span>
+                <span className="navbar-brand"><Link to='/'><img style={{"height": "50px"}} src={QUIZDECO} /></Link></span>
               </div>
               <div className="navbar-mid" role="search">
                 <div className="navbar-mid-row">
