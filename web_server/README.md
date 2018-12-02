@@ -56,41 +56,134 @@ Response: 200 OK
 
 **Parameters:** None
 
+**Response:**
+- `id`: int, submission's id
+- `quiz`: int, quiz's id
+- `mark`: float, the result of the submission
+- `title`: string
+- `brief`: string
+- `category`: string, options: ('ma', 'cs')
+- `shuffle`: boolean
+- `rating`: int, quiz's difficulty, options: (1(easy), 2(medium), 3(hard))
+- `author`: string, username of the quiz's author
+- `answers`: array, an array of user's answers with parameters:
+    - `type`: string, options: ('si', 'mu', 'ma', 'fi')
+    - `index`: int, index of question in quiz
+    - `content`: string
+    - `options`: array, available options of question
+    - `answer`: array, solutions of question
+    - `matchings` (optional): array, an array of statements to match
+    - `user_answer`: user's answer for the question
+    - `correct`: boolean, indicate the user's answer is correct or not
+
 Example:
 ```
 Link: http://127.0.0.1:8000/api/quiz_result/1/
 
 Response: 200 OK
 {
-    "id": 1,
-    "quiz": 1,
-    "mark": 1,
+    "id": 2,
+    "quiz": 22,
+    "mark": 0.12,
     "answers": [
         {
-            "solution": [
-                "Ha Noi"
-            ],
             "index": 0,
-            "correct": true,
+            "type": "mu",
+            "content": "There are 60 marbles in a bowl. Their colors are red, blue, and yellow. 1/3 of the marbles are yellow, 1/4 of the marbles are blue. How many red marbles are there in the bowl?",
+            "options": [
+                "30",
+                "25",
+                "28",
+                "32"
+            ],
             "answer": [
-                "Ha Noi"
-            ]
+                "25",
+                "28"
+            ],
+            "user_answer": [
+                "30"
+            ],
+            "correct": false
         },
         {
-            "solution": [
-                "ulis",
-                "uet",
-                "ueb"
-            ],
             "index": 1,
-            "correct": true,
+            "type": "mu",
+            "content": "What is the next number in the following sequence **4 16 5 25 6 36 7 49 8 _______**",
+            "options": [
+                "56",
+                "64",
+                "36",
+                "52"
+            ],
             "answer": [
-                "uet",
-                "ulis",
-                "ueb"
-            ]
+                "64"
+            ],
+            "user_answer": [
+                "56"
+            ],
+            "correct": false
+        },
+        {
+            "index": 2,
+            "type": "mu",
+            "content": "What is 26x8?",
+            "options": [
+                "158",
+                "198",
+                "168",
+                "208"
+            ],
+            "answer": [
+                "208"
+            ],
+            "user_answer": [
+                "158"
+            ],
+            "correct": false
+        },
+        {
+            "index": 3,
+            "type": "mu",
+            "content": "How many legs (total ) does 4 dogs, 2 elephants, 15 cats, and 26 people have? ![image](https://imgc.allpostersimages.com/img/print/posters/dualororua-cartoon-wild-animals-background_a-G-15346796-9664571.jpg)",
+            "options": [
+                "98",
+                "110",
+                "136",
+                "142"
+            ],
+            "answer": [
+                "136"
+            ],
+            "user_answer": [
+                "98"
+            ],
+            "correct": false
+        },
+        {
+            "index": 4,
+            "type": "mu",
+            "content": "John works 4 days per week. He drives 10 miles round trip per day. If gas is $2.50 per gallon and his car gets 20 miles to the gallon, how much would he have spent on gasoline in 2 weeks getting back and forth to work?",
+            "options": [
+                "$8.50",
+                "$10.00",
+                "$12.00",
+                "$9.50"
+            ],
+            "answer": [
+                "$10.00"
+            ],
+            "user_answer": [
+                "$8.50"
+            ],
+            "correct": false
         }
-    ]
+    ],
+    "title": "Logic And Math Quiz",
+    "brief": "How does your brain cope with a healthy dose of lateral thinking?",
+    "category": "ma",
+    "shuffle": false,
+    "author": "admin",
+    "rating": 0
 }
 
 If not exist: 404 Not Found
@@ -387,13 +480,23 @@ Response: 200 OK
 
 **Response:**
 - `id`: int, submission's id
-- `quiz_id`: int
+- `quiz`: int, quiz's id
 - `mark`: float, the result of the submission
+- `title`: string
+- `brief`: string
+- `category`: string, options: ('ma', 'cs')
+- `shuffle`: boolean
+- `rating`: int, quiz's difficulty, options: (1(easy), 2(medium), 3(hard))
+- `author`: string, username of the quiz's author
 - `answers`: array, an array of user's answers with parameters:
+    - `type`: string, options: ('si', 'mu', 'ma', 'fi')
     - `index`: int, index of question in quiz
+    - `content`: string
+    - `options`: array, available options of question
+    - `answer`: array, solutions of question
+    - `matchings` (optional): array, an array of statements to match
+    - `user_answer`: user's answer for the question
     - `correct`: boolean, indicate the user's answer is correct or not
-    - `solution`: the solution of the question
-    - `answer`: user's answer for the question
 
 Example:
 ```
@@ -403,34 +506,5 @@ data:
 {"quiz_id": 1, "answers": [{"index": 0, "answer": ["Ha Noi"]}, {"index": 1, "answer": ["uet"]}]}
 
 Response: 201 Created
-{
-    "id": 11,
-    "quiz": 1,
-    "mark": 0.5,
-    "answers": [
-        {
-            "index": 0,
-            "correct": true,
-            "solution": [
-                "Ha Noi"
-            ],
-            "answer": [
-                "Ha Noi"
-            ]
-        },
-        {
-            "index": 1,
-            "correct": false,
-            "solution": [
-                "ulis",
-                "uet",
-                "ueb"
-            ],
-            "answer": [
-                "uet"
-            ]
-        }
-    ]
-}
 
 ```

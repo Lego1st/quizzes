@@ -233,12 +233,11 @@ class AnswerSerializer(serializers.BaseSerializer):
         }
         
     def to_representation(self, obj):
-        return {
-            'index': obj.question.index,
-            'answer': json.loads(obj.answer),
-            'solution': json.loads(obj.question.answer),
-            'correct': obj.correct
-        }
+        output = FullQuestionSerializer(obj.question).data
+        output['user_answer'] = json.loads(obj.answer)
+        output['correct'] = obj.correct
+
+        return output
 
 class UserSubmissionSerializer(serializers.ModelSerializer):
     answers = AnswerSerializer(many=True)
@@ -247,6 +246,15 @@ class UserSubmissionSerializer(serializers.ModelSerializer):
         model = UserSubmission
         fields = ('id', 'quiz', 'mark', 'answers')
 
+    def to_representation(self, obj):
+        output = super().to_representation(obj)
+        quiz = Quiz.objects.get(pk=output['quiz'])
+        quiz_question_data = QuizQuestionReadOnlySerializer(quiz).data
+        for field in quiz_question_data.keys():
+            if field not in ['id', 'questions']:
+                output[field] = quiz_question_data[field]
+        return output
+                
     def to_internal_value(self, data):
         quiz_id = data.get('quiz_id')
         quiz = Quiz.objects.get(pk=quiz_id)
