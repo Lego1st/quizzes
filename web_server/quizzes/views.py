@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from quizzes.models import *
 from quizzes.serializers import *
 from rest_framework import generics, mixins
@@ -57,12 +57,20 @@ class QuizQuestionDetail(generics.RetrieveAPIView):
 class QuizResult(generics.RetrieveAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = UserSubmissionSerializer
+    queryset = UserSubmission.objects.all()
+    lookup_fields = ('quiz_id',)
 
-    def get_queryset(self):
-        quiz_id = self.kwargs['pk']
-        quiz = Quiz.objects.get(pk=quiz_id)
-        user = self.request.user
-        return UserSubmission.objects.filter(quiz=quiz, user=user)
+    def get_object(self):
+        queryset = self.get_queryset()
+        queryset = self.filter_queryset(queryset)
+        filter = {}
+        filter['user'] = self.request.user
+        for field in self.lookup_fields:
+            filter[field] = self.kwargs[field]
+        obj = get_object_or_404(queryset, **filter)
+        self.check_object_permissions(self.request, obj)
+
+        return obj
 
 class FullQuizDetail(generics.RetrieveUpdateDestroyAPIView):
 

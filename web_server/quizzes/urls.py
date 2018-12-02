@@ -4,7 +4,7 @@ from . import views
 urlpatterns = [
     #quiz and question api
     path('api/quiz_question/<int:pk>/', views.QuizQuestionDetail.as_view()),
-    path('api/quiz_result/<int:pk>/', views.QuizResult.as_view()),
+    path('api/quiz_result/<int:quiz_id>/', views.QuizResult.as_view()),
     path('api/full_quiz/<int:pk>/', views.FullQuizDetail.as_view()),
     path('api/quiz_category/<cate>/', views.QuizCategory.as_view()),
     path('api/quiz_status_update/<int:pk>/', views.UpdateStatusQuiz.as_view()),
