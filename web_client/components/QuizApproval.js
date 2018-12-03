@@ -88,7 +88,7 @@ class QuizApproval extends Component {
 
     renderQuestionList(questions) {
         return questions.map(question => {
-            return <QuestDetail key={question.index} quest_detail={question} viewOnly={true}
+            return <QuestDetail key={question.index} quest_detail={question} viewOnly={true} approvalOnly={true}
                                 doQuiz={{}} callbackQuiz={() => {}}/>
         });
     }

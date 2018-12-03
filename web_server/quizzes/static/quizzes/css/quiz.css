@@ -76,3 +76,18 @@
     max-width: 400px;
     height: auto;
 }
+
+.scoreboard {
+    background-color: #fbfbfb;
+    padding : 20px 20px;
+    font-size: 20px;
+    border: 1px solid #d3d3d3;
+    border-radius: 10px;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
