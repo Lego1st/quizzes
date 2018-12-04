@@ -4,10 +4,21 @@ import ReactMdeDemo from "./ReactMdeDemo";
 class QuestHolder extends React.Component {
 	constructor(props) {
 		super(props);
-		const intial_state = props.intial_state;
+		var intial_state = props.intial_state;
+		var numOptions = props.numOptions;
+		var addable = 1;
+
+		if (props.intial_state.type == 2) {
+			intial_state['options'] = intial_state['answer']
+			numOptions = 1;
+			addable = 0;
+		}
+
 		this.state = {
-			question: props.intial_state,
-			numOptions: props.numOptions
+			question: intial_state,
+			numOptions: numOptions,
+			initNumOptions: numOptions,
+			addable: addable
 		}
 		
 		console.log("Adding new question " + props.index + ":", this.state.question);
@@ -61,7 +72,13 @@ class QuestHolder extends React.Component {
 
 	handleChangeType(_type, event) {
 		const new_question = { index: this.state.question.index, type: _type, content: this.state.question.content, options: [], matchings: [], answer: [] };
-		this.setState({ question: new_question })
+		
+		if (_type != 2) {
+			this.setState({ question: new_question, numOptions: this.state.initNumOptions, addable: 1 })			
+		}
+		else {
+			this.setState({ question: new_question, numOptions: 1, addable: 0})
+		}
 
 		for (var i = 0; i < this.state.numOptions; i++) {
 			this.refs['input' + (i + 1).toString()] = "";
@@ -108,7 +125,8 @@ class QuestHolder extends React.Component {
 								key = {'input' + (i + 1).toString()} 
 								type="text" 
 								className="form-control" 
-								placeholder= {this.state.question.options[i] ? this.state.question.options[i] : "Option " + (i+1).toString() }
+								placeholder= {this.state.question.options[i] ? this.state.question.options[i] : "Option " + (i+1).toString()}
+								value= {this.state.question.options[i]}
 								style = {{display: 'inline', float: 'left', width: '30%', marginLeft: '5%', marginRight: '5%', marginBottom: '1%'}}
 								onChange = {this.handleChangeOption.bind(this, i)}/> )
 
@@ -196,11 +214,13 @@ class QuestHolder extends React.Component {
 
 								<hr />
 								<div className="options&answer row">
-									<div className="optCrl col-sm-2" >
+									<div className="col-sm-1">
+									</div>
+									<div className="optCrl col-sm-1" >
 										<div style={{width: '1%', fontSize: '20px', textAlign: 'center'}}>
-											<i className="fas fa-lg fa-caret-up" onClick={() => this.setState({numOptions: this.state.numOptions + 1})}></i>
+											<i className="fas fa-lg fa-caret-up" onClick={() => this.setState({numOptions: this.state.numOptions + 1 * this.state.addable})}></i>
 											{this.state.numOptions}
-											<i className="fas fa-lg fa-caret-down" onClick={() => this.setState({numOptions: this.state.numOptions - 1})}></i>
+											<i className="fas fa-lg fa-caret-down" onClick={() => this.setState({numOptions: this.state.numOptions - 1 * this.state.addable})}></i>
 										</div>
 									</div>
 
