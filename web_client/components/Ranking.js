@@ -19,10 +19,10 @@ class Ranking extends React.Component {
 	handleData(fetch_data) {
 		let newData = [];
 		
-		console.log(newData);
-		for (let i = 0; i < fetch_data.length; i++) {
-			let key = fetch_data[i];
-			newData.push(<li key ={key['id']} className="list-group-item"><strong>{key['course']}</strong> <span className="badge badge-primary">{key['counter']}</span> </li>)
+		for (let key in fetch_data) {
+			let rank = fetch_data[key];
+			console.log(rank);
+			newData.push(<li key={key} className="list-group-item"><strong>{rank[0] + 1}</strong> <span className="badge badge-primary">{rank[1]}</span> </li>)
 		}
 
 		this.setState({
@@ -33,22 +33,14 @@ class Ranking extends React.Component {
 	}
 
 	componentDidMount() {
-	    get_data("/api/ranking/?username=",true)
+	    get_data("/profile/api/ranking/?username="+this.props.username,true)
 	      .then(res => res.json())
 	      .then(
 	        (result) => {
-	        console.log("statistic:", result);
-	        	this.handleData(result);
+					console.log("statistic:", result);
+					
+	        this.handleData(result);
 	        },
-	        // Note: it's important to handle errors here
-	        // instead of a catch() block so that we don't swallow
-	        // exceptions from actual bugs in components.
-	        (error) => {
-	          this.setState({
-	            isLoaded: true,
-	            error
-	          });
-	        }
 	      )
 	}
 

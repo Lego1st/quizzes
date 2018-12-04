@@ -60,7 +60,7 @@ class Favorite extends React.Component {
     return (
       <div className="container" id="profile-page">
           <div className="row">
-            <ProfileSideBar/>
+            <ProfileSideBar username={this.props.match.params.username}/>
             <div className="col-md-8">
                 {posts}
             </div>

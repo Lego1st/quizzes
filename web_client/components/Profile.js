@@ -17,9 +17,9 @@ class Profile extends React.Component {
     return (
       <div className="container" id="profile-page">
         <div className="row">
-          <ProfileSideBar username={this.props.match.params.username}/>
+          <ProfileSideBar username={this.props.match.params.username} />
           <div className="col-md-5">
-            { this.props.match.params.username != localStorage.getItem('username') ? '' :
+            {this.props.match.params.username != localStorage.getItem('username') ? '' :
               <button className='btn btn-info btn-profile' id='editbtn' onClick={() => { this.setState({ is_editing: true }) }}> Edit </button>
             }
             <ul className="nav nav-tabs">
@@ -34,35 +34,33 @@ class Profile extends React.Component {
               </div>
             </div>
           </div>
-        </div>
-
-
-        <div className="row">
-          <div className="col-md-3">
+          <div className="col-md-1">
           </div>
-          <div className="col-md-5">
+          <div className="col-md-3">
             <ul className="nav nav-tabs">
-
+              <li className="nav-item">
+              <a className="nav-link">&emsp;&emsp;</a>
+              </li>
               <li className="nav-item">
                 <a className="nav-link active" data-toggle="tab" href="#ranking">Ranking</a>
               </li>
             </ul>
             <div className="tab-content">
               <div id="ranking" className="container tab-pane active">
-                <Ranking />
+                <Ranking username={this.props.match.params.username} />
               </div>
             </div>
           </div>
-        </div>
-        {/* <div className="col-md-5" style={{ textAlign: 'center' }}>
+
+          {/* <div className="col-md-5" style={{ textAlign: 'center' }}>
             <strong><h4>PROCESS</h4></strong>
             <div id='chart'>
               <StatsChart />
             </div>
            </div>  */}
 
-      </div >
-
+        </div >
+      </div>
     );
   }
 }

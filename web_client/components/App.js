@@ -46,9 +46,9 @@ class App extends Component {
               <Route path='/profile/:username' component={Profile}/>
               <Route path='/search/:search_text' component={Search} />
               <Route path='/category/:cate' component={QuizCategory}/>
-              <Route path='/myquizzes' component={Post}/>
-              <Route path='/favorite' component={Favorite}/>
-              <Route path='/answered' component={Answered}/>
+              <Route path='/myquizzes/:username' component={Post}/>
+              <Route path='/favorite/:username' component={Favorite}/>
+              <Route path='/answered/:username' component={Answered}/>
               <Route path='/leaderboard' component={LeaderBoard}/>
               <Route path='/quizapproval' component={QuizApproval}/>
               <Route path='/quiz/:quizid' component={QuizDetail}/>

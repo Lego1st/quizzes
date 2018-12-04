@@ -20,6 +20,7 @@ class ProfileSideBar extends React.Component {
         }
     }
     componentDidMount() {
+        console.log(this.props.username);
         get_data("/profile/api/current_avatar/?username="+ this.props.username, true)
             .then((res) => res.json())
             .then(
@@ -71,7 +72,7 @@ class ProfileSideBar extends React.Component {
             <div className="col-md-3">
 
                 <img id='avatar' src={this.state.avatar} alt="default avatar" className="img-circle avatar" />
-                {this.props.username ? '' :
+                {this.props.username != localStorage.getItem('username') ? '' :
                     <div className="avatar-upload">
                         <label className="btn-upload">
                             Upload new picture
@@ -93,22 +94,22 @@ class ProfileSideBar extends React.Component {
                 <br />
                 <ul className="list-group">
                     <li className="list-group-item  list-profile ">
-                        <Link to="/profile">
+                        <Link to={`/profile/${this.props.username}`}>
                             Profile
 				</Link>
                     </li>
                     <li className="list-group-item  list-profile ">
-                        <Link to="/myquizzes">
+                        <Link to={`/myquizzes/${this.props.username}`}>
                             Post
 				</Link>
                     </li>
                     <li className="list-group-item  list-profile ">
-                        <Link to="/favorite">
+                        <Link to={`/favorite/${this.props.username}`}>
                             Favorite
 				</Link>
                     </li>
                     <li className="list-group-item  list-profile ">
-                        <Link to="/answered">
+                        <Link to={`/answered/${this.props.username}`}>
                             Answered
 	            </Link>
                     </li>
