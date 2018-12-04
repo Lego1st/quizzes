@@ -108,11 +108,22 @@ def ranking_counter(request):
         ranking[cate] = (user_mark[cate].index(scores[cur_user][cate]) , total_done[cate])
     return Response(ranking)
 
-# @api_view(['GET'])
-# def ranking_counter(request):
-#     cates = ['ma','cs','lg']
-#     for cate in cates:
-#         user_quiz = UserSubmission.objects.filter(quiz__category=cate)
+@api_view(['GET'])
+def get_leaderboard(request):
+    categories = defaultdict(list)
+    users = User.objects.all()
+    for user in users:
+        user_quiz = UserSubmission.objects.filter(user=user)
+        user_mark = defaultdict(float)
+        for quizdo in user_quiz:
+            quiz = Quiz.objects.filter(pk=quizdo.id)
+            cate = quiz[0].category
+            user_mark[cate] += quizdo.mark
+        for cate in user_mark:
+            categories[cate].append((user.username, user_mark[cate]))
+    for cate in categories:
+        categories[cate] = reversed(sorted(categories[cate], key=lambda x: x[1]))
+    return Response(categories)
         
 
 class UserList(generics.GenericAPIView):
