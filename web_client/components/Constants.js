@@ -54,6 +54,13 @@ export const CATEGORY_COLOR = {
 	'lg' : '#c25b5a'
 }
 
+export const EMOTICON = {
+	'sad' : '/static/quizzes/images/sad.png',
+	'smile' : '/static/quizzes/images/smile.png'
+}
+
+export const RUSURE = '/static/quizzes/images/rusure.jpg'
+export const QUIZRESULTHAT = '/static/quizzes/images/hat.png'
 export const QUIZDECO = '/static/quizzes/images/quizdeco.png'
 export const HOMEDECO = '/static/quizzes/images/homedeco.png'
 export const UPLOAD_AVATAR_API = '/profile/api/avatar/'

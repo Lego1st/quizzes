@@ -7,7 +7,7 @@ import { CATEGORY_FROM_CODE, CATEGORY_IMG } from './Constants';
 import get_data from './Utils';
 
 const limit = 1;
-const pageCount = 5;
+const pageCount = 10;
 
 class QuizDetail extends Component {
   constructor(props) {
@@ -21,6 +21,7 @@ class QuizDetail extends Component {
         category: null,
         questions: []
       },
+      isFinished : false,
       doQuiz : {}
     };
   }
@@ -35,13 +36,34 @@ class QuizDetail extends Component {
     get_data(`/api/quiz_question/${this.props.match.params.quizid}/`, true)
       .then(res => res.json())
       .then(data => {
-        this.setState({
-          total: data.questions.length,
-          dataQuiz: data
-        });  
+        if(data.detail) {
+          console.log(data.detail);
+          get_data(`/api/quiz_result/${this.props.match.params.quizid}/`, true)
+            .then(resj => resj.json())
+            .then(dataj => {
+              let newDataQuiz = dataj;
+              newDataQuiz['questions'] = newDataQuiz['answers'];
+              let newDoQuiz = {};
+              for (var i in newDataQuiz['questions']) 
+                newDoQuiz[newDataQuiz['questions'][i].index] = newDataQuiz['questions'][i].user_answer
+              console.log(newDataQuiz);
+              this.setState({
+                total: dataj.answers.length,
+                dataQuiz: newDataQuiz,
+                isFinished: true,
+                doQuiz: newDoQuiz
+              })
+            })
+        } else {
+          this.setState({
+            total: data.questions.length,
+            dataQuiz: data,
+            isFinished: false
+          });
+        }  
       })
       .catch(err => {
-        console.log(err);
+        // console.log(err);
       })
   }
 
@@ -51,21 +73,48 @@ class QuizDetail extends Component {
     });
   };
 
+  getNumberOfCorrect(quests) {
+    let total = quests.length;
+    let correct = quests.reduce((total, x) => total + x);
+    return `${correct} / ${total}`;
+  }
+
+  renderRating() {
+    var rate = [];
+    for(var i = 0; i < 3; i++)
+      rate.push(<span key={i} className={i < this.state.dataQuiz.rating ? "fa fa-star checked" : "fa fa-star"}></span>)
+    return rate;
+  }
+
   render() {
-    // const { currentPage } = this.state;
-    const ques = this.state.dataQuiz.questions.map((x) =>  <QuestDetail quest_detail={x} callbackQuiz={this.handleQuestAnswered} doQuiz={this.state.doQuiz}/>)
+    const ques = this.state.dataQuiz.questions.map((x) =>  
+      <QuestDetail 
+        viewOnly={this.state.isFinished} 
+        approvalOnly={false} 
+        quest_detail={x} 
+        callbackQuiz={this.handleQuestAnswered} 
+        doQuiz={this.state.doQuiz}/>);
+    const quests = this.state.dataQuiz.questions.map((x) => (x.correct ? 1 : 0));
     return (
       <div className="container" id="quiz-page">
         <div className="row">
           <div className="col-sm-6">
             <h2>{this.state.dataQuiz.title}</h2>
+            {this.renderRating()}
             <p>{this.state.dataQuiz.brief} </p>
           </div>
           <div className="col-sm-6">
-            <QuizResult 
-              submission={this.state.doQuiz} 
-              quizId={this.props.match.params.quizid} 
-              questions={this.state.dataQuiz.questions}/>
+            {
+              this.state.isFinished ?
+              <div className="float-right scoreboard">
+                Correct answer: {this.getNumberOfCorrect(quests)}<br/>
+                Point : {this.state.dataQuiz.rating * this.state.dataQuiz.mark}
+              </div>
+              : <QuizResult 
+                submission={this.state.doQuiz} 
+                quizId={this.props.match.params.quizid} 
+                questions={this.state.dataQuiz.questions}/>
+            }
           </div>
         </div>
         <div className="row quest-wrapper">

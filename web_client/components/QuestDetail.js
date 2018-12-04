@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { EMOTICON } from './Constants';
 const ReactMarkdown = require('react-markdown');
 
 function updateQuizAnswer(user_answer) {
@@ -24,6 +25,8 @@ class SingleChoiceQuest extends Component {
     console.log(this.props.doQuiz[this.props.quest_detail.index])
   }
   handleOnClick(event, option) {
+    if(this.props.viewOnly) return;
+    // console.log(option);
     updateQuizAnswer.apply(this, [[option]]);
   }
 
@@ -31,11 +34,11 @@ class SingleChoiceQuest extends Component {
     var x = this.props.quest_detail;
     return (
       <div className="row">
-        <div className={this.props.viewOnly ? "col-lg-12" : "col-lg-8"}>
+        <div className={this.props.viewOnly && this.props.approvalOnly ? "col-lg-12" : "col-lg-8"}>
           <ReactMarkdown source={x.content}/>
           <br/>
         </div>
-        <div className={this.props.viewOnly ? "col-lg-12" : "col-lg-4"}>
+        <div className={this.props.viewOnly && this.props.approvalOnly ? "col-lg-12" : "col-lg-4"}>
           <p className="font-weight-bold" style={{"textAlign" : "center"}}>Choose one option: </p>
           <div className="btn-group btn-group-toggle btn-group-vertical" data-toggle="buttons" style={{"width" : "100%"}}>
             {
@@ -65,6 +68,7 @@ class MultipleChoiceQuest extends Component {
   }
 
   handleOnClick(event, option) {
+    if(this.props.viewOnly) return;
     let { answer } = this.state;
     const idx = answer.indexOf(option);
     if(idx > -1) {
@@ -82,11 +86,11 @@ class MultipleChoiceQuest extends Component {
     var x = this.props.quest_detail;
     return(
       <div className="row">
-        <div className={this.props.viewOnly ? "col-lg-12" : "col-lg-8"}>
+        <div className={this.props.viewOnly && this.props.approvalOnly ? "col-lg-12" : "col-lg-8"}>
           <ReactMarkdown source={x.content}/>
           <br/>
         </div>
-        <div className={this.props.viewOnly ? "col-lg-12" : "col-lg-4"}>
+        <div className={this.props.viewOnly && this.props.approvalOnly ? "col-lg-12" : "col-lg-4"}>
           <p className="font-weight-bold" style={{"textAlign" : "center"}}>Choose all options that satisfy: </p>
           <div className="btn-group btn-group-toggle btn-group-vertical" data-toggle="buttons" style={{"width" : "100%"}}>
             {
@@ -95,7 +99,8 @@ class MultipleChoiceQuest extends Component {
                   key={idx} 
                   className={"btn " + (this.props.doQuiz[x.index] && this.props.doQuiz[x.index].includes(option) ? "active btn-warning" : "btn-info")}
                   onClick={event => this.handleOnClick(event, option)}
-                  style={{"margin" : "10px 10px"}}>
+                  style={{"margin" : "10px 10px"}}
+                  disabled={this.props.viewOnly}>
                   <input type="checkbox" name="options" autoComplete="off" disabled={this.props.viewOnly}/> {option}
                 </label>
               )
@@ -161,6 +166,7 @@ class MatchingQuest extends Component {
   }
 
   handleOnClick = (event, matching) => {
+    if(this.props.viewOnly) return;
     const { matchedOption, toMatchOptions } = this.state;
     if(matchedOption[matching] === undefined)
       return;
@@ -184,7 +190,7 @@ class MatchingQuest extends Component {
     const { toMatchOptions, matchedOption } = this.state;
     return (
       <div className="row">
-        <div className={this.props.viewOnly ? "col-lg-12" : "col-lg-8"}>
+        <div className={this.props.viewOnly && this.props.approvalOnly ? "col-lg-12" : "col-lg-8"}>
           <ReactMarkdown source={x.content}/>
           <ul style={{"listStyleType" : "none"}}>
             {
@@ -206,7 +212,7 @@ class MatchingQuest extends Component {
             }
           </ul>
         </div>
-        <div className={this.props.viewOnly ? "col-lg-12" : "col-lg-4"}>
+        <div className={this.props.viewOnly && this.props.approvalOnly ? "col-lg-12" : "col-lg-4"}>
           <p className="font-weight-bold" style={{"textAlign" : "center"}}>Match the following options into their right position:</p>
             <ul style={{"listStyleType": "none"}} id="answer-list">
             {
@@ -244,13 +250,13 @@ class FillingQuest extends Component {
     var x = this.props.quest_detail;
     return(
       <div className="row">
-        <div className={this.props.viewOnly ? "col-lg-12" : "col-lg-8"}>
+        <div className={this.props.viewOnly && this.props.approvalOnly ? "col-lg-12" : "col-lg-8"}>
           <ReactMarkdown source={x.content}/>
           <ul style={{"listStypeType" : "none"}}>
             {x.options.map((y, idx) => (<li key={idx}>{y} ?</li>))}
           </ul>
         </div>
-        <div className={this.props.viewOnly ? "col-lg-12" : "col-lg-4"}>
+        <div className={this.props.viewOnly && this.props.approvalOnly ? "col-lg-12" : "col-lg-4"}>
           <p className="font-weight-bold" style={{"textAlign" : "center"}}>Filling in the ???:</p>
             <input className="form-control" type="text" placeholder="???" 
                     onChange={event => this.handleOnChange(event)} 
@@ -271,12 +277,37 @@ class QuestDetail extends Component {
     var x = this.props.quest_detail;
     return (
       <div className="quest-box">
+
+        <div align="center" style={{fontSize : "20px"}}>
+          {
+            this.props.viewOnly 
+            && 
+            ( 
+              <div>
+                {
+                  x.correct 
+                  ? <div> 
+                      <img style={{height:"50px"}} src={ EMOTICON['smile']}/> 
+                      <div style={{color : "green"}}>Correct</div> 
+                    </div>
+                  : <div>
+                      <img style={{height:"50px"}} src={ EMOTICON['sad']}/>
+                      <div style={{color : "red"}}>Incorrect</div>
+                    </div>
+                }
+                <div style={{color : "green"}}>Solution: {x.answer.toString()}</div>
+              </div>
+            )
+          }
+               
+        </div>
+
         <h2> Quesiton {x.index}</h2>
         <br/>
-        {x.type=='si' && <SingleChoiceQuest key={x.index} quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz} viewOnly={this.props.viewOnly}/>}
-        {x.type=='mu' && <MultipleChoiceQuest key={x.index} quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz} viewOnly={this.props.viewOnly}/>}
-        {x.type=='ma' && <MatchingQuest key={x.index} quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz} viewOnly={this.props.viewOnly}/>}
-        {x.type=='fi' && <FillingQuest key={x.index} quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz} viewOnly={this.props.viewOnly}/>}
+        {x.type=='si' && <SingleChoiceQuest key={x.index} quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz} viewOnly={this.props.viewOnly} approvalOnly={this.props.approvalOnly}/>}
+        {x.type=='mu' && <MultipleChoiceQuest key={x.index} quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz} viewOnly={this.props.viewOnly} approvalOnly={this.props.approvalOnly}/>}
+        {x.type=='ma' && <MatchingQuest key={x.index} quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz} viewOnly={this.props.viewOnly} approvalOnly={this.props.approvalOnly}/>}
+        {x.type=='fi' && <FillingQuest key={x.index} quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz} viewOnly={this.props.viewOnly} approvalOnly={this.props.approvalOnly}/>}
       </div>
     );
   }

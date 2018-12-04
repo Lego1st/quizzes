@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CATEGORY_FROM_CODE } from './Constants';
+import { CATEGORY_FROM_CODE, QUIZRESULTHAT, RUSURE } from './Constants';
 import get_data from './Utils';
 import { Link } from 'react-router-dom';
 
@@ -8,8 +8,15 @@ class QuizResult extends Component {
     super(props);
     this.state = {
       qresult: 'Are you sure ?',
+      tflist: [],
       isSubmited: false
     }
+  }
+
+  getNumberOfCorrect(quests) {
+    let total = quests.length;
+    let correct = quests.reduce((total, x) => total + x);
+    return `${correct} / ${total}`;
   }
 
 
@@ -18,13 +25,14 @@ class QuizResult extends Component {
     const answers = indices.map((x) => ({ index: x, answer: this.props.submission[x]}));
     return {
       quiz_id: this.props.quizId,
-      answers: answers,
+      answers: answers
     };
   }
 
   handleNextQuiz() {
     this.refs.submit.click();
   }
+
   handleOnClick(data) {
     fetch('/api/submit_quiz/' , {
       method: 'POST',
@@ -37,18 +45,20 @@ class QuizResult extends Component {
     .then(res => res.json())
     .then(data => {
       console.log("Score: ", data);
+      let TFanswers = data.answers.map((x) => (x.correct ? 1 : 0));
       this.setState({
-        qresult: "You have just gained " + data.mark + " pts",
+        qresult: "Correct: " + this.getNumberOfCorrect(TFanswers),
+        tflist: TFanswers,
         isSubmited: true
       })
       // this.refs.scoreModal.modal('show');
 
     }).catch(err => {
       console.log(err);
-      this.setState({
-        qresult: "You cannot answer this because you have already answerd or you are the author",
-        isSubmited: true
-      })
+      // this.setState({
+      //   qresult: "You cannot answer this because you have already answerd or you are the author",
+      //   isSubmited: true
+      // })
       // alert("You cannot answer this because you have already answerd or you are the author");
     });
     // this.refs.submit.click();
@@ -74,7 +84,17 @@ class QuizResult extends Component {
             </div>
             */}
             <div className="modal-body">
-              {this.state.qresult}
+              {
+                this.state.isSubmited 
+                ? <div>
+                    <img className="center" src={QUIZRESULTHAT}/>
+                    <ul style={{"listStyleType" : "none"}}>
+                      {this.state.tflist.map((x, idx) => <li> Question {idx}: {x ? <i class="fas fa-check"></i> : <i class="fas fa-times"></i>} </li>)}
+                    </ul>
+                    <div style={{color: "blue"}}> {this.state.qresult} </div>
+                  </div>
+                : <img className="center" src={RUSURE}/>
+              }
             </div>
             <div className="modal-footer">
               <button type="button" ref="submit" className="btn btn-secondary" data-dismiss="modal">Nope</button>
