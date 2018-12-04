@@ -1,5 +1,6 @@
 import React from 'react';
 import get_data from "./Utils"
+import {CATEGORY_CODE} from "./Constants"
 // ////////////////////////////////////
 // // 			RANKING INFO		  //
 // ////////////////////////////////////
@@ -21,8 +22,8 @@ class Ranking extends React.Component {
 		
 		for (let key in fetch_data) {
 			let rank = fetch_data[key];
-			console.log(rank);
-			newData.push(<li key={key} className="list-group-item"><strong>{rank[0] + 1}</strong> <span className="badge badge-primary">{rank[1]}</span> </li>)
+			console.log(CATEGORY_CODE);
+			newData.push(<li key={key} className="list-group-item">{CATEGORY_CODE[key]} <span className="badge badge-pill badge-danger"> {rank[0] + 1} / {rank[1]} </span> </li>)
 		}
 
 		this.setState({

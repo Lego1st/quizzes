@@ -30,6 +30,10 @@
 	float: right;
 	width: 100px;
 }
+.label-info{
+	float: right;
+	padding-right: 10px
+}
 
 .badge {
 	float: right;

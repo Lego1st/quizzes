@@ -11,7 +11,9 @@ class Profile extends React.Component {
     super(props);
     this.state = { is_editing: false }
   }
-
+  handle_save(){
+    this.setState({is_editing: false});
+  }
   render() {
 
     return (
@@ -30,7 +32,7 @@ class Profile extends React.Component {
 
             <div className="tab-content">
               <div id="general-info" className="container tab-pane active">
-                <GeneralInfo username={this.props.match.params.username} is_editing={this.state.is_editing} />
+                <GeneralInfo username={this.props.match.params.username} is_editing={this.state.is_editing} handle={this.handle_save.bind(this)}/>
               </div>
             </div>
           </div>

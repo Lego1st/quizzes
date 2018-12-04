@@ -22,7 +22,7 @@ class GeneralInfo extends React.Component {
 		};
 	}
 	componentDidMount() {
-
+		console.log(this.props.is_editing);
 		get_data(`/profile/api/detail/${this.props.username}/`, true)
 			.then((res) => res.json())
 			.catch(
@@ -92,11 +92,14 @@ class GeneralInfo extends React.Component {
 				'Authorization': 'Token ' + localStorage.getItem('token'),
 			},
 			body: JSON.stringify(data)
-		})
+		}).then(res => res.json())
 			.then((result) => {
-				for (var j in this.refs) {
-					this.refs[j].setAttribute('disabled', '');
-				}
+				console.log('update done');
+				// for (var i = 0; i < $(".label-info").length; i++) {
+				// 	$(".label-info")[i].removeAttribute('hidden');
+				// }
+				this.props.handle();
+				console.log(this.props.is_editing);
 			});
 	}
 	render() {
@@ -106,37 +109,48 @@ class GeneralInfo extends React.Component {
 					<ul className="list-group">
 
 						<li className="list-group-item"><strong>Full Name</strong>
+							<label className='label-info' hidden={this.props.is_editing}> {this.state.fullname} </label>
+
 							<span className="info">
-								<input id='fullname' ref='fn' disabled={!this.props.is_editing} onChange={e => this.setState({ fullname: e.target.value })} value={this.state.fullname} />
+								<input id='fullname' style={{ border: 'groove' }} ref='fn' hidden={!this.props.is_editing} onChange={e => this.setState({ fullname: e.target.value })} value={this.state.fullname} />
 							</span>
 						</li>
 						<li className="list-group-item"><strong>Age</strong>
+							<label className='label-info' hidden={this.props.is_editing}> {this.state.age} </label>
+
 							<span className="info">
-								<input id='age' ref='age' disabled={!this.props.is_editing} onChange={e => this.setState({ age: e.target.value })} value={this.state.age} />
+								<input id='age' ref='age' style={{ border: 'groove' }} hidden={!this.props.is_editing} onChange={e => this.setState({ age: e.target.value })} value={this.state.age} />
+
 							</span>
 						</li>
 						<li className="list-group-item"><strong>Country</strong>
+							<label className='label-info' hidden={this.props.is_editing}> {this.state.country} </label>
 
 							<span className="info">
-								<input id='country' list="countries" ref='ct' disabled={!this.props.is_editing} onFocus={e => e.target.value = ''} onChange={e => this.setState({ country: e.target.value })} value={this.state.country} />
+								<input id='country' list="countries" ref='ct' style={{ border: 'groove' }} hidden={!this.props.is_editing} onFocus={e => e.target.value = ''} onChange={e => this.setState({ country: e.target.value })} value={this.state.country} />
 								<datalist id="countries">
 									<option value="Vietnam" />
 									<option value="England" />
 									<option value="America" />
 									<option value="Japan" />
 								</datalist>
+
 							</span>
 						</li>
 						<li className="list-group-item"><strong>Education</strong>
+							<label className='label-info' hidden={this.props.is_editing}> {this.state.education} </label>
 
 							<span className="info">
-								<input id='education' ref='edu' disabled={!this.props.is_editing} onChange={e => this.setState({ education: e.target.value })} value={this.state.education} />
+								<input id='education' ref='edu' style={{ border: 'groove' }} hidden={!this.props.is_editing} onChange={e => this.setState({ education: e.target.value })} value={this.state.education} />
+
 							</span>
 						</li>
 						<li className="list-group-item"><strong>Bio</strong>
+							<label className='label-info' hidden={this.props.is_editing}> {this.state.bio} </label>
 
 							<span className="info">
-								<input id='bio' ref='bio' disabled={!this.props.is_editing} onChange={e => this.setState({ bio: e.target.value })} value={this.state.bio} />
+								<input id='bio' ref='bio' style={{ border: 'groove' }} hidden={!this.props.is_editing} onChange={e => this.setState({ bio: e.target.value })} value={this.state.bio} />
+
 							</span></li>
 
 					</ul>
