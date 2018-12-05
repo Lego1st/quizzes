@@ -1,28 +1,32 @@
 import React from 'react';
 import ProfileSideBar from './ProfileSideBar';
 import get_data from './Utils';
+import TableView from './TableView';
 import {CATEGORY_CODE, STATUS_QUIZ} from './Constants';
 import {Link} from 'react-router-dom';
 
 var Config = require('Config');
+var page_size = 5;
+
 class Post extends React.Component {
 	constructor(props) {
 	    super(props);
 	    this.state = {
 	    	posts: [],
+	    	next: null,
 	    	isLoaded: true,
 	    	error: null
 	    }
 	}
 
 	componentDidMount() {
-		get_data("/api/posted_quiz/", true)
+		get_data(`/api/posted_quiz/?page_size=${page_size}`, true)
 			.then(res => {
 				return res.json();
 			})
 			.then((result) => {
-				console.log(result);
 				this.setState({
+					next: result.next,
 					posts: result.results || []
 				})
 			},
@@ -34,6 +38,24 @@ class Post extends React.Component {
 				});
 			}
 		)
+	}
+
+	handleScrollToBottom(completed) {
+	    // load more
+	    if(this.state.next == null) {
+	      completed();
+	      return;
+	    }
+	    get_data(this.state.next.replace(Config.serverUrl, ''), true).then(res => res.json()).then(result=> {
+	      var newData = Object.assign([], this.state.posts);
+	      newData.push.apply(newData, result.results);
+	      console.log("Scroll-load: ", result.results);
+	      completed();
+	      this.setState({
+	        posts: newData,
+	        next: result.next
+	      })
+	    });
 	}
 
 	render() {
@@ -75,7 +97,10 @@ class Post extends React.Component {
 		                </h4>
 	                </div>
 		        	) : (
-		            posts
+		            	<TableView 
+		                    dataSource={this.state.posts}
+		                    onScrollToBottom={this.handleScrollToBottom.bind(this)}
+		                  />
 		        		)
 		        }
 		        
