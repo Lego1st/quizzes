@@ -280,7 +280,7 @@ class QuestDetail extends Component {
 
         <div align="center" style={{fontSize : "20px"}}>
           {
-            this.props.viewOnly 
+            this.props.viewOnly && (!this.props.approvalOnly)
             && 
             ( 
               <div>

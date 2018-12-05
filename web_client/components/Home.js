@@ -47,6 +47,7 @@ class Home extends Component {
         return res.json();
       })
       .then((result) => {
+        console.log("Result ", result);
         this.setState({
           next: result.next,
           recent_quizzes: result.results || []
@@ -71,6 +72,7 @@ class Home extends Component {
     get_data(this.state.next.replace(Config.serverUrl, ''), true).then(res => res.json()).then(result=> {
       var newData = Object.assign([], this.state.recent_quizzes);
       newData.push.apply(newData, result.results);
+      console.log("Scroll-load: ", result.results);
       completed();
       this.setState({
         recent_quizzes: newData,
