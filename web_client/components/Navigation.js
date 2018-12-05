@@ -11,6 +11,7 @@ class Navigation extends Component {
   handle_logout = () => {
     this.props.setLoginState(false);
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
   };
 
   handleSubmitSearch(e) {
