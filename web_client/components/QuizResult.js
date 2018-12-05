@@ -9,7 +9,8 @@ class QuizResult extends Component {
     this.state = {
       qresult: 'Are you sure ?',
       tflist: [],
-      isSubmited: false
+      isSubmited: false,
+      next: '/'
     }
   }
 
@@ -49,7 +50,8 @@ class QuizResult extends Component {
       this.setState({
         qresult: "Correct: " + this.getNumberOfCorrect(TFanswers),
         tflist: TFanswers,
-        isSubmited: true
+        isSubmited: true,
+        next: '/quiz/' + data.next_quiz.toString()
       })
       // this.refs.scoreModal.modal('show');
 
@@ -88,21 +90,21 @@ class QuizResult extends Component {
                 this.state.isSubmited 
                 ? <div>
                     <img className="center" src={QUIZRESULTHAT}/>
-                    <ul style={{"listStyleType" : "none"}}>
-                      {this.state.tflist.map((x, idx) => <li> Question {idx}: {x ? <i class="fas fa-check"></i> : <i class="fas fa-times"></i>} </li>)}
+                    <ul style={{"listStyleType" : "none", "padding" : "0", "textAlign" : "center"}}>
+                      {this.state.tflist.map((x, idx) => <li> Question {idx}:    {x ? <i style={{color: "green"}} class="fas fa-check"></i> : <i style={{color: "red"}} class="fas fa-times"></i>} </li>)}
                     </ul>
-                    <div style={{color: "blue"}}> {this.state.qresult} </div>
                   </div>
                 : <img className="center" src={RUSURE}/>
               }
             </div>
             <div className="modal-footer">
+              {this.state.isSubmited && <div style={{color: "blue"}} className="mr-auto"> {this.state.qresult} </div>}
+              {
+                !this.state.isSubmited 
+                ? <button type="button" className="btn btn-primary" onClick={event => this.handleOnClick(this.submitQuiz())}>Yes, sumbit</button>
+                : <Link to={this.state.next} onClick={event => this.handleNextQuiz()}>A new quiz ?</Link>
+              }
               <button type="button" ref="submit" className="btn btn-secondary" data-dismiss="modal">Nope</button>
-                {
-                  !this.state.isSubmited 
-                  ? <button type="button" className="btn btn-primary" onClick={event => this.handleOnClick(this.submitQuiz())}>Yes, sumbit</button>
-                  : <Link to="/" onClick={event => this.handleNextQuiz()}>A new quiz ?</Link>
-                }
             </div>
           </div>
         </div>

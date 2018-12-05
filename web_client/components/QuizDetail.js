@@ -32,7 +32,7 @@ class QuizDetail extends Component {
     });
   }
 
-  componentDidMount() {
+  fetchQuizData() {
     get_data(`/api/quiz_question/${this.props.match.params.quizid}/`, true)
       .then(res => res.json())
       .then(data => {
@@ -58,13 +58,25 @@ class QuizDetail extends Component {
           this.setState({
             total: data.questions.length,
             dataQuiz: data,
-            isFinished: false
+            isFinished: false,
+            currentPage: 1,
+            doQuiz : {}
           });
         }  
       })
       .catch(err => {
         // console.log(err);
       })
+  }
+
+  componentDidMount() {
+    this.fetchQuizData();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params.quizid != this.props.match.params.quizid) {
+      this.fetchQuizData();
+    }
   }
 
   handlePageChange = page => {
