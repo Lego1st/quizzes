@@ -3,12 +3,13 @@ from quizzes.models import *
 from quizzes.serializers import *
 from rest_framework import generics, mixins
 from rest_framework import permissions, status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.filters import OrderingFilter
+import random
 import pandas
 
 def index(request):
@@ -134,13 +135,40 @@ class SearchQuiz(generics.ListAPIView):
     def get_queryset(self):
         return Question.objects.filter(content__contains=self.kwargs['search_text'])
         
-class UserSubmit(generics.CreateAPIView):
-    permission_classes = (permissions.IsAuthenticated,)
-    queryset = UserSubmission.objects.all()
-    serializer_class = UserSubmissionSerializer
+# class UserSubmit(generics.CreateAPIView):
+#     permission_classes = (permissions.IsAuthenticated,)
+#     queryset = UserSubmission.objects.all()
+#     serializer_class = UserSubmissionSerializer
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+#     def perform_create(self, serializer):
+#         serializer.save(user=self.request.user)
+
+@api_view(['POST'])
+@permission_classes([permissions.IsAuthenticated])
+def user_submit(request):
+    def random_quiz(category, user):
+        quiz_id_pool = Quiz.objects.filter(category=category)\
+                                    .exclude(submissions__user=user)\
+                                    .values_list('id', flat=True)
+        if quiz_id_pool:
+            quiz_id = random.choice(quiz_id_pool)
+            next_quiz = Quiz.objects.filter(pk=quiz_id).first()
+            if next_quiz:
+                return quiz_id
+        return None
+    print(request.data)
+    serializer = UserSubmissionSerializer(data=request.data)
+    if not serializer.is_valid():
+        return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+    
+    serializer.save(user=request.user)
+    res = serializer.data
+    current_quiz_id = res['quiz']
+    current_quiz = Quiz.objects.get(pk=current_quiz_id)
+    category = current_quiz.category
+    next_quiz_id = random_quiz(category, request.user)
+    res['next_quiz'] = next_quiz_id
+    return Response(res, status=status.HTTP_201_CREATED)
 
 class UpdateStatusQuiz(generics.UpdateAPIView):
     permission_classes = (permissions.IsAdminUser,)
