@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-// import { render } from "react-dom";
+import { Link } from 'react-router-dom';
+
 import Pagination from "react-paginating";
 import QuestDetail from "./QuestDetail";
 import QuizResult from "./QuizResult";
@@ -111,8 +112,15 @@ class QuizDetail extends Component {
       <div className="container" id="quiz-page">
         <div className="row">
           <div className="col-sm-6">
-            <h2>{this.state.dataQuiz.title}</h2>
-            {this.renderRating()}
+            <h2>{this.state.dataQuiz.title}</h2> 
+            { 
+              localStorage.username == this.state.dataQuiz.author &&
+              <Link 
+                to={"/editquiz/" + this.props.match.params.quizid}> 
+                Edit 
+              </Link> 
+            }
+            <div>{this.renderRating()}</div>
             <p>{this.state.dataQuiz.brief} </p>
           </div>
           <div className="col-sm-6">
