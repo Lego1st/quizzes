@@ -7,6 +7,7 @@ urlpatterns = [
     path('api/quiz_result/<int:quiz_id>/', views.QuizResult.as_view()),
     path('api/full_quiz/<int:pk>/', views.FullQuizDetail.as_view()),
     path('api/quiz_category/<cate>/', views.QuizCategory.as_view()),
+    path('api/answered_quiz/', views.UserAnswered.as_view()),
     path('api/quiz_status_update/<int:pk>/', views.UpdateStatusQuiz.as_view()),
     path('api/create_quiz/', views.QuizCreate.as_view()),
     path('api/recent_quiz/', views.RecentQuiz.as_view()),

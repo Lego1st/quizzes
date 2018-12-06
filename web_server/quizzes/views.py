@@ -182,6 +182,17 @@ class UpdateStatusQuiz(generics.UpdateAPIView):
 
         return Response({'status': 'success'})
 
+class UserAnswered(generics.ListAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = BriefQuizSerializer
+    
+    def get_queryset(self):
+        username = self.request.query_params.get('username', None)
+        if not username:
+            output = Quiz.objects.filter(submissions__user=self.request.user)
+        else:
+            output = Quiz.objects.filter(submissions__user__username=username)
+        return output
 
 @api_view(['POST'])
 def upload_file_quiz(request):

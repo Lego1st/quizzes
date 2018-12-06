@@ -11,6 +11,7 @@ List APIs:
 - [`api/posted_quiz/`](#apiposted_quiz)
 - [`api/quiz_result/<quiz_id>/`](#apiquiz_resultquiz_id)
 - [`api/quiz_category/<cate>/`](#apiquiz_categorycate)
+- [`api/answered_quiz/`](#apianswered_quiz)
 
 ### `api/quiz_question/<quiz_id>/`
 **Method:** `GET`
@@ -508,4 +509,57 @@ data:
 
 Response: 201 Created
 
+```
+
+### `api/answered_quiz/`
+**Method:** `GET`
+
+**Descriptions:** Get a list of quizzes done by user
+
+**Parameters:**
+- `username`: string, if not specified, server will response the current user's answered quiz
+
+Example:
+```
+Link: http://127.0.0.1:8000/api/answered_quiz/?username=admin
+
+Response: 200 OK
+[
+    {
+        "id": 22,
+        "title": "Logic And Math Quiz",
+        "brief": "How does your brain cope with a healthy dose of lateral thinking?",
+        "rating": 0,
+        "created_at": "2018-12-01T10:44:08.035344Z",
+        "status": "p",
+        "category": "ma",
+        "author": "admin"
+    }
+]
+
+Link: http://127.0.0.1:8000/api/answered_quiz/
+
+Response: 200 OK
+[
+    {
+        "id": 22,
+        "title": "Logic And Math Quiz",
+        "brief": "How does your brain cope with a healthy dose of lateral thinking?",
+        "rating": 0,
+        "created_at": "2018-12-01T10:44:08.035344Z",
+        "status": "p",
+        "category": "ma",
+        "author": "admin"
+    },
+    {
+        "id": 20,
+        "title": "Logic And Math Quiz",
+        "brief": "How does your brain cope with a healthy dose of lateral thinking?",
+        "rating": 0,
+        "created_at": "2018-12-01T10:44:07.788964Z",
+        "status": "p",
+        "category": "ma",
+        "author": "admin"
+    },
+]
 ```
