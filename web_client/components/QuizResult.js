@@ -53,21 +53,25 @@ class QuizResult extends Component {
         isSubmited: true,
         next: '/quiz/' + data.next_quiz.toString()
       })
-      // this.refs.scoreModal.modal('show');
 
     }).catch(err => {
       console.log(err);
-      // this.setState({
-      //   qresult: "You cannot answer this because you have already answerd or you are the author",
-      //   isSubmited: true
-      // })
-      // alert("You cannot answer this because you have already answerd or you are the author");
     });
-    // this.refs.submit.click();
+  }
+
+  getPreviewAnswered() {
+    const indices = this.props.questions.map((x) => x.index);
+    const previewAnswers = indices.map((x) => (
+      <li key={x}> 
+        {this.props.submission[x] && this.props.submission[x].length > 0 ? <span style={{color: "green"}}> Question {x}  </span> : <span style={{color: "red"}}> Question {x} </span>} 
+      </li>
+
+    ));
+    return previewAnswers;
   }
 
   render() {
-    // console.log(this.props.questions);
+    
     return (
       <div>
       <button type="button" className="btn btn-warning float-right" data-toggle="modal" data-target="#quizResultModal">
@@ -77,24 +81,25 @@ class QuizResult extends Component {
       <div className="modal fade" id="quizResultModal" tabIndex="-1" role="dialog" aria-labelledby="quizResultModalTitle" aria-hidden="true">
         <div className="modal-dialog" role="document">
           <div className="modal-content">
-            {/*
-            <div className="modal-header">
-              <h5 className="modal-title" id="quizResultModalTitle">Modal title</h5>
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            */}
             <div className="modal-body">
               {
                 this.state.isSubmited 
                 ? <div>
                     <img className="center" src={QUIZRESULTHAT}/>
                     <ul style={{"listStyleType" : "none", "padding" : "0", "textAlign" : "center"}}>
-                      {this.state.tflist.map((x, idx) => <li> Question {idx}:    {x ? <i style={{color: "green"}} class="fas fa-check"></i> : <i style={{color: "red"}} class="fas fa-times"></i>} </li>)}
+                      {this.state.tflist.map((x, idx) => <li key={idx}> Question {idx}:    {x ? <i style={{color: "green"}} class="fas fa-check"></i> : <i style={{color: "red"}} class="fas fa-times"></i>} </li>)}
                     </ul>
                   </div>
-                : <img className="center" src={RUSURE}/>
+                : <div>
+                    <img className="center" src={RUSURE}/>
+                    <ul style={{"listStyleType" : "none", backgroundColor: "#f7f7f7", margin : "20px 70px", padding : "10px 20px", textAlign : "center"}}>
+                      <li><span style={{color: "green"}}> Answerded  </span></li>
+                      <li><span style={{color: "red"}}> Not answerded </span></li>
+                    </ul>
+                    <ul style={{listStyleType : "none", padding : "0", textAlign : "center"}}>
+                      {this.getPreviewAnswered()}
+                    </ul>
+                  </div>
               }
             </div>
             <div className="modal-footer">
