@@ -197,7 +197,11 @@ class LikeQuiz(generics.UpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         obj = self.get_object()
-        obj.likes.add(self.request.user)
+        user = self.request.user
+        if user not in obj.likes.all():
+            obj.likes.add(user)
+        else:
+            obj.likes.remove(user)
         return Response(self.get_serializer(obj).data, status=status.HTTP_200_OK)
 
 @api_view(['POST'])

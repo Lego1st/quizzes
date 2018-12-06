@@ -620,7 +620,7 @@ Response: 201 Created
 ### `api/like_quiz/<quiz_id>/`
 **Method:** `PUT`
 
-**Description:** Use for like a quiz
+**Description:** Use for liking or unliking a quiz, like if the user hasn't like the quiz, otherwise unlike.
 
 **Parameters:** None
 
