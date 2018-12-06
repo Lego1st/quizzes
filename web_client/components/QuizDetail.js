@@ -22,6 +22,8 @@ class QuizDetail extends Component {
         category: null,
         questions: []
       },
+      like_count : 0,
+      liked : false,
       isFinished : false,
       doQuiz : {}
     };
@@ -51,6 +53,8 @@ class QuizDetail extends Component {
               this.setState({
                 total: dataj.answers.length,
                 dataQuiz: newDataQuiz,
+                like_count : newDataQuiz.like_count,
+                liked : newDataQuiz.liked,
                 isFinished: true,
                 doQuiz: newDoQuiz
               })
@@ -59,6 +63,8 @@ class QuizDetail extends Component {
           this.setState({
             total: data.questions.length,
             dataQuiz: data,
+            like_count : data.like_count,
+            liked : data.liked,
             isFinished: false,
             currentPage: 1,
             doQuiz : {}
@@ -78,6 +84,27 @@ class QuizDetail extends Component {
     if (prevProps.match.params.quizid != this.props.match.params.quizid) {
       this.fetchQuizData();
     }
+  }
+
+  handleLove() {
+    fetch(`/api/like_quiz/${this.props.match.params.quizid}/` , {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Token ' + localStorage.getItem('token'),
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      this.setState({
+        like_count: data.like_count,
+        liked: data.liked
+      })
+
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
   handlePageChange = page => {
@@ -112,14 +139,31 @@ class QuizDetail extends Component {
       <div className="container" id="quiz-page">
         <div className="row">
           <div className="col-sm-6">
-            <h2>{this.state.dataQuiz.title}</h2> 
-            { 
-              localStorage.username == this.state.dataQuiz.author &&
-              <Link 
-                to={"/editquiz/" + this.props.match.params.quizid}> 
-                Edit 
-              </Link> 
-            }
+            <h2>
+              
+              <i 
+                className="fas fa-heart" 
+                style={{
+                  borderRadius: "10px",
+                  border: "1px solid #c3c3c3",
+                  padding: "10px 10px",
+                  backgroundColor: "#fff", 
+                  marginRight: "20px", 
+                  fontSize: "20px", 
+                  color : this.state.liked ? "red" : "black"}}
+                onClick={e => this.handleLove()}>  {this.state.like_count}
+              </i>
+              {this.state.dataQuiz.title}
+              { 
+                localStorage.username == this.state.dataQuiz.author &&
+                <Link 
+                  style={{marginLeft: "20px", fontSize: "15px"}}
+                  to={"/editquiz/" + this.props.match.params.quizid}> 
+                  Edit 
+                </Link> 
+              } 
+            </h2>         
+            
             <div>{this.renderRating()}</div>
             <p>{this.state.dataQuiz.brief} </p>
           </div>
