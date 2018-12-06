@@ -80,18 +80,8 @@ class FullQuizDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Quiz.objects.all()
     serializer_class = FullQuizSerializer
 
-class QuizCategory(generics.ListAPIView):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
-    serializer_class = BriefQuizSerializer
-    pagination_class = StandardPaginationResult
-    filter_backends = (OrderingFilter,)
-    ordering_fields = '__all__'
-    ordering = ('-created_at',)
-
-    def get_queryset(self):
-        return Quiz.objects.filter(category=self.kwargs['cate'])
-
-class PostedQuiz(generics.ListAPIView):
+# Set of api that return a list of quiz item use BriefQuizSerializer
+class QuizItemList(generics.ListAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = BriefQuizSerializer
     pagination_class = StandardPaginationResult
@@ -99,8 +89,49 @@ class PostedQuiz(generics.ListAPIView):
     ordering_fields = '__all__'
     ordering = ('-created_at',)
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['user'] = self.request.user
+        return context
+
+class RecentQuiz(QuizItemList):
+
+    queryset = Quiz.objects.all()
+
+class QuizCategory(QuizItemList):
+
     def get_queryset(self):
-        return Quiz.objects.filter(author=self.request.user)
+        return Quiz.objects.filter(category=self.kwargs['cate'])
+
+class PostedQuiz(QuizItemList):
+
+    def get_queryset(self):
+        username = self.request.query_params.get('username', None)
+        if not username:
+            output = Quiz.objects.filter(author=self.request.user)
+        else:
+            output = Quiz.objects.filter(author__username=username)
+        return output
+
+class UserAnswered(QuizItemList):
+    
+    def get_queryset(self):
+        username = self.request.query_params.get('username', None)
+        if not username:
+            output = Quiz.objects.filter(submissions__user=self.request.user)
+        else:
+            output = Quiz.objects.filter(submissions__user__username=username)
+        return output
+
+class LikedQuiz(QuizItemList):
+    
+    def get_queryset(self):
+        username = self.request.query_params.get('username', None)
+        if not username:
+            output = Quiz.objects.filter(likes=self.request.user)
+        else:
+            output = Quiz.objects.filter(likes__username=username)
+        return output
 
 class PendingQuiz(generics.ListAPIView):
     permission_classes = (permissions.IsAdminUser,)
@@ -117,31 +148,13 @@ class QuizCreate(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
-
-class RecentQuiz(generics.ListAPIView):
-
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    queryset = Quiz.objects.all()
-    serializer_class = BriefQuizSerializer
-    pagination_class = StandardPaginationResult
-    filter_backends = (OrderingFilter,)
-    ordering_fields = '__all__'
-    ordering = ('-created_at',)
-
+    
 class SearchQuiz(generics.ListAPIView):
     permission_classes = (permissions.IsAuthenticated, )
     serializer_class = QuestionAndQuizSerializer
 
     def get_queryset(self):
         return Question.objects.filter(content__contains=self.kwargs['search_text'])
-        
-# class UserSubmit(generics.CreateAPIView):
-#     permission_classes = (permissions.IsAuthenticated,)
-#     queryset = UserSubmission.objects.all()
-#     serializer_class = UserSubmissionSerializer
-
-#     def perform_create(self, serializer):
-#         serializer.save(user=self.request.user)
 
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
@@ -181,18 +194,6 @@ class UpdateStatusQuiz(generics.UpdateAPIView):
         instance.save()
 
         return Response({'status': 'success'})
-
-class UserAnswered(generics.ListAPIView):
-    permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = BriefQuizSerializer
-    
-    def get_queryset(self):
-        username = self.request.query_params.get('username', None)
-        if not username:
-            output = Quiz.objects.filter(submissions__user=self.request.user)
-        else:
-            output = Quiz.objects.filter(submissions__user__username=username)
-        return output
 
 @api_view(['POST'])
 def upload_file_quiz(request):

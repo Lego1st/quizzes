@@ -14,6 +14,7 @@ class Quiz(models.Model):
 	category = models.CharField(max_length=2, choices=CATEGORIES)
 	shuffle = models.BooleanField(default=False)
 	author = models.ForeignKey(User, related_name='created_quizzes', on_delete=models.CASCADE)
+	likes = models.ManyToManyField(User, related_name="likes")
 
 	@property
 	def name(self):

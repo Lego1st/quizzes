@@ -1,17 +1,242 @@
 # Quizzes backend API
-
+**Notice:** APIs that return a list of brief quiz item is updated to have pagination, username parameter for answered_quiz, liked_quiz, posted_quiz apis
 ## Quiz and Question APIs
 List APIs:
+- [Quiz item list APIs](#quizitemlistapi):
+    - [`api/recent_quiz/`](#apirecent_quiz)
+    - [`api/posted_quiz/`](#apiposted_quiz)
+    - [`api/quiz_category/<cate>/`](#apiquiz_categorycate)
+    - [`api/answered_quiz/`](#apianswered_quiz)
+    - [`api/liked_quiz/`](#apiliked_quiz)
 
 - [`api/quiz_question/<quiz_id>/`](#apiquiz_questionquiz_id)
 - [`api/full_quiz/<quiz_id>/`](#apifull_quizquiz_id)
 - [`api/create_quiz/`](#apicreate_quiz)
-- [`api/recent_quiz/`](#apirecent_quiz)
 - [`api/submit_quiz/`](#apisubmit_quiz)
-- [`api/posted_quiz/`](#apiposted_quiz)
 - [`api/quiz_result/<quiz_id>/`](#apiquiz_resultquiz_id)
-- [`api/quiz_category/<cate>/`](#apiquiz_categorycate)
-- [`api/answered_quiz/`](#apianswered_quiz)
+
+### Quiz item list APIs
+**Method:** `GET`
+
+**Descriptions:** Get a list of quiz item
+
+**Parameters:**
+- `page`: int, page index, start from 1
+- `page_size`: int, number of items to response per page, default is `10`
+- `username`: string, if not specified, will be default to the current user, ***only available for `posted_quiz`, `answered_quiz`, `liked_quiz`***
+
+**Response:**
+- `count`: int, the number of quiz items available
+- `next`: link, the link of the next page for pagination, `null` if there is no next page
+- `previous`: link, the link of the previous page for pagination, `null` if there is no previous page
+- `result`: array, array of quiz items
+    - `id`: int, quiz's id`
+    - `title`: string
+    - `brief`: string
+    - `category`: string, options: ('ma', 'cs')
+    - `rating`: int, quiz's difficulty, options: (1(easy), 2(medium), 3(hard))
+    - `author`: string, username of the quiz's author`
+    - `created_at`: date
+    - `status`: string
+    - `like_count`: int, number of likes this quiz recieved
+    - `liked`: boolean, indicate whether the current user liked the quiz or didn't
+
+#### `api/recent_quiz/`
+**Descriptions:** Get a list of most recent quiz
+
+Example:
+```
+Link: http://127.0.0.1:8000/api/recent_quiz/?page_size=2&page=2
+
+Response: 200 OK
+{
+    "count": 22,
+    "next": "http://127.0.0.1:8000/api/recent_quiz/?page=3&page_size=2",
+    "previous": "http://127.0.0.1:8000/api/recent_quiz/?page_size=2",
+    "results": [
+        {
+            "id": 20,
+            "title": "Logic And Math Quiz",
+            "brief": "How does your brain cope with a healthy dose of lateral thinking?",
+            "rating": 0,
+            "created_at": "2018-12-01T10:44:07.788964Z",
+            "status": "p",
+            "category": "ma",
+            "author": "admin",
+            "like_count": 0,
+            "liked": false
+        },
+        {
+            "id": 19,
+            "title": "How logical are you?",
+            "brief": "How does your brain cope with a healthy dose of lateral thinking?",
+            "rating": 0,
+            "created_at": "2018-12-01T10:44:07.705688Z",
+            "status": "p",
+            "category": "lg",
+            "author": "admin",
+            "like_count": 0,
+            "liked": false
+        }
+    ]
+}
+```
+
+#### `api/posted_quiz/`
+**Descriptions:** Response a list of quiz that is created by an user
+
+Example:
+```
+Link: http://127.0.0.1:8000/api/posted_quiz/?page_size=2&page=1
+
+Response: 200 OK
+{
+    "count": 0,
+    "next": null,
+    "previous": null,
+    "results": []
+}
+
+Link: http://127.0.0.1:8000/api/posted_quiz/?page_size=2&page=1&username=admin
+
+Response: 200 OK
+{
+    "count": 22,
+    "next": "http://127.0.0.1:8000/api/posted_quiz/?page=2&page_size=2&username=admin",
+    "previous": null,
+    "results": [
+        {
+            "id": 22,
+            "title": "Logic And Math Quiz",
+            "brief": "How does your brain cope with a healthy dose of lateral thinking?",
+            "rating": 0,
+            "created_at": "2018-12-01T10:44:08.035344Z",
+            "status": "p",
+            "category": "ma",
+            "author": "admin",
+            "like_count": 1,
+            "liked": true
+        },
+        {
+            "id": 21,
+            "title": "How logical are you?",
+            "brief": "How does your brain cope with a healthy dose of lateral thinking?",
+            "rating": 0,
+            "created_at": "2018-12-01T10:44:07.951632Z",
+            "status": "p",
+            "category": "lg",
+            "author": "admin",
+            "like_count": 0,
+            "liked": false
+        }
+    ]
+}
+```
+
+#### `api/quiz_category/<cate>/`
+**Descriptions:** Get a list of most recent in a category
+
+Example:
+```
+Link: http://127.0.0.1:8000/api/quiz_category/ma/?page_size=2&page=2
+
+Response: 200 OK
+{
+    "count": 11,
+    "next": "http://127.0.0.1:8000/api/quiz_category/ma/?page=3&page_size=2",
+    "previous": "http://127.0.0.1:8000/api/quiz_category/ma/?page_size=2",
+    "results": [
+        {
+            "id": 18,
+            "title": "Logic And Math Quiz",
+            "brief": "How does your brain cope with a healthy dose of lateral thinking?",
+            "rating": 0,
+            "created_at": "2018-12-01T10:44:07.576288Z",
+            "status": "p",
+            "category": "ma",
+            "author": "admin",
+            "like_count": 0,
+            "liked": false
+        },
+        {
+            "id": 16,
+            "title": "Logic And Math Quiz",
+            "brief": "How does your brain cope with a healthy dose of lateral thinking?",
+            "rating": 0,
+            "created_at": "2018-12-01T10:44:07.324084Z",
+            "status": "p",
+            "category": "ma",
+            "author": "admin",
+            "like_count": 0,
+            "liked": false
+        }
+    ]
+}
+```
+
+#### `api/answered_quiz/`
+**Descriptions:** Get a list of quizzes done by user
+
+Example:
+```
+Link: http://127.0.0.1:8000/api/answered_quiz/?username=admin&page_size=2&page=1
+
+Response: 200 OK
+{
+    "count": 1,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "id": 22,
+            "title": "Logic And Math Quiz",
+            "brief": "How does your brain cope with a healthy dose of lateral thinking?",
+            "rating": 0,
+            "created_at": "2018-12-01T10:44:08.035344Z",
+            "status": "p",
+            "category": "ma",
+            "author": "admin",
+            "like_count": 1,
+            "liked": true
+        }
+    ]
+}
+
+Link: http://127.0.0.1:8000/api/answered_quiz/?page_size=2&page=1
+
+Response: 200 OK
+{
+    "count": 4,
+    "next": "http://127.0.0.1:8000/api/answered_quiz/?page=2&page_size=2",
+    "previous": null,
+    "results": [
+        {
+            "id": 22,
+            "title": "Logic And Math Quiz",
+            "brief": "How does your brain cope with a healthy dose of lateral thinking?",
+            "rating": 0,
+            "created_at": "2018-12-01T10:44:08.035344Z",
+            "status": "p",
+            "category": "ma",
+            "author": "admin",
+            "like_count": 1,
+            "liked": true
+        },
+        {
+            "id": 20,
+            "title": "Logic And Math Quiz",
+            "brief": "How does your brain cope with a healthy dose of lateral thinking?",
+            "rating": 0,
+            "created_at": "2018-12-01T10:44:07.788964Z",
+            "status": "p",
+            "category": "ma",
+            "author": "admin",
+            "like_count": 0,
+            "liked": false
+        }
+    ]
+}
+```
 
 ### `api/quiz_question/<quiz_id>/`
 **Method:** `GET`
@@ -348,126 +573,6 @@ Response: 201 Created
 
 ```
 
-### `api/recent_quiz/`
-**Method:** `GET`
-
-**Descriptions:** Get a list of most recent quiz
-
-**Parameters:**
-- `page`: page index, start from 1
-- `page_size`: number of items to response per page
-
-Example:
-```
-Link: http://127.0.0.1:8000/api/recent_quiz/?page_size=2&page=2
-
-Response: 200 OK
-{
-    "count": 4,
-    "next": null,
-    "previous": "http://127.0.0.1:8000/api/recent_quiz/?page_size=2",
-    "results": [
-        {
-            "id": 2,
-            "title": "quiz 1",
-            "brief": "This is first quiz",
-            "rating": 1,
-            "created_at": "2018-12-01T10:52:01.028313Z",
-            "status": "p",
-            "category": "ma",
-            "author": "minh"
-        },
-        {
-            "id": 1,
-            "title": "quiz 1",
-            "brief": "This is first quiz",
-            "rating": 1,
-            "created_at": "2018-12-01T09:49:56.069562Z",
-            "status": "p",
-            "category": "ma",
-            "author": "minh"
-        }
-    ]
-}
-```
-
-### `api/quiz_category/<cate>/`
-**Method:** `GET`
-
-**Descriptions:** Get a list of most recent in a category
-
-**Parameters:**
-- `page`: page index, start from 1
-- `page_size`: number of items to response per page
-
-Example:
-```
-Link: http://127.0.0.1:8000/api/quiz_category/ma/?page_size=2&page=2
-
-Response: 200 OK
-{
-    "count": 4,
-    "next": null,
-    "previous": "http://127.0.0.1:8000/api/quiz_category/ma/?page_size=2",
-    "results": [
-        {
-            "id": 2,
-            "title": "quiz 1",
-            "brief": "This is first quiz",
-            "rating": 1,
-            "created_at": "2018-12-01T10:52:01.028313Z",
-            "status": "p",
-            "category": "ma",
-            "author": "minh"
-        },
-        {
-            "id": 1,
-            "title": "quiz 1",
-            "brief": "This is first quiz",
-            "rating": 1,
-            "created_at": "2018-12-01T09:49:56.069562Z",
-            "status": "p",
-            "category": "ma",
-            "author": "minh"
-        }
-    ]
-}
-
-```
-
-### `api/posted_quiz/`
-**Method:** `GET`
-
-**Descriptions:** Response a list of quiz that is created by an user
-
-**Parameters:** 
-- `page`: page index, start from 1
-- `page_size`: number of items to response per page
-
-Example:
-```
-Link: http://127.0.0.1:8000/api/posted_quiz/?page_size=2&page=1
-
-Response: 200 OK
-{
-    "count": 1,
-    "next": null,
-    "previous": null,
-    "results": [
-        {
-            "id": 1,
-            "title": "quiz 1",
-            "brief": "This is first quiz",
-            "rating": 1,
-            "created_at": "2018-11-27T09:47:25.881746Z",
-            "status": "p",
-            "category": "ma",
-            "author": "minh"
-        }
-    ]
-}
-```
-
 ### `api/submit_quiz/`
 **Method:** `POST`
 
@@ -509,57 +614,4 @@ data:
 
 Response: 201 Created
 
-```
-
-### `api/answered_quiz/`
-**Method:** `GET`
-
-**Descriptions:** Get a list of quizzes done by user
-
-**Parameters:**
-- `username`: string, if not specified, server will response the current user's answered quiz
-
-Example:
-```
-Link: http://127.0.0.1:8000/api/answered_quiz/?username=admin
-
-Response: 200 OK
-[
-    {
-        "id": 22,
-        "title": "Logic And Math Quiz",
-        "brief": "How does your brain cope with a healthy dose of lateral thinking?",
-        "rating": 0,
-        "created_at": "2018-12-01T10:44:08.035344Z",
-        "status": "p",
-        "category": "ma",
-        "author": "admin"
-    }
-]
-
-Link: http://127.0.0.1:8000/api/answered_quiz/
-
-Response: 200 OK
-[
-    {
-        "id": 22,
-        "title": "Logic And Math Quiz",
-        "brief": "How does your brain cope with a healthy dose of lateral thinking?",
-        "rating": 0,
-        "created_at": "2018-12-01T10:44:08.035344Z",
-        "status": "p",
-        "category": "ma",
-        "author": "admin"
-    },
-    {
-        "id": 20,
-        "title": "Logic And Math Quiz",
-        "brief": "How does your brain cope with a healthy dose of lateral thinking?",
-        "rating": 0,
-        "created_at": "2018-12-01T10:44:07.788964Z",
-        "status": "p",
-        "category": "ma",
-        "author": "admin"
-    },
-]
 ```
