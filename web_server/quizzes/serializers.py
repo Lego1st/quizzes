@@ -20,8 +20,9 @@ class BriefQuizSerializer(serializers.ModelSerializer):
         ret['author'] = author_username
         likes = ret.pop('likes')
         ret['like_count'] = len(likes)
-        user = self.context['user']
-        ret['liked'] = user.id in likes
+        request = self.context.get('request')
+        if request:
+            ret['liked'] = request.user.id in likes
         return ret
 
 class QuestionReadOnlySerializer(serializers.BaseSerializer):

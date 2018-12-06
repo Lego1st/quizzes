@@ -89,11 +89,6 @@ class QuizItemList(generics.ListAPIView):
     ordering_fields = '__all__'
     ordering = ('-created_at',)
 
-    def get_serializer_context(self):
-        context = super().get_serializer_context()
-        context['user'] = self.request.user
-        return context
-
 class RecentQuiz(QuizItemList):
 
     queryset = Quiz.objects.all()
@@ -194,6 +189,16 @@ class UpdateStatusQuiz(generics.UpdateAPIView):
         instance.save()
 
         return Response({'status': 'success'})
+
+class LikeQuiz(generics.UpdateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = BriefQuizSerializer
+    queryset = Quiz.objects.all()
+
+    def update(self, request, *args, **kwargs):
+        obj = self.get_object()
+        obj.likes.add(self.request.user)
+        return Response(self.get_serializer(obj).data, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 def upload_file_quiz(request):

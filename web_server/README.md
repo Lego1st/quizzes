@@ -14,6 +14,7 @@ List APIs:
 - [`api/create_quiz/`](#apicreate_quiz)
 - [`api/submit_quiz/`](#apisubmit_quiz)
 - [`api/quiz_result/<quiz_id>/`](#apiquiz_resultquiz_id)
+- [`api/like_quiz/<quiz_id>/`](#apilike_quizquiz_id)
 
 ### Quiz item list APIs
 **Method:** `GET`
@@ -614,4 +615,42 @@ data:
 
 Response: 201 Created
 
+```
+
+### `api/like_quiz/<quiz_id>/`
+**Method:** `PUT`
+
+**Description:** Use for like a quiz
+
+**Parameters:** None
+
+**Response:** It is recommended to use `like_count` in the response to update number of likes in the front-end, and if the user successfully like the quiz, `liked` should be `true`
+- `id`: int, quiz's id`
+- `title`: string
+- `brief`: string
+- `category`: string, options: ('ma', 'cs')
+- `rating`: int, quiz's difficulty, options: (1(easy), 2(medium), 3(hard))
+- `author`: string, username of the quiz's author`
+- `created_at`: date
+- `status`: string
+- `like_count`: int, number of likes this quiz recieved
+- `liked`: boolean, indicate whether the current user liked the quiz or didn't
+
+Example:
+```
+Link: http://127.0.0.1:8000/api/like_quiz/12/
+
+Response: 200 OK
+{
+    "id": 12,
+    "title": "Logic And Math Quiz",
+    "brief": "How does your brain cope with a healthy dose of lateral thinking?",
+    "rating": 0,
+    "created_at": "2018-12-01T10:44:06.884720Z",
+    "status": "p",
+    "category": "ma",
+    "author": "admin",
+    "like_count": 1,
+    "liked": true
+}
 ```
