@@ -293,6 +293,8 @@ Response: 200 OK
 - `shuffle`: boolean
 - `rating`: int, quiz's difficulty, options: (1(easy), 2(medium), 3(hard))
 - `author`: string, username of the quiz's author
+- `like_count`: int, number of likes this quiz recieved
+- `liked`: boolean, indicate whether the current user liked the quiz or didn't
 - `answers`: array, an array of user's answers with parameters:
     - `type`: string, options: ('si', 'mu', 'ma', 'fi')
     - `index`: int, index of question in quiz
@@ -596,6 +598,8 @@ Response: 201 Created
 - `rating`: int, quiz's difficulty, options: (1(easy), 2(medium), 3(hard))
 - `author`: string, username of the quiz's author
 - `next_quiz`: int, suggested quiz's id
+- `like_count`: int, number of likes this quiz recieved
+- `liked`: boolean, indicate whether the current user liked the quiz or didn't
 - `answers`: array, an array of user's answers with parameters:
     - `type`: string, options: ('si', 'mu', 'ma', 'fi')
     - `index`: int, index of question in quiz

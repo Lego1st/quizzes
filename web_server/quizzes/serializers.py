@@ -68,12 +68,17 @@ class QuizQuestionReadOnlySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Quiz
-        fields = ('id' ,'title', 'brief', 'category', 'shuffle', 'author', 'rating', 'questions')
+        fields = ('id' ,'title', 'brief', 'category', 'shuffle', 'author', 'rating', 'questions', 'likes')
     def to_representation(self, obj):
         ret = super().to_representation(obj)
         author_id = ret['author']
         author_username = User.objects.get(pk=author_id).username
         ret['author'] = author_username
+        likes = ret.pop('likes')
+        ret['like_count'] = len(likes)
+        request = self.context.get('request')
+        if request:
+            ret['liked'] = request.user.id in likes
         return ret
 
 class FullQuestionSerializer(serializers.BaseSerializer):
@@ -253,7 +258,11 @@ class UserSubmissionSerializer(serializers.ModelSerializer):
     def to_representation(self, obj):
         output = super().to_representation(obj)
         quiz = Quiz.objects.get(pk=output['quiz'])
-        quiz_question_data = QuizQuestionReadOnlySerializer(quiz).data
+        quiz_question_data = QuizQuestionReadOnlySerializer(
+            quiz, context={
+                'request': self.context.get('request')
+            }
+        ).data
         for field in quiz_question_data.keys():
             if field not in ['id', 'questions']:
                 output[field] = quiz_question_data[field]
