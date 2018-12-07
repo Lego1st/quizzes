@@ -56,7 +56,7 @@ class Ranking extends React.Component {
 	render() {
 		if (this.state.isLoaded) {
 			return (
-			<ul className="list-group list-group-flush">
+			<ul className="list-group">
                 {this.state.data}
               </ul>
 			);

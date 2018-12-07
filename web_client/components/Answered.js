@@ -1,28 +1,33 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import ProfileSideBar from './ProfileSideBar';
 import get_data from './Utils';
-import {CATEGORY_FROM_CODE} from './Constants';
+import TableView from './TableView';
+import {CATEGORY_CODE, STATUS_QUIZ} from './Constants';
+import {Link} from 'react-router-dom';
 
+var Config = require('Config');
+var page_size = 5;
 
-class Answered extends React.Component {
+class Favorite extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
         posts: [],
+        next: null,
         isLoaded: true,
         error: null
       }
   }
 
   componentDidMount() {
-    get_data("/api/answered_quiz/", true)
+    get_data(`/api/answered_quiz/?page_size=${page_size}?username=${this.props.match.params.username}`, true)
       .then(res => {
         return res.json();
       })
       .then((result) => {
         this.setState({
-          posts: result || []
+          next: result.next,
+          posts: result.results || []
         })
       },
       (error) => {
@@ -35,14 +40,33 @@ class Answered extends React.Component {
     )
   }
 
+  handleScrollToBottom(completed) {
+      // load more
+      if(this.state.next == null) {
+        completed();
+        return;
+      }
+      get_data(this.state.next.replace(Config.serverUrl, ''), true).then(res => res.json()).then(result=> {
+        var newData = Object.assign([], this.state.posts);
+        newData.push.apply(newData, result.results);
+        console.log("Scroll-load: ", result.results);
+        completed();
+        this.setState({
+          posts: newData,
+          next: result.next
+        })
+      });
+  }
+
   render() {
     const posts = [];
     for (var i = this.state.posts.length - 1; i >= 0; i--) {
-      let post = this.state.posts[i].quiz;
+      let post = this.state.posts[i];
+      console.log(post);
       posts.push(
-        <div className="userPost" key = {i}>
+        <div className="userPost" key={post.id} onClick={() => window.location.replace(Config.serverUrl + "/editquiz/" + post.id + "/")}>
           <h2 style = {{display: 'inline-block', margin: '0px'}}> {post['title']} </h2>
-          <p style = {{float:'right', margin: '0px'}}> {CATEGORY_FROM_CODE[post['category']]} </p>
+          <p style = {{float:'right', margin: '0px'}}> {CATEGORY_CODE[post['category']]} </p>
           
           <div style={{marginTop: "2%"}}>
             <p> {post['brief']} </p>
@@ -50,13 +74,8 @@ class Answered extends React.Component {
           <hr/>
           <div>
             {/* <div id="head-ava" style={{transform: "scale(0.5)", display: "inline-block"}}>N</div> */}
-            <p style={{display: 'inline', fontSize: '15px'}}>by {post.author.user.username}   <i className="fas fa-heart"></i> {post['likes']}</p>
-            {post['status'] == 0 ? (
-              <span style={{float: 'right', margin: '0px', fontSize: '15px'}}><i className="fas fa-times-circle"></i></span>
-              
-              ) : (
-              <span style={{float: 'right', margin: '0px', fontSize: '15px'}}><i className="fas fa-check-circle"></i></span>
-            )}
+            <p style={{display: 'inline', fontSize: '15px'}}>by {post.author}   <i className="fas fa-heart"></i> {post['likes']}</p>
+            <p style={{float: 'right', margin: '0px', fontSize: '15px'}}>{STATUS_QUIZ[post['status']]}</p>
           </div>
         </div>
       );
@@ -66,7 +85,25 @@ class Answered extends React.Component {
           <div className="row">
             <ProfileSideBar username={this.props.match.params.username}/>
             <div className="col-md-8">
-                {posts}
+            { (posts.length == 0) ? (
+              <div style={{textAlign: 'center'}}>
+                <h3>You have not answered any quiz yet ^^</h3>
+
+                <h4>Go 
+                  <Link to="/">
+                          <i className="fas fa-home" style={{margin: '1%'}}></i>
+                        </Link>
+                        to explore more quizzes!
+                    </h4>
+                  </div>
+              ) : (
+                  <TableView 
+                        dataSource={this.state.posts}
+                        onScrollToBottom={this.handleScrollToBottom.bind(this)}
+                      />
+                )
+            }
+            
             </div>
             
           </div>
@@ -75,4 +112,4 @@ class Answered extends React.Component {
   }
 }
 
-export default Answered;
+export default Favorite;

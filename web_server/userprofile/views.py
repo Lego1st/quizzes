@@ -104,8 +104,9 @@ def ranking_counter(request):
 
     cur_user = request.GET.get('username')
     ranking = defaultdict()
+    print(user_mark)
     for cate in user_mark:
-        ranking[cate] = (user_mark[cate].index(scores[cur_user][cate]) , total_done[cate])
+        ranking[cate] = (user_mark[cate].index(scores[cur_user][cate]), total_done[cate])
     return Response(ranking)
 
 @api_view(['GET'])

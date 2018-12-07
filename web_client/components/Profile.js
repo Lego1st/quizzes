@@ -21,47 +21,28 @@ class Profile extends React.Component {
         <div className="row">
           <ProfileSideBar username={this.props.match.params.username} />
           <div className="col-md-7">
-            {this.props.match.params.username != localStorage.getItem('username') ? '' :
-              <button className='btn btn-outline-info btn-profile' id='editbtn' onClick={() => { this.setState({ is_editing: true }) }}> Edit </button>
-            }
-            <ul className="nav nav-tabs">
-              <li className="nav-item">
-                <a className="nav-link active" data-toggle="tab" href="#general-info">General Info</a>
-              </li>
-            </ul>
-
-            <div className="tab-content">
-              <div id="general-info" className="container tab-pane active">
+                
+                <div className='title'>          
+                  <h4 style={{display: 'inline-block'}}> General Info </h4> 
+                  {this.props.match.params.username != localStorage.getItem('username') ? '' :
+                    // <button className='btn btn-outline-info btn-profile' > Edit </button>
+                    <i className="fas fa-edit" style={{display: 'inline', marginLeft: '1%', marginTop: '-1%', cursor: 'pointer'}} onClick={() => { this.setState({ is_editing: true }) }}></i>
+                  }
+                </div>
+                
                 <GeneralInfo username={this.props.match.params.username} is_editing={this.state.is_editing} handle={this.handle_save.bind(this)} />
-              </div>
-            </div>
           </div>
         </div>
         <div className="row">
           <div className="col-md-3">
           </div>
           <div className="col-md-7">
-            <ul className="nav nav-tabs">
-              <li className="nav-item">
-                <a className="nav-link active" data-toggle="tab" href="#ranking">Ranking</a>
-              </li>
-            </ul>
-            <div className="tab-content">
-              <div id="ranking" className="container tab-pane active">
+              <h4> Ranking </h4>
                 <Ranking username={this.props.match.params.username} />
-              </div>
-            </div>
           </div>
         </div>
 
-        {/* <div className="col-md-5" style={{ textAlign: 'center' }}>
-            <strong><h4>PROCESS</h4></strong>
-            <div id='chart'>
-              <StatsChart />
-            </div>
-           </div>  */}
-
-      </div >
+      </div>
     );
   }
 }

@@ -9,11 +9,13 @@ class Navigation extends Component {
     super(props);
     this.state = {username: ''};
   }
+  
   handle_logout = () => {
     this.props.setLoginState(false);
     localStorage.removeItem('token');
     localStorage.removeItem('username');
   };
+
   componentWillUpdate() {
     get_data('/profile/current_user/', true)
       .then(res => {
@@ -32,6 +34,7 @@ class Navigation extends Component {
           }
         })
   }
+
   handleSubmitSearch(e) {
     e.preventDefault();
     window.location.href = '/search/' + $("#search").val();
