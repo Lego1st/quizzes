@@ -11,8 +11,8 @@ class Profile extends React.Component {
     super(props);
     this.state = { is_editing: false }
   }
-  handle_save(){
-    this.setState({is_editing: false});
+  handle_save() {
+    this.setState({ is_editing: false });
   }
   render() {
 
@@ -20,9 +20,9 @@ class Profile extends React.Component {
       <div className="container" id="profile-page">
         <div className="row">
           <ProfileSideBar username={this.props.match.params.username} />
-          <div className="col-md-5">
+          <div className="col-md-7">
             {this.props.match.params.username != localStorage.getItem('username') ? '' :
-              <button className='btn btn-info btn-profile' id='editbtn' onClick={() => { this.setState({ is_editing: true }) }}> Edit </button>
+              <button className='btn btn-outline-info btn-profile' id='editbtn' onClick={() => { this.setState({ is_editing: true }) }}> Edit </button>
             }
             <ul className="nav nav-tabs">
               <li className="nav-item">
@@ -32,17 +32,16 @@ class Profile extends React.Component {
 
             <div className="tab-content">
               <div id="general-info" className="container tab-pane active">
-                <GeneralInfo username={this.props.match.params.username} is_editing={this.state.is_editing} handle={this.handle_save.bind(this)}/>
+                <GeneralInfo username={this.props.match.params.username} is_editing={this.state.is_editing} handle={this.handle_save.bind(this)} />
               </div>
             </div>
           </div>
-          <div className="col-md-1">
-          </div>
+        </div>
+        <div className="row">
           <div className="col-md-3">
+          </div>
+          <div className="col-md-7">
             <ul className="nav nav-tabs">
-              <li className="nav-item">
-              <a className="nav-link">&emsp;&emsp;</a>
-              </li>
               <li className="nav-item">
                 <a className="nav-link active" data-toggle="tab" href="#ranking">Ranking</a>
               </li>
@@ -53,16 +52,16 @@ class Profile extends React.Component {
               </div>
             </div>
           </div>
+        </div>
 
-          {/* <div className="col-md-5" style={{ textAlign: 'center' }}>
+        {/* <div className="col-md-5" style={{ textAlign: 'center' }}>
             <strong><h4>PROCESS</h4></strong>
             <div id='chart'>
               <StatsChart />
             </div>
            </div>  */}
 
-        </div >
-      </div>
+      </div >
     );
   }
 }

@@ -156,7 +156,7 @@ class GeneralInfo extends React.Component {
 					</ul>
 					<div style={{ marginTop: 5 + 'px' }}>
 						{this.props.username != localStorage.getItem('username') ? '' :
-							<button className='btn btn-primary btn-profile' id='savebtn' onClick={e => this.handle_click(e, this.state)}>Save</button>
+							<button className='btn btn-outline-success btn-profile' id='savebtn' hidden={!this.props.is_editing} onClick={e => this.handle_click(e, this.state)}>Save</button>
 						}
 					</div>
 				</div >

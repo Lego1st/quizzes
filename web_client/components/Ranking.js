@@ -23,7 +23,15 @@ class Ranking extends React.Component {
 		for (let key in fetch_data) {
 			let rank = fetch_data[key];
 			console.log(CATEGORY_CODE);
-			newData.push(<li key={key} className="list-group-item">{CATEGORY_CODE[key]} <span className="badge badge-pill badge-danger"> {rank[0] + 1} / {rank[1]} </span> </li>)
+			let num = 'th';
+			if((rank[0] + 1) % 10 == 1){
+				num = 'st';
+			}
+			if((rank[0] + 1) % 10 ==2){
+				num = 'nd';
+			}
+
+			newData.push(<li key={key} className="list-group-item"><strong>{CATEGORY_CODE[key]} </strong><span className="badge badge-pill badge-danger"> {rank[0] + 1}{num} </span> </li>)
 		}
 
 		this.setState({

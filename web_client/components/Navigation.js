@@ -2,18 +2,36 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import { QUIZDECO } from './Constants';
+import get_data from './Utils';
 
 class Navigation extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {username: ''};
   }
   handle_logout = () => {
     this.props.setLoginState(false);
     localStorage.removeItem('token');
     localStorage.removeItem('username');
   };
-
+  componentWillUpdate() {
+    get_data('/profile/current_user/', true)
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+        } else {
+          this.props.history.push('/login');
+        }
+      })
+      .then(
+        (result) => {
+          if (result) {
+            localStorage.setItem('id', result['id']);
+            localStorage.setItem('username', result['username']);
+            this.setState({username: result['username']});
+          }
+        })
+  }
   handleSubmitSearch(e) {
     e.preventDefault();
     window.location.href = '/search/' + $("#search").val();
@@ -26,7 +44,7 @@ class Navigation extends Component {
           <div className="container navbar-container">
             <div className="navbar-row">
               <div className="navbar-head">
-                <span className="navbar-brand"><Link to='/'><img style={{"height": "50px"}} src={QUIZDECO} /></Link></span>
+                <span className="navbar-brand"><Link to='/'><img style={{ "height": "50px" }} src={QUIZDECO} /></Link></span>
               </div>
               <div className="navbar-mid" role="search">
                 <div className="navbar-mid-row">
@@ -61,14 +79,14 @@ class Navigation extends Component {
                       </Link>
                     </div>
                     <ul className="dropdown-menu">
-                      <li><Link to={`/profile/${localStorage.getItem('username')}`}>Your Profile</Link></li>
-                    <li><Link to='/login' onClick={this.handle_logout}>Logout</Link></li>
+                      <li><Link to={`/profile/${this.state.username}`}>Your Profile</Link></li>
+                      <li><Link to='/login' onClick={this.handle_logout}>Logout</Link></li>
                     </ul>
                   </li>
+                </div>
               </div>
-            </div>
 
-          </div>    
+            </div>
           </div>
         </nav>
       </div >

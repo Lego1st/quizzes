@@ -27,21 +27,6 @@ class Home extends Component {
   }
   
   componentDidMount() {
-    get_data('/profile/current_user/', true)
-      .then(res => {
-        if (res.ok) {
-          return res.json()
-        } else {
-          this.props.history.push('/login')
-        }
-      })
-      .then(
-        (result) => {
-          if(result){
-            localStorage.setItem('id', result['id']);
-            localStorage.setItem('username',result['username']);
-          }
-        })
     get_data(`/api/recent_quiz/?page_size=${page_size}`, true)
       .then(res => {
         return res.json();
