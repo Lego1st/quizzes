@@ -159,7 +159,7 @@ class GeneralInfo extends React.Component {
 							<button className='btn btn-outline-success btn-profile' id='savebtn' hidden={!this.props.is_editing} onClick={e => this.handle_click(e, this.state)}>Save</button>
 						}
 					</div>
-				</div >
+				</div>
 			);
 		}
 		else {

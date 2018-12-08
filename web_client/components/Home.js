@@ -44,6 +44,8 @@ class Home extends Component {
               this.props.setUser(result['username']);
             }
           })
+    }else{
+      this.props.setUser(localStorage.getItem('username'));
     }
     get_data(`/api/recent_quiz/?page_size=${page_size}`, true)
       .then(res => {

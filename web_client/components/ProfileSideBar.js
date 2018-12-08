@@ -114,7 +114,7 @@ class ProfileSideBar extends React.Component {
 	            </Link>
                     </li>
                 </ul>
-            </div >
+            </div>
 
         );
     }
