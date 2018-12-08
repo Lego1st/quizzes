@@ -7,7 +7,7 @@ import get_data from './Utils';
 class Navigation extends Component {
   constructor(props) {
     super(props);
-    this.state = {username: ''};
+    this.state = {username: '', is_staff: false};
   }
   
   handle_logout = () => {
@@ -16,7 +16,7 @@ class Navigation extends Component {
     localStorage.removeItem('username');
   };
 
-  componentDidMount() {
+  componentWillUpdate() {
     get_data('/profile/current_user/', true)
       .then(res => {
         if (res.ok) {
@@ -30,7 +30,7 @@ class Navigation extends Component {
           if (result) {
             localStorage.setItem('id', result['id']);
             localStorage.setItem('username', result['username']);
-            this.setState({username: result['username']});
+            this.setState({username: result['username'], is_staff: result['is_staff']});
           }
         })
   }
@@ -83,6 +83,11 @@ class Navigation extends Component {
                     </div>
                     <ul className="dropdown-menu">
                       <li><Link to={`/profile/${this.state.username}`}>Your Profile</Link></li>
+                      {this.state.is_staff == true ? 
+                        <li><Link to={`/quizapproval`}>Quizzes Approval</Link></li>
+                        :
+                        null
+                      }
                       <li><Link to='/login' onClick={this.handle_logout}>Logout</Link></li>
                     </ul>
                   </li>

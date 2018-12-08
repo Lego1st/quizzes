@@ -8,7 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ('username','id')
+        fields = ('username','id', 'is_staff')
 
 class PSSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)

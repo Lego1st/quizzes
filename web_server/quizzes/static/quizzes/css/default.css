@@ -96,7 +96,7 @@ input {
 }
 
 .nav-category ul {
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 .nav-category > ul > li {
@@ -131,8 +131,9 @@ li.nav-category {
 }
 
 .navbar-tail .nav-category ul {
-  margin-top: 7px;
-  left: -50%;
+  margin-top: 10px;
+  left: -100%;
+  width: 11rem;
 }
 
 .questholder:hover {
