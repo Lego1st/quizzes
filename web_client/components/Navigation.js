@@ -7,31 +7,13 @@ import get_data from './Utils';
 class Navigation extends Component {
   constructor(props) {
     super(props);
-    this.state = {username: ''};
   }
   handle_logout = () => {
     this.props.setLoginState(false);
     localStorage.removeItem('token');
     localStorage.removeItem('username');
   };
-  componentWillUpdate() {
-    get_data('/profile/current_user/', true)
-      .then(res => {
-        if (res.ok) {
-          return res.json()
-        } else {
-          this.props.history.push('/login');
-        }
-      })
-      .then(
-        (result) => {
-          if (result) {
-            localStorage.setItem('id', result['id']);
-            localStorage.setItem('username', result['username']);
-            this.setState({username: result['username']});
-          }
-        })
-  }
+
   handleSubmitSearch(e) {
     e.preventDefault();
     window.location.href = '/search/' + $("#search").val();
@@ -79,7 +61,7 @@ class Navigation extends Component {
                       </Link>
                     </div>
                     <ul className="dropdown-menu">
-                      <li><Link to={`/profile/${this.state.username}`}>Your Profile</Link></li>
+                      <li><Link to={`/profile/${this.props.username}`}>Your Profile</Link></li>
                       <li><Link to='/login' onClick={this.handle_logout}>Logout</Link></li>
                     </ul>
                   </li>

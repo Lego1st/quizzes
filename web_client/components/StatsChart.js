@@ -1,113 +1,137 @@
 import React from 'react';
 import get_data from './Utils';
+import { Doughnut } from 'react-chartjs-2';
+// import { Pie } from 'react-chartjs-2';
+import Chart from 'chart.js'
+import { CATEGORY_CODE } from './Constants';
 
-/////////////////////////////////
-// 			POLARCHART	  	   //
-/////////////////////////////////
-var PolarAreaChart = require("react-chartjs").PolarArea;
+// var Pie = require('react-charjs-2').Pie;
+var originalDoughnutDraw = Chart.controllers.doughnut.prototype.draw;
+Chart.helpers.extend(Chart.controllers.doughnut.prototype, {
+	draw: function () {
+		originalDoughnutDraw.apply(this, arguments);
+
+		var chart = this.chart;
+		var width = chart.chart.width,
+			height = chart.chart.height,
+			ctx = chart.chart.ctx;
+
+		var fontSize = 0.8;
+		ctx.font = fontSize + "em sans-serif";
+		ctx.textBaseline = "middle";
+
+		var text = chart.config.data.text,
+			textX = Math.round((width - ctx.measureText(text).width) / 2),
+			textY = Math.round(height / 2.5);
+
+		ctx.fillText(text, textX, textY);
+	}
+});
 
 var chartOptions = {
-	//Boolean - Show a backdrop to the scale label
-	scaleShowLabelBackdrop : true,
+	maintainAspectRatio: false,
+	responsive: false,
+	title: {
+		position: "bottom",
+		text: "Math",
+		display: true
+	},
+	legend: {
+		display: false
+	}
 
-	//String - The colour of the label backdrop
-	scaleBackdropColor : "rgba(255,255,255,0.75)",
-
-	// Boolean - Whether the scale should begin at zero
-	scaleBeginAtZero : true,
-
-	//Number - The backdrop padding above & below the label in pixels
-	scaleBackdropPaddingY : 2,
-
-	//Number - The backdrop padding to the side of the label in pixels
-	scaleBackdropPaddingX : 2,
-
-	//Boolean - Show line for each value in the scale
-	scaleShowLine : true,
-
-	//Boolean - Stroke a line around each segment in the chart
-	segmentShowStroke : true,
-
-	//String - The colour of the stroke on each segment.
-	segmentStrokeColor : "#fff",
-
-	//Number - The width of the stroke value in pixels
-	segmentStrokeWidth : 2,
-
-	//Number - Amount of animation steps
-	animationSteps : 100,
-
-	//String - Animation easing effect.
-	animationEasing : "easeOutBounce",
-
-	//Boolean - Whether to animate the rotation of the chart
-	animateRotate : true,
-
-	//Boolean - Whether to animate scaling the chart from the centre
-	animateScale : false,
-	//String - A legend template
-	legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"><%if(segments[i].label){%><%=segments[i].label%><%}%></span></li><%}%></ul>"
 }
 
 var colors = ["#F7464A", "#46BFBD", "#FDB45C", "#5985cc"]
 
-var myWidth = 400;
-var myHeight = 400;
-
 var Config = require('Config');
 
-class StatChart extends React.Component{
-	constructor(props){
+class StatChart extends React.Component {
+	constructor(props) {
 		super(props);
 		this.state = {
 			error: null,
 			isLoaded: false,
-			chartData: null,
+			chartData: [],
+			chartOption: []
 		};
 	}
 
 	componentDidMount() {
-	    get_data("/api/profile/statistic/",true)
-	      .then(res => res.json())
-	      .then(
-	        (result) => {
-        	 	var data = [];
-				for (let i = 0; i < result.length; i++) {
-					data.push({
-						value: result[i]['counter'],
-						color: colors[i % colors.length],
-						highlight: colors[i % colors.length],
-						label: result[i]['course']
+		get_data("/profile/api/statistic/?username=" + this.props.username, true)
+			.then(res => res.json())
+			.then(
+				(result) => {
+					var data = [];
+					var option = [];
+					for (let i = 0; i < result.length; i++) {
+						data.push({
+							labels: ["Done", "Remain"],
+							datasets: [{
+								data: [result[i]['counter'], 100 - result[i]['counter']],
+								backgroundColor: [
+									'#FF6384',
+									'#36A2EB',
+									'#FFCE56'
+								],
+								hoverBackgroundColor: [
+									'#FF6384',
+									'#36A2EB',
+									'#FFCE56'
+								]
+							}],
+							text: result[i]['counter'] + '%'
+
+						});
+						option.push({
+							maintainAspectRatio: false,
+							responsive: false,
+							title: {
+								position: "bottom",
+								text: CATEGORY_CODE[result[i]['cate']],
+								display: true
+							},
+							legend: {
+								display: false
+							},
+							cutoutPercentage: 70,
+						});
+					}
+					console.log(data);
+					this.setState({
+						isLoaded: true,
+						chartData: data,
+						chartOption: option
+					});
+				},
+				// Note: it's important to handle errors here
+				// instead of a catch() block so that we don't swallow
+				// exceptions from actual bugs in components.
+				(error) => {
+					this.setState({
+						isLoaded: true,
+						error
 					});
 				}
-
-	          this.setState({
-	            isLoaded: true,
-	            chartData: data
-	          });
-	        },
-	        // Note: it's important to handle errors here
-	        // instead of a catch() block so that we don't swallow
-	        // exceptions from actual bugs in components.
-	        (error) => {
-	          this.setState({
-	            isLoaded: true,
-	            error
-	          });
-	        }
-	      )
+			)
 	}
 
 	render() {
 		if (this.state.isLoaded) {
+			const myStat = []
+			for (var i = 0; i < this.state.chartData.length; i++) {
+				myStat.push(<Doughnut key={i} data={this.state.chartData[i]}  width={170} height={120} options={this.state.chartOption[i]} />)
+			}
 			return (
-			<PolarAreaChart data={this.state.chartData} options={chartOptions} width = {myWidth} height = {myHeight} redraw = {true}/>
-			);			
+				<div style={{ position: 'relative', alignContent: "center" }}>
+					{myStat}
+				</div>
+			);
 		}
 		else {
 			return null;
 		}
-		
+
 	}
 }
 

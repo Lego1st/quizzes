@@ -105,7 +105,10 @@ def ranking_counter(request):
     cur_user = request.GET.get('username')
     ranking = defaultdict()
     for cate in user_mark:
-        ranking[cate] = (user_mark[cate].index(scores[cur_user][cate]) , total_done[cate])
+        if scores[cur_user][cate] not in user_mark[cate]:
+            ranking[cate] = (total_done[cate],total_done[cate])
+        else:
+            ranking[cate] = (user_mark[cate].index(scores[cur_user][cate]) , total_done[cate])
     return Response(ranking)
 
 @api_view(['GET'])
@@ -124,7 +127,19 @@ def get_leaderboard(request):
     for cate in categories:
         categories[cate] = reversed(sorted(categories[cate], key=lambda x: x[1]))
     return Response(categories)
-        
+
+@api_view(['GET'])
+def get_statistic(request):
+    username = request.GET.get('username')
+    user = User.objects.filter(username=username)
+    cates = ['ma','lg','cs']
+    static = []
+    for cate in cates:
+        user_quiz = UserSubmission.objects.filter(user=user[0],quiz__category=cate).count()
+        static.append({'counter':user_quiz / Quiz.objects.filter(category=cate).count(), 'cate': cate})
+    print(static)
+    return Response(static)
+
 
 class UserList(generics.GenericAPIView):
     """
