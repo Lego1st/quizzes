@@ -16,7 +16,7 @@ class Navigation extends Component {
     localStorage.removeItem('username');
   };
 
-  componentWillUpdate() {
+  componentDidMount() {
     get_data('/profile/current_user/', true)
       .then(res => {
         if (res.ok) {
