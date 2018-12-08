@@ -12,5 +12,6 @@ urlpatterns = [
     path('api/current_avatar/',views.current_profile_avatar),
     path('api/detail/<str:username>/',views.PSDetail.as_view()),
     path('api/ranking/',views.ranking_counter),
-    path('api/leader_board/',views.get_leaderboard)
+    path('api/leader_board/',views.get_leaderboard),
+    path('api/statistic/',views.get_statistic)
 ] 

@@ -14,12 +14,14 @@
     "url": "https://github.com/Lego1st/quizzes/issues"
   },
   "dependencies": {
+    "chart.js": "^2.1.4",
     "classnames": "^2.2.5",
     "codemirror": "^5.18.2",
-    "chart.js": "^1.1.1",
     "draft-js": "^0.10.5",
     "package-json-merge": "0.0.1",
     "react-chartjs": "^1.2.0",
+    "react-chartjs-2": "^2.7.4",
+    "react-chartkick": "^0.3.0",
     "react-markdown-editor": "^1.0.0",
     "react-mde": "^6.0.0-alpha.1",
     "react-router-dom": "^4.3.1",

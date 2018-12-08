@@ -31,7 +31,7 @@ class Ranking extends React.Component {
 				num = 'nd';
 			}
 
-			newData.push(<li key={key} className="list-group-item"><strong>{CATEGORY_CODE[key]} </strong><span className="badge badge-pill badge-danger"> {rank[0] + 1}{num} </span> </li>)
+			newData.push(<li key={key} ><strong>{CATEGORY_CODE[key]} </strong><span className="badge badge-pill badge-danger"> {rank[0] + 1}{num} </span> </li>)
 		}
 
 		this.setState({
@@ -56,7 +56,7 @@ class Ranking extends React.Component {
 	render() {
 		if (this.state.isLoaded) {
 			return (
-			<ul className="list-group">
+			<ul className="list-group list-group-flush">
                 {this.state.data}
               </ul>
 			);

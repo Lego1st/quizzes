@@ -25,8 +25,28 @@ class Home extends Component {
     }
     return quizzes;
   }
-  
+
   componentDidMount() {
+    if (!localStorage.getItem('username')) {
+      get_data('/profile/current_user/', true)
+        .then(res => {
+          if (res.ok) {
+            return res.json()
+          } else {
+            this.props.history.push('/login');
+          }
+        })
+        .then(
+          (result) => {
+            if (result) {
+              localStorage.setItem('id', result['id']);
+              localStorage.setItem('username', result['username']);
+              this.props.setUser(result['username']);
+            }
+          })
+    }else{
+      this.props.setUser(localStorage.getItem('username'));
+    }
     get_data(`/api/recent_quiz/?page_size=${page_size}`, true)
       .then(res => {
         return res.json();
@@ -38,23 +58,23 @@ class Home extends Component {
           recent_quizzes: result.results || []
         })
       },
-      (error) => {
-        console.log(error);
-        this.setState({
-          isLoaded: true,
-          error
-        });
-      }
-    )
+        (error) => {
+          console.log(error);
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
   }
 
   handleScrollToBottom(completed) {
     // load more
-    if(this.state.next == null) {
+    if (this.state.next == null) {
       completed();
       return;
     }
-    get_data(this.state.next.replace(Config.serverUrl, ''), true).then(res => res.json()).then(result=> {
+    get_data(this.state.next.replace(Config.serverUrl, ''), true).then(res => res.json()).then(result => {
       var newData = Object.assign([], this.state.recent_quizzes);
       newData.push.apply(newData, result.results);
       console.log("Scroll-load: ", result.results);
@@ -72,34 +92,34 @@ class Home extends Component {
     return (
       <div className="container" id="home-page">
 
-        
+
         <div className="row">
 
           <div className="col-sm-2" id="left-body">
-            <div style={{marginTop : "100px"}}>
-            <img style={{"height": "200px"}} src={HOMEDECO} />
+            <div style={{ marginTop: "100px" }}>
+              <img style={{ "height": "200px" }} src={HOMEDECO} />
             </div>
           </div>
 
-          <div className="col-md-9" id="main-body" style={{padding: "0 10px 20px 15px"}}>
-              
-            <div id="qz_pending_list" style={{padding: "20px", height: "auto"}}>
+          <div className="col-md-9" id="main-body" style={{ padding: "0 10px 20px 15px" }}>
+
+            <div id="qz_pending_list" style={{ padding: "20px", height: "auto" }}>
               <div className="qz_list_title">
                 Recent quizzes
               </div>
               {(this.state.recent_quizzes.length == 0) ? (
-                  <div style={{textAlign: 'center'}}>
-                    <h3>It looks like we currently do not have any post yet ^^</h3>
+                <div style={{ textAlign: 'center' }}>
+                  <h3>It looks like we currently do not have any post yet ^^</h3>
 
-                    <h4>Click 
+                  <h4>Click
                       <Link to="/addquiz">
-                              <i className="fas fa-plus-circle" style={{margin: '1%'}}></i>
-                            </Link>
-                            to add one!
+                      <i className="fas fa-plus-circle" style={{ margin: '1%' }}></i>
+                    </Link>
+                    to add one!
                         </h4>
-                  </div>
-                ) : (
-                  <TableView 
+                </div>
+              ) : (
+                  <TableView
                     ref="recent_quizzes"
                     dataSource={this.state.recent_quizzes}
                     onScrollToBottom={this.handleScrollToBottom.bind(this)}

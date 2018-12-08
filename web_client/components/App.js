@@ -30,6 +30,11 @@ class App extends Component {
       logged_in: state
     })
   }
+  setUser(user){
+    this.setState({
+      username: user
+    })
+  }
 
   componentDidMount() {
     console.log(this.state.logged_in);
@@ -39,10 +44,11 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <Navigation setLoginState={this.setLoginState.bind(this)}/>
+          <Navigation setLoginState={this.setLoginState.bind(this)} username={this.state.username}/>
           {this.state.logged_in ? 
             <Switch>
-              <Route exact path="/" component={Home}/>
+              <Route exact path="/" component={(props) => <Home 
+                                    setUser={this.setUser.bind(this)} {...props}/>}/>
               <Route path='/profile/:username' component={Profile}/>
               <Route path='/search/:search_text' component={Search} />
               <Route path='/category/:cate' component={QuizCategory}/>

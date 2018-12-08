@@ -16,25 +16,6 @@ class Navigation extends Component {
     localStorage.removeItem('username');
   };
 
-  componentWillUpdate() {
-    get_data('/profile/current_user/', true)
-      .then(res => {
-        if (res.ok) {
-          return res.json()
-        } else {
-          this.props.history.push('/login');
-        }
-      })
-      .then(
-        (result) => {
-          if (result) {
-            localStorage.setItem('id', result['id']);
-            localStorage.setItem('username', result['username']);
-            this.setState({username: result['username'], is_staff: result['is_staff']});
-          }
-        })
-  }
-
   handleSubmitSearch(e) {
     e.preventDefault();
     window.location.href = '/search/' + $("#search").val();
