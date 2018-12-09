@@ -23,6 +23,8 @@
 #boards .board {
   background: #fbfbfb;
   display: table-cell;
+  box-shadow: 0 0 18px -5px rgba(0, 0, 0, 0.2);
+  width: 30%;
 }
 
 .board ul {
@@ -38,6 +40,6 @@
 .board-title {
   padding: 10px;
   font-size: 25px;
-  border-bottom: 5px dashed #f7f7f7;
+  border-bottom: 5px dashed #efefef;
   font-weight: bold;
 }

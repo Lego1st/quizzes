@@ -96,7 +96,7 @@ class RecentQuiz(QuizItemList):
 class QuizCategory(QuizItemList):
 
     def get_queryset(self):
-        return Quiz.objects.filter(category=self.kwargs['cate'])
+        return Quiz.objects.filter(category=self.kwargs['cate'], status='a')
 
 class PostedQuiz(QuizItemList):
 
