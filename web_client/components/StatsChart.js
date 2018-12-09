@@ -70,14 +70,13 @@ class StatChart extends React.Component {
 							datasets: [{
 								data: [result[i]['counter'], 100 - result[i]['counter']],
 								backgroundColor: [
-									'#FF6384',
-									'#36A2EB',
-									'#FFCE56'
+									colors[i],
+									colors[i+1]
 								],
 								hoverBackgroundColor: [
 									'#FF6384',
-									'#36A2EB',
-									'#FFCE56'
+									'#36A2EB'
+									
 								]
 							}],
 							text: result[i]['counter'] + '%'
@@ -120,10 +119,10 @@ class StatChart extends React.Component {
 		if (this.state.isLoaded) {
 			const myStat = []
 			for (var i = 0; i < this.state.chartData.length; i++) {
-				myStat.push(<Doughnut key={i} data={this.state.chartData[i]}  width={170} height={120} options={this.state.chartOption[i]} />)
+				myStat.push(<Doughnut key={i} data={this.state.chartData[i]}  width={200} height={200} options={this.state.chartOption[i]} />)
 			}
 			return (
-				<div style={{ position: 'relative', alignContent: "center" }}>
+				<div style={{ position: 'relative', textAlign: "center", padding: "20px"}}>
 					{myStat}
 				</div>
 			);

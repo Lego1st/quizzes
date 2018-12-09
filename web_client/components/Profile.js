@@ -17,16 +17,18 @@ class Profile extends React.Component {
   render() {
 
     return (
-      <div className="container" style={{backgroundColor: "#f7f7f7"}} id="profile-page">
+      <div className="container" id="profile-page">
         <div className="row">
           <ProfileSideBar username={this.props.match.params.username} />
-          <div className="col-md-7">
+          <div className="col-md-9">
             {this.props.match.params.username != localStorage.getItem('username') ? '' :
               <button className='btn btn-outline-info btn-profile' id='editbtn' onClick={() => { this.setState({ is_editing: true }) }}> Edit </button>
             }
-            <ul >
-              <li >
-                <a data-toggle="tab" href="#general-info">General Info</a>
+            <ul className="nav nav-tabs" >
+              <li className="nav-item" >
+                <a className="nav-link active" style={{ backgroundColor: "#f7f7f7" }} data-toggle="tab" href="#general-info">
+                  <strong>General Info</strong>
+                </a>
               </li>
             </ul>
 
@@ -41,10 +43,12 @@ class Profile extends React.Component {
         <div className="row">
           <div className="col-md-3">
           </div>
-          <div className="col-md-7">
-            <ul >
-              <li >
-                <a data-toggle="tab" href="#ranking">Ranking</a>
+          <div className="col-md-9">
+            <ul className="nav nav-tabs">
+              <li className="nav-item">
+                <a className="nav-link active" style={{ backgroundColor: "#f7f7f7" }} data-toggle="tab" href="#ranking">
+                  <strong>Ranking</strong>
+                </a>
               </li>
             </ul>
             <div >
@@ -57,10 +61,11 @@ class Profile extends React.Component {
         <div className="row">
           <div className="col-md-3">
           </div>
-          <div className="col-md-7">
-            <ul >
-              <li >
-                <a data-toggle="tab" href="#progress">Progress</a>
+          <div className="col-md-9">
+            <ul className="nav nav-tabs">
+              <li className="nav-item">
+                <a className="nav-link active" style={{ backgroundColor: "#f7f7f7" }}  data-toggle="tab" href="#progress">
+                <strong>Progress</strong></a>
               </li>
             </ul>
             <div >
