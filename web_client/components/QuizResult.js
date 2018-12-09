@@ -57,7 +57,7 @@ class QuizResult extends Component {
         qresult: "Correct: " + this.getNumberOfCorrect(TFanswers),
         tflist: TFanswers,
         isSubmited: true,
-        next: '/quiz/' + data.next_quiz.toString()
+        next: (data.next_quiz ? ('/quiz/' + data.next_quiz.toString()) : '/')
       })
 
     }).catch(err => {
