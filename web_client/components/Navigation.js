@@ -7,7 +7,6 @@ import get_data from './Utils';
 class Navigation extends Component {
   constructor(props) {
     super(props);
-    this.state = {is_staff: false};
   }
   
   handle_logout = () => {
@@ -64,7 +63,7 @@ class Navigation extends Component {
                     </div>
                     <ul className="dropdown-menu">
                       <li><Link to={`/profile/${this.props.username}`}>Your Profile</Link></li>
-                      {this.state.is_staff == true ? 
+                      {this.props.is_staff == true ? 
                         <li><Link to={`/quizapproval`}>Quizzes Approval</Link></li>
                         :
                         null

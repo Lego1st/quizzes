@@ -21,7 +21,8 @@ class App extends Component {
     super(props);
     this.state = {
       logged_in: localStorage.getItem('token') ? true : false,
-      username: ''
+      username: '',
+      is_staff: false
     };
   }
 
@@ -30,9 +31,10 @@ class App extends Component {
       logged_in: state
     })
   }
-  setUser(user){
+  setUser(user, is_staff){
     this.setState({
-      username: user
+      username: user,
+      is_staff: is_staff
     })
   }
 
@@ -44,11 +46,13 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <Navigation setLoginState={this.setLoginState.bind(this)} username={this.state.username}/>
+          <Navigation setLoginState={this.setLoginState.bind(this)} username={this.state.username}
+                      is_staff={this.state.is_staff}/>
           {this.state.logged_in ? 
             <Switch>
               <Route exact path="/" component={(props) => <Home 
-                                    setUser={this.setUser.bind(this)} username={this.state.username} {...props}/>}/>
+                                    setUser={this.setUser.bind(this)} username={this.state.username} 
+                                    is_staff={this.state.is_staff} {...props}/>}/>
               <Route path='/profile/:username' component={Profile}/>
               <Route path='/search/:search_text' component={Search} />
               <Route path='/category/:cate' component={QuizCategory}/>
@@ -56,7 +60,8 @@ class App extends Component {
               <Route path='/favorite/:username' component={Favorite}/>
               <Route path='/answered/:username' component={Answered}/>
               <Route path='/leaderboard' component={LeaderBoard}/>
-              <Route path='/quizapproval' component={QuizApproval}/>
+              <Route path='/quizapproval' component={(props) => <QuizApproval 
+                                          is_staff={this.state.is_staff} {...props}/>}/>
               <Route path='/quiz/:quizid' component={QuizDetail}/>
               <Route path='/quiz' component={QuizDetail}/>
               <Route path='/addquiz' component={AddQuiz}/>
