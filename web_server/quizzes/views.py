@@ -109,7 +109,7 @@ class PostedQuiz(QuizItemList):
         return output
 
 class UserAnswered(QuizItemList):
-    
+    ordering = ('-submissions__created_at', '-created_at')
     def get_queryset(self):
         username = self.request.query_params.get('username', None)
         if not username:
@@ -164,7 +164,6 @@ def user_submit(request):
             if next_quiz:
                 return quiz_id
         return None
-    print(request.data)
     serializer = UserSubmissionSerializer(data=request.data,
                                         context={'request': request})
     if not serializer.is_valid():

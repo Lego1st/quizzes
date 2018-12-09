@@ -21,8 +21,20 @@ class BriefQuizSerializer(serializers.ModelSerializer):
         likes = ret.pop('likes')
         ret['like_count'] = len(likes)
         request = self.context.get('request')
-        if request:
+        if request and request.user:
             ret['liked'] = request.user.id in likes
+        
+        view = self.context.get('view')
+        username = request.query_params.get('username', None)
+        from quizzes.views import UserAnswered
+        if view and isinstance(view, UserAnswered) and request and (request.user or username):
+            if username:
+                submission = UserSubmission.objects.get(quiz=obj, user__username=username)
+            else:
+                submission = UserSubmission.objects.get(quiz=obj, user=request.user)
+            ret['mark'] = submission.mark
+            ret['submitted_at'] = submission.created_at
+
         return ret
 
 class QuestionReadOnlySerializer(serializers.BaseSerializer):
@@ -253,7 +265,7 @@ class UserSubmissionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserSubmission
-        fields = ('id', 'quiz', 'mark', 'answers')
+        fields = ('id', 'quiz', 'mark', 'created_at', 'answers')
 
     def to_representation(self, obj):
         output = super().to_representation(obj)
