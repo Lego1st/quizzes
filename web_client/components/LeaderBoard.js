@@ -13,7 +13,11 @@ function Board(props) {
     <div className="board">
       <div className="board-title"> {CATEGORY_FROM_CODE[props.category]} </div>
       <ul>
-        {display_user_list}
+        {user_list.length == 0 ? 
+          <span>No submission for this category</span>
+          :
+          display_user_list
+        }
       </ul>
     </div>
   )
@@ -40,8 +44,9 @@ class LeaderBoard extends Component {
 
   renderLeaderboard() {
     let ld = this.state.leader_board;
-    return Object.keys(ld).map((key, i) => {
-      return <Board key={i} category={key} user_list={ld[key]}/>;
+    return Object.keys(CATEGORY_FROM_CODE).map((key, i) => {
+      let ul = (key in ld) ? ld[key] : [];
+      return <Board key={i} category={key} user_list={ul}/>;
     });
   }
 
