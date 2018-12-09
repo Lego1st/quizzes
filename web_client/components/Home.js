@@ -45,7 +45,9 @@ class Home extends Component {
             }
           })
     }else{
-      this.props.setUser(localStorage.getItem('username'));
+      if(! this.props.username){
+        this.props.setUser(localStorage.getItem('username'));
+      }
     }
     get_data(`/api/recent_quiz/?page_size=${page_size}`, true)
       .then(res => {

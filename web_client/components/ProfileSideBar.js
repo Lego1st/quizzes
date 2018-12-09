@@ -80,10 +80,10 @@ class ProfileSideBar extends React.Component {
                         </label>
 
                         <div className="upload-state">
-                            <button type="button" hidden={!this.state.loaded_ava} onClick={e => { this.handle_save(e, this.state.avatar) }}>
+                            <button type="button" className='btn btn-outline-primary' hidden={!this.state.loaded_ava} onClick={e => { this.handle_save(e, this.state.avatar) }}>
                                 Save
                         </button>
-                            <button type="button" hidden={!this.state.loaded_ava} onClick={this.handle_cancel}>
+                            <button type="button" className='btn btn-outline-danger' hidden={!this.state.loaded_ava} onClick={this.handle_cancel}>
                                 Cancel
                        </button>
                         </div>

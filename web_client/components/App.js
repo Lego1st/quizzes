@@ -48,7 +48,7 @@ class App extends Component {
           {this.state.logged_in ? 
             <Switch>
               <Route exact path="/" component={(props) => <Home 
-                                    setUser={this.setUser.bind(this)} {...props}/>}/>
+                                    setUser={this.setUser.bind(this)} username={this.state.username} {...props}/>}/>
               <Route path='/profile/:username' component={Profile}/>
               <Route path='/search/:search_text' component={Search} />
               <Route path='/category/:cate' component={QuizCategory}/>
