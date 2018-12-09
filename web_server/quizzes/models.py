@@ -9,7 +9,7 @@ class Quiz(models.Model):
 	title = models.CharField(max_length=100)
 	brief = models.TextField(max_length=200, null=True)
 	rating = models.PositiveIntegerField(choices=DIFFICULTY, default=1)
-	created_at = models.DateTimeField(auto_now_add=True, null = True)
+	created_at = models.DateTimeField(auto_now_add=True)
 	status = models.CharField(max_length=1, choices=QUIZ_STATUS, default='p')
 	category = models.CharField(max_length=2, choices=CATEGORIES)
 	shuffle = models.BooleanField(default=False)
@@ -41,6 +41,7 @@ class UserSubmission(models.Model):
 	quiz = models.ForeignKey(Quiz, related_name='submissions', on_delete=models.CASCADE)
 	user = models.ForeignKey(User, related_name='submissions', on_delete=models.CASCADE)
 	mark = models.FloatField(default=0.0)
+	created_at = models.DateTimeField(auto_now_add=True)
 
 	class Meta:
 		unique_together = ('quiz', 'user')

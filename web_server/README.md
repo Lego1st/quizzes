@@ -1,5 +1,9 @@
 # Quizzes backend API
-**Notice:** APIs that return a list of brief quiz item is updated to have pagination, username parameter for answered_quiz, liked_quiz, posted_quiz apis
+**Changelog:** 
+- Add `created_at` field to UserSubmission model
+- Add `mark` and `submitted_at` to the response of `answered_quiz` api
+- Add ordering filter with submission date to `answered_quiz` api
+- Remove constrain `null=True` from `Quiz.created_date`, to migrate the existing database, select option `Provide a one-off default now` and add value `timezone.now`
 ## Quiz and Question APIs
 List APIs:
 - [Quiz item list APIs](#quizitemlistapi):
