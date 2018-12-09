@@ -71,7 +71,7 @@ class Navigation extends Component {
             </div>
           </div>
         </nav>
-      </div >
+      </div>
     );
   }
 }
