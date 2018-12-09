@@ -21,25 +21,17 @@ class App extends Component {
     super(props);
     this.state = {
       logged_in: localStorage.getItem('token') ? true : false,
-      username: '',
-      is_staff: false
+      username: localStorage.getItem('username') ?  localStorage.getItem('username') : null,
+      is_staff: localStorage.getItem('is_staff') ? localStorage.getItem('is_staff') : false
     };
   }
 
-  setLoginState(state) {
+  setLoginState(state, username=null, is_staff=false) {
     this.setState({
-      logged_in: state
-    })
-  }
-  setUser(user, is_staff){
-    this.setState({
-      username: user,
+      logged_in: state,
+      username: username,
       is_staff: is_staff
-    })
-  }
-
-  componentDidMount() {
-    console.log(this.state.logged_in);
+    });
   }
 
   render() {
@@ -48,10 +40,10 @@ class App extends Component {
         <div>
           <Navigation setLoginState={this.setLoginState.bind(this)} username={this.state.username}
                       is_staff={this.state.is_staff}/>
-          {this.state.logged_in ? 
+          {this.state.logged_in == true ? 
             <Switch>
               <Route exact path="/" component={(props) => <Home 
-                                    setUser={this.setUser.bind(this)} username={this.state.username} 
+                                    username={this.state.username} 
                                     is_staff={this.state.is_staff} {...props}/>}/>
               <Route path='/profile/:username' component={Profile}/>
               <Route path='/search/:search_text' component={Search} />

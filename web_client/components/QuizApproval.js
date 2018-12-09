@@ -97,7 +97,7 @@ class QuizApproval extends Component {
         let selected = this.state.selected;
         return (
             <div>
-            {this.props.is_staff == true ? 
+            {this.props.is_staff == "true" ? 
                 <div className="container" id="qz_quiz_approval">
                     <div id="qz_pending_list" style={{ height: "initial", width: "550px" }}>
                         {this.renderQuizList(this.state.quiz_pending_list)}
