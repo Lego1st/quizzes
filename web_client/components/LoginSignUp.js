@@ -49,6 +49,13 @@ class LoginSignUp extends React.Component {
         return formIsValid;
     }
 
+    handleSaveLogin(token, username, is_staff) {
+        localStorage.setItem('token', token);
+        localStorage.setItem('username', username);
+        localStorage.setItem('is_staff', is_staff);
+        this.props.setLoginState(true, username, is_staff.toString());
+        this.props.history.push("/");
+    }
 
     handle_login = (e, data) => {
         e.preventDefault();
@@ -64,13 +71,7 @@ class LoginSignUp extends React.Component {
             .then(
                 (result) => {
                     if (!('non_field_errors' in result)) {
-                        localStorage.setItem('token', result.token);
-                        this.props.setLoginState(true);
-                        // this.setState({
-                        //     // logged_in: true,
-                        //     username: result.user.username
-                        // });
-                        this.props.history.push("/");
+                        this.handleSaveLogin(result.token, result.user.username, result.user.is_staff);
                     }
                     else {
                         this.setState({
@@ -101,18 +102,14 @@ class LoginSignUp extends React.Component {
                 .then(res => res.json())
                 .then(json => {
                     console.log(json);
-                    console.log('username' in json);
                     if ('username' in json) {
                         this.setState({
                             errors: { signup: json['username'][0] }
                         });
                     }
                     else {
-                        console.log('regis ok');
-                        localStorage.setItem('token', json['user']['token']);
-
-                        this.props.setLoginState(true);
-                        window.location.href = '/';
+                        this.handleSaveLogin(json['user']['token'], json['user']['username'], 
+                                             json['user']['is_staff']);
                     }
                 });
         }

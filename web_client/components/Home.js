@@ -27,30 +27,6 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    if (!localStorage.getItem('username')) {
-      get_data('/profile/current_user/', true)
-        .then(res => {
-          if (res.ok) {
-            return res.json()
-          } else {
-            this.props.history.push('/login');
-          }
-        })
-        .then(
-          (result) => {
-            if (result) {
-              localStorage.setItem('id', result['id']);
-              localStorage.setItem('username', result['username']);
-              localStorage.setItem('is_staff', result['is_staff']);
-              this.props.setUser(result['username'], result['is_staff']);
-            }
-          })
-    }else{
-      if(! this.props.username){
-        this.props.setUser(localStorage.getItem('username'));
-        this.props.setUser(localStorage.getItem('is_staff'));
-      }
-    }
     get_data(`/api/recent_quiz/?page_size=${page_size}`, true)
       .then(res => {
         return res.json();

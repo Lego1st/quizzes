@@ -13,6 +13,7 @@ class Navigation extends Component {
     this.props.setLoginState(false);
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    localStorage.removeItem('is_staff');
   };
 
   handleSubmitSearch(e) {
@@ -63,7 +64,7 @@ class Navigation extends Component {
                     </div>
                     <ul className="dropdown-menu">
                       <li><Link to={`/profile/${this.props.username}`}>Your Profile</Link></li>
-                      {this.props.is_staff == true ? 
+                      {this.props.is_staff == "true" ? 
                         <li><Link to={`/quizapproval`}>Quizzes Approval</Link></li>
                         :
                         null
