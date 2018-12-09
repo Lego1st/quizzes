@@ -217,33 +217,37 @@ Link: http://127.0.0.1:8000/api/answered_quiz/?page_size=2&page=1
 
 Response: 200 OK
 {
-    "count": 4,
+    "count": 6,
     "next": "http://127.0.0.1:8000/api/answered_quiz/?page=2&page_size=2",
     "previous": null,
     "results": [
         {
-            "id": 22,
-            "title": "Logic And Math Quiz",
+            "id": 3,
+            "title": "How logical are you?",
             "brief": "How does your brain cope with a healthy dose of lateral thinking?",
             "rating": 0,
-            "created_at": "2018-12-01T10:44:08.035344Z",
+            "created_at": "2018-12-01T10:44:05.882841Z",
             "status": "p",
-            "category": "ma",
-            "author": "admin",
-            "like_count": 1,
-            "liked": true
-        },
-        {
-            "id": 20,
-            "title": "Logic And Math Quiz",
-            "brief": "How does your brain cope with a healthy dose of lateral thinking?",
-            "rating": 0,
-            "created_at": "2018-12-01T10:44:07.788964Z",
-            "status": "p",
-            "category": "ma",
+            "category": "lg",
             "author": "admin",
             "like_count": 0,
-            "liked": false
+            "liked": false,
+            "mark": 0,
+            "submitted_at": "2018-12-09T05:17:12.352760Z"
+        },
+        {
+            "id": 19,
+            "title": "How logical are you?",
+            "brief": "How does your brain cope with a healthy dose of lateral thinking?",
+            "rating": 0,
+            "created_at": "2018-12-01T10:44:07.705688Z",
+            "status": "p",
+            "category": "lg",
+            "author": "admin",
+            "like_count": 0,
+            "liked": false,
+            "mark": 0,
+            "submitted_at": "2018-12-09T05:15:35.197978Z"
         }
     ]
 }
