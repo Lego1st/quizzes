@@ -25,9 +25,13 @@ class BriefQuizSerializer(serializers.ModelSerializer):
             ret['liked'] = request.user.id in likes
         
         view = self.context.get('view')
+        username = request.query_params.get('username', None)
         from quizzes.views import UserAnswered
-        if view and isinstance(view, UserAnswered) and request and request.user:
-            submission = UserSubmission.objects.get(quiz=obj, user=request.user)
+        if view and isinstance(view, UserAnswered) and request and (request.user or username):
+            if username:
+                submission = UserSubmission.objects.get(quiz=obj, user__username=username)
+            else:
+                submission = UserSubmission.objects.get(quiz=obj, user=request.user)
             ret['mark'] = submission.mark
             ret['submitted_at'] = submission.created_at
 

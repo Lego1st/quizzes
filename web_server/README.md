@@ -180,7 +180,11 @@ Response: 200 OK
 ```
 
 #### `api/answered_quiz/`
-**Descriptions:** Get a list of quizzes done by user
+**Descriptions:** Get a list of quizzes done by user, ordering by the submisison's date
+
+**Response:** Additional fields
+- `mark`: float, user's completeness of the quiz
+- `submitted_at`: time, user's submission's date
 
 Example:
 ```
@@ -202,7 +206,9 @@ Response: 200 OK
             "category": "ma",
             "author": "admin",
             "like_count": 1,
-            "liked": true
+            "liked": true,
+            "mark": 0.88,
+            "submitted_at": "2018-12-09T05:09:30.958960Z"
         }
     ]
 }
