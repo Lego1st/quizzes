@@ -7,8 +7,26 @@ import {CATEGORY_FROM_CODE} from './Constants';
 function Board(props) {
   let display_user_list = [];
   let user_list = props.user_list;
-  for (let i = 0; i < user_list.length; i++)
-    display_user_list.push(<li key={i}>{user_list[i][0]}</li>)
+  for (let i = 0; i < user_list.length; i++) {
+    let style = {};
+    if (i == 0) {
+      style = {'color': '#ffc425'}
+    } else if (i == 1) {
+      style = {'color': '#bcbcbc'}
+    } else if (i == 2) {
+      style = {'color': '#c68642'}
+    } else {
+      style = {'color': 'white'}
+    }
+    style.fontSize = '18px';
+    display_user_list.push(
+      <li key={i} style={{'display': 'flex'}}>
+        <i className="fas fa-trophy" style={style}/>
+        <div style={{'flex': '1', 'paddingRight': '12px'}}>{user_list[i][0]}</div>
+        <span>{user_list[i][1]}</span>
+      </li>
+    )
+  }
   return (
     <div className="board">
       <div className="board-title"> {CATEGORY_FROM_CODE[props.category]} </div>
