@@ -55,6 +55,7 @@ class QuizDetail extends Component {
                 dataQuiz: newDataQuiz,
                 like_count : newDataQuiz.like_count,
                 liked : newDataQuiz.liked,
+                currentPage: 1,
                 isFinished: true,
                 doQuiz: newDoQuiz
               })
@@ -84,6 +85,10 @@ class QuizDetail extends Component {
     if (prevProps.match.params.quizid != this.props.match.params.quizid) {
       this.fetchQuizData();
     }
+  }
+
+  handleReload() {
+    this.fetchQuizData();
   }
 
   handleLove() {
@@ -132,7 +137,7 @@ class QuizDetail extends Component {
         viewOnly={this.state.isFinished} 
         approvalOnly={false} 
         quest_detail={x} 
-        callbackQuiz={this.handleQuestAnswered} 
+        callbackQuiz={this.handleQuestAnswered}
         doQuiz={this.state.doQuiz}/>);
     const quests = this.state.dataQuiz.questions.map((x) => (x.correct ? 1 : 0));
     return (
@@ -177,7 +182,8 @@ class QuizDetail extends Component {
               : <QuizResult 
                 submission={this.state.doQuiz} 
                 quizId={this.props.match.params.quizid} 
-                questions={this.state.dataQuiz.questions}/>
+                questions={this.state.dataQuiz.questions}
+                callbackReload={this.handleReload.bind(this)}/>
             }
           </div>
         </div>

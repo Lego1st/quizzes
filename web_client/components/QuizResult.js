@@ -31,6 +31,12 @@ class QuizResult extends Component {
   }
 
   handleNextQuiz() {
+    this.setState ({
+      qresult: 'Are you sure ?',
+      tflist: [],
+      isSubmited: false,
+      next: '/'
+    });
     this.refs.submit.click();
   }
 
@@ -70,6 +76,10 @@ class QuizResult extends Component {
     return previewAnswers;
   }
 
+  handleReload() {
+    this.props.callbackReload();
+  }
+
   render() {
     
     return (
@@ -87,7 +97,7 @@ class QuizResult extends Component {
                 ? <div>
                     <img className="center" src={QUIZRESULTHAT}/>
                     <ul style={{"listStyleType" : "none", "padding" : "0", "textAlign" : "center"}}>
-                      {this.state.tflist.map((x, idx) => <li key={idx}> Question {idx}:    {x ? <i style={{color: "green"}} class="fas fa-check"></i> : <i style={{color: "red"}} class="fas fa-times"></i>} </li>)}
+                      {this.state.tflist.map((x, idx) => <li key={idx}> Question {idx}:    {x ? <i style={{color: "green"}} className="fas fa-check"></i> : <i style={{color: "red"}} className="fas fa-times"></i>} </li>)}
                     </ul>
                   </div>
                 : <div>
@@ -106,10 +116,20 @@ class QuizResult extends Component {
               {this.state.isSubmited && <div style={{color: "blue"}} className="mr-auto"> {this.state.qresult} </div>}
               {
                 !this.state.isSubmited 
-                ? <button type="button" className="btn btn-primary" onClick={event => this.handleOnClick(this.submitQuiz())}>Yes, sumbit</button>
-                : <Link to={this.state.next} onClick={event => this.handleNextQuiz()}>A new quiz ?</Link>
+                ? (
+                  <div>
+                    <button type="button" ref="submit" className="btn btn-secondary" data-dismiss="modal">Nope</button>
+                    <button type="button" className="btn btn-primary" onClick={event => this.handleOnClick(this.submitQuiz())} style={{marginLeft: "10px"}}>Yes, sumbit</button>
+                  </div>
+                  )
+                : (
+                  <div>
+                    <Link to={this.state.next} onClick={event => this.handleNextQuiz()}>A new quiz ?</Link>
+                    <button type="button" ref="submit" className="btn btn-secondary" data-dismiss="modal" onClick={event => this.handleReload()} style={{marginLeft: "10px"}}>Nope</button>
+                  </div>
+                  )
               }
-              <button type="button" ref="submit" className="btn btn-secondary" data-dismiss="modal">Nope</button>
+              
             </div>
           </div>
         </div>
