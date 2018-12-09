@@ -39,6 +39,9 @@ class Search extends Component {
     for (var i = 0; i < quiz_list.length; i++) {
       quizzes.push(<QuizItem key={i} info={quiz_list[i]} />)
     }
+    if (quizzes.length == 0) {
+        return <div style={{'textAlign': 'center'}}>No result found!</div>
+    }
     return quizzes;
   }
 
@@ -49,7 +52,7 @@ class Search extends Component {
                 <div className="col-sm-1" id="left-body"></div>
                 <div className="col-sm-10" id="main-body" style={{padding: "0 10px 20px 15px"}}>
                     <div id="qz_pending_list" style={{padding: "20px", height: "auto"}}>
-                        <div className="qz_list_title">
+                        <div className="qz_list_title" style={{fontSize: '32px', 'margin': '0 0 64px 0'}}>
                             Search result for:  <span style={{textDecoration: "underline"}}>{this.props.match.params.search_text}</span>
                         </div>
                         {this.renderQuizList(this.state.search_result)}

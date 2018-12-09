@@ -60,6 +60,7 @@ export const EMOTICON = {
 }
 
 export const RUSURE = '/static/quizzes/images/rusure.jpg'
+export const CUP = '/static/quizzes/images/cup.png'
 export const QUIZRESULTHAT = '/static/quizzes/images/hat.png'
 export const QUIZDECO = '/static/quizzes/images/quizdeco.png'
 export const HOMEDECO = '/static/quizzes/images/homedeco.png'
