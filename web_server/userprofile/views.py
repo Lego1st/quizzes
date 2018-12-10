@@ -9,6 +9,7 @@ from rest_framework.viewsets import ModelViewSet
 from quizzes.models import UserSubmission, Quiz
 from itertools import chain
 from collections import defaultdict
+import datetime
 
 # Create your views here.
 class PSListCreate(generics.ListCreateAPIView):
@@ -137,8 +138,16 @@ def get_statistic(request):
     for cate in cates:
         user_quiz = UserSubmission.objects.filter(user=user[0],quiz__category=cate).count()
         static.append({'counter':user_quiz / Quiz.objects.filter(category=cate).count(), 'cate': cate})
-    print(static)
-    return Response(static)
+    months = range(1,13)
+    year = datetime.datetime.now().year
+    print(year)
+    do_per_mon = []
+    for mon in months:
+        per_mon = UserSubmission.objects.filter(user=user[0],created_at__month=mon,created_at__year=year).count()
+        do_per_mon.append(per_mon)
+
+
+    return Response({'per_cate':static,'per_mon':do_per_mon})
 
 
 class UserList(generics.GenericAPIView):

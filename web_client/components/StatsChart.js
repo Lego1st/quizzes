@@ -1,6 +1,6 @@
 import React from 'react';
 import get_data from './Utils';
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut, Bar } from 'react-chartjs-2';
 // import { Pie } from 'react-chartjs-2';
 import Chart from 'chart.js'
 import { CATEGORY_CODE } from './Constants';
@@ -53,7 +53,8 @@ class StatChart extends React.Component {
 			error: null,
 			isLoaded: false,
 			chartData: [],
-			chartOption: []
+			chartOption: [],
+			barData: '',
 		};
 	}
 
@@ -61,9 +62,11 @@ class StatChart extends React.Component {
 		get_data("/profile/api/statistic/?username=" + this.props.username, true)
 			.then(res => res.json())
 			.then(
-				(result) => {
+				(results) => {
 					var data = [];
 					var option = [];
+					var result = results['per_cate'];
+					console.log(result);
 					for (let i = 0; i < result.length; i++) {
 						data.push({
 							labels: ["Done", "Remain"],
@@ -71,12 +74,12 @@ class StatChart extends React.Component {
 								data: [result[i]['counter'], 100 - result[i]['counter']],
 								backgroundColor: [
 									colors[i],
-									colors[i+1]
+									colors[i + 1]
 								],
 								hoverBackgroundColor: [
 									'#FF6384',
 									'#36A2EB'
-									
+
 								]
 							}],
 							text: result[i]['counter'] + '%'
@@ -96,11 +99,27 @@ class StatChart extends React.Component {
 							cutoutPercentage: 70,
 						});
 					}
-					console.log(data);
+					var result2 = results['per_mon']
+					var data2 = {
+						labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+							'August', 'September', 'October', 'Novemver', 'December'],
+						datasets: [
+							{
+								label: 'Quiz do each months',
+								backgroundColor: '#36a2eb',
+								borderColor: '#36a2eb',
+								borderWidth: 1,
+								hoverBackgroundColor: '#36a2eb',
+								hoverBorderColor: '#36a2eb',
+								data: results['per_mon']
+							}
+						]
+					}
 					this.setState({
 						isLoaded: true,
 						chartData: data,
-						chartOption: option
+						chartOption: option,
+						barData: data2,
 					});
 				},
 				// Note: it's important to handle errors here
@@ -119,11 +138,16 @@ class StatChart extends React.Component {
 		if (this.state.isLoaded) {
 			const myStat = []
 			for (var i = 0; i < this.state.chartData.length; i++) {
-				myStat.push(<Doughnut key={i} data={this.state.chartData[i]}  width={200} height={200} options={this.state.chartOption[i]} />)
+				myStat.push(<Doughnut key={i} data={this.state.chartData[i]} width={200} height={200} options={this.state.chartOption[i]} />)
 			}
 			return (
-				<div style={{ position: 'relative', textAlign: "center", padding: "20px"}}>
-					{myStat}
+				<div>
+					<div style={{ position: 'relative', textAlign: "center", padding: "20px" }}>
+						{myStat}
+					</div>
+					<div>
+						<Bar data={this.state.barData} />
+					</div>
 				</div>
 			);
 		}
