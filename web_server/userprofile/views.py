@@ -137,7 +137,7 @@ def ranking_counter(request):
             ranking[cate] = (user_sorted.index(cur_user), len(user_sorted))
         else:
             ranking[cate] = (len(user_sorted), len(user_sorted))
-
+        print(categories[cate],cur_user)
     return Response(ranking)
 
 
@@ -166,14 +166,14 @@ def get_statistic(request):
     cates = ['ma','lg','cs']
     static = []
     for cate in cates:
+        num_quiz = Quiz.objects.filter(category=cate).count()
         user_quiz = UserSubmission.objects.filter(user=user[0],quiz__category=cate).count()
         try:
-            static.append({'counter':user_quiz / Quiz.objects.filter(category=cate).count(), 'cate': cate})
+            static.append({'counter': round(user_quiz / num_quiz,3), 'cate': cate})
         except ZeroDivisionError:
-            pass
+            static.append({'counter': 0.0, 'cate': cate})
     months = range(1,13)
     year = datetime.datetime.now().year
-    print(year)
     do_per_mon = []
     for mon in months:
         per_mon = UserSubmission.objects.filter(user=user[0],created_at__month=mon,created_at__year=year).count()

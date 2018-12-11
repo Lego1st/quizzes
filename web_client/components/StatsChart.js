@@ -88,9 +88,9 @@ class StatChart extends React.Component {
 							num = 'nd';
 						}
 						data.push({
-							labels: ["Done", "Remain"],
+							labels: [" % Done", " % Remain"],
 							datasets: [{
-								data: [result[i]['counter'], 100 - result[i]['counter']],
+								data: [result[i]['counter'] * 100 , (1 - result[i]['counter']) *100],
 								backgroundColor: [
 									colors[i],
 									colors[i + 1]
