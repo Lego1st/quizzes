@@ -22,7 +22,7 @@ class Profile extends React.Component {
           <ProfileSideBar username={this.props.match.params.username} />
           <div className="col-md-8">
 
-            <div className='title'>
+            <div className='title' style={{marginBottom: "5%"}}>
               <h4 style={{ display: 'inline-block' }}> About me </h4>
               {this.props.match.params.username != localStorage.getItem('username') ? '' :
                 // <button className='btn btn-outline-info btn-profile' > Edit </button>
@@ -31,7 +31,7 @@ class Profile extends React.Component {
             </div>
 
             <GeneralInfo username={this.props.match.params.username} is_editing={this.state.is_editing} handle={this.handle_save.bind(this)} />
-            <div className='title'>
+            <div style={{marginTop: "10%"}} className='title'>
 
               <h4 style={{ display: 'inline-block' }}> Progress </h4>
               <i className="fas fa-chart-line" style={{ display: 'inline', marginLeft: '1%', marginTop: '-1%' }}></i>

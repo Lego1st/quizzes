@@ -10,7 +10,7 @@
 }
 
 #qz_pending_list::-webkit-scrollbar {
-    width: 7px;
+    width: 5px;
     /* display: none; */
 }
 
@@ -21,7 +21,7 @@
 }
 
 #qz_pending_list::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.1);
     border-radius: 3px;
 }
 

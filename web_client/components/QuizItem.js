@@ -59,7 +59,7 @@ class QuizItem extends Component {
             <span>
               <i 
                 className="fas fa-heart" 
-                style={{"float" : "right", "color" : this.state.liked ? "red" : "black"}}
+                style={{"float" : "right", "color" : this.state.liked ? "#e2b5b5" : "black"}}
                 onClick={e => this.handleLove()}>  {this.state.like_count}
               </i>
             </span>
