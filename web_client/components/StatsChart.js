@@ -55,10 +55,20 @@ class StatChart extends React.Component {
 			chartData: [],
 			chartOption: [],
 			barData: '',
+			rankData: {}
 		};
 	}
 
 	componentDidMount() {
+		get_data("/profile/api/ranking/?username="+this.props.username,true)
+		.then(res => res.json())
+		.then(
+		  (result) => {
+				console.log("statistic:", result);
+				  
+		  		this.setState({rankData: result})
+		  },
+		)
 		get_data("/profile/api/statistic/?username=" + this.props.username, true)
 			.then(res => res.json())
 			.then(
@@ -66,8 +76,17 @@ class StatChart extends React.Component {
 					var data = [];
 					var option = [];
 					var result = results['per_cate'];
-					console.log(result);
 					for (let i = 0; i < result.length; i++) {
+						try{
+						let rank = this.state.rankData[result[i]['cate']];
+
+						let num = 'th';
+						if((rank[0] + 1) % 10 == 1){
+							num = 'st';
+						}
+						if((rank[0] + 1) % 10 ==2){
+							num = 'nd';
+						}
 						data.push({
 							labels: ["Done", "Remain"],
 							datasets: [{
@@ -82,7 +101,7 @@ class StatChart extends React.Component {
 
 								]
 							}],
-							text: result[i]['counter'] + '%'
+							text: rank[0] + 1 + num,
 
 						});
 						option.push({
@@ -97,7 +116,9 @@ class StatChart extends React.Component {
 								display: false
 							},
 							cutoutPercentage: 70,
-						});
+						});}catch{
+							
+						}
 					}
 					var result2 = results['per_mon']
 					var data2 = {
@@ -138,11 +159,12 @@ class StatChart extends React.Component {
 		if (this.state.isLoaded) {
 			const myStat = []
 			for (var i = 0; i < this.state.chartData.length; i++) {
-				myStat.push(<Doughnut key={i} data={this.state.chartData[i]} redraw={true} width={200} height={200} options={this.state.chartOption[i]} />)
+				myStat.push(<Doughnut key={i} data={this.state.chartData[i]} redraw={true} width={200} 
+						height={200} options={this.state.chartOption[i]}/>)
 			}
 			return (
 				<div style={{ backgroundColor: "#ffffff" }} >
-					<div style={{ position: 'relative', textAlign: "center", padding: "20px" }}>
+					<div style={{ position: 'relative', textAlign: "center", padding: "40px" }}>
 						{myStat}
 					</div>
 					<div>

@@ -21,72 +21,27 @@ class Profile extends React.Component {
         <div className="row" >
           <ProfileSideBar username={this.props.match.params.username} />
           <div className="col-md-8">
-            {this.props.match.params.username != localStorage.getItem('username') ? '' :
-              <button className='btn btn-outline-info btn-profile' id='editbtn' onClick={() => { this.setState({ is_editing: true }) }}> Edit </button>
-            }
-            <ul className="nav nav-tabs" >
-              <li className="nav-item" >
-                <a className="nav-link active" data-toggle="tab" href="#general-info">
-                <i class="fas fa-user-circle"></i>
-                  <strong style={{color:"#42b6ff"}}> About me</strong>
-                </a>
-              </li>
-            </ul>
 
-            <div >
-              <div id="general-info">
-                <GeneralInfo username={this.props.match.params.username} is_editing={this.state.is_editing} handle={this.handle_save.bind(this)} />
-              </div>
+            <div className='title'>
+              <h4 style={{ display: 'inline-block' }}> About me </h4>
+              {this.props.match.params.username != localStorage.getItem('username') ? '' :
+                // <button className='btn btn-outline-info btn-profile' > Edit </button>
+                <i className="fas fa-edit" style={{ display: 'inline', marginLeft: '1%', marginTop: '-1%', cursor: 'pointer' }} onClick={() => { this.setState({ is_editing: true }) }}></i>
+              }
             </div>
+
+            <GeneralInfo username={this.props.match.params.username} is_editing={this.state.is_editing} handle={this.handle_save.bind(this)} />
+            <div className='title'>
+
+              <h4 style={{ display: 'inline-block' }}> Progress </h4>
+              <i class="fas fa-chart-line" style={{ display: 'inline', marginLeft: '1%', marginTop: '-1%', cursor: 'pointer' }}></i>
+
+            </div>
+            <StatsChart username={this.props.match.params.username} />
+
           </div>
         </div>
-
-        <div className="row" style={{marginTop: "-2%"}}>
-          <div className="col-md-3">
-          </div>
-          <div className="col-md-8">
-            <ul className="nav nav-tabs">
-              <li className="nav-item">
-                <a className="nav-link active" data-toggle="tab" href="#ranking">
-                  <i className="fas fa-star" style={{color:"yellow"}}></i>
-                  <strong style={{color:"#42b6ff"}}> Ranking</strong>
-                </a>
-              </li>
-            </ul>
-            <div >
-              <div id="ranking" >
-                <Ranking username={this.props.match.params.username} />
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div className="row">
-          <div className="col-md-3">
-          </div>
-          <div className="col-md-8">
-            <ul className="nav nav-tabs">
-              <li className="nav-item">
-                <a className="nav-link active"  data-toggle="tab" href="#progress">
-                <i class="fas fa-tasks" style={{color: "green"}}></i>
-                <strong style={{color:"#42b6ff"}}> Progress</strong></a>
-              </li>
-            </ul>
-            <div >
-              <div id="progress" >
-                <StatsChart username={this.props.match.params.username} />
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* <div className="col-md-5" style={{ textAlign: 'center' }}>
-            <strong><h4>PROCESS</h4></strong>
-            <div id='chart'>
-              <StatsChart />
-            </div>
-           </div>  */}
-
-      </div >
+      </div>
     );
   }
 }

@@ -10,6 +10,7 @@ from quizzes.models import UserSubmission, Quiz
 from itertools import chain
 from collections import defaultdict
 import datetime
+from django.db.models import Sum
 
 # Create your views here.
 class PSListCreate(generics.ListCreateAPIView):
@@ -80,37 +81,66 @@ def current_user(request):
     serializer = UserSerializer(request.user)
     return Response(serializer.data)
 
+# @api_view(['GET'])
+# def ranking_counter(request):
+#     users = User.objects.all()
+#     scores = defaultdict()
+#     user_mark = defaultdict(list)
+#     for user in users: 
+#         user_quiz  = UserSubmission.objects.filter(user=user)
+#         mark  = defaultdict(float)
+#         for quizdo in user_quiz:
+            
+#             quiz = Quiz.objects.filter(pk=quizdo.id)
+#             cate = quiz[0].category
+#             mark[cate] += quizdo.mark
+
+#         for cate in mark:
+#             user_mark[cate].append(mark[cate])
+
+#         scores[user.username] = mark
+#     total_done = {}
+#     for cate in user_mark:
+#         user_mark[cate] = sorted(user_mark[cate],reverse=True)
+#         total_done[cate] = len(user_mark[cate])
+
+#     cur_user = request.GET.get('username')
+#     ranking = defaultdict()
+#     for cate in user_mark:
+#         if scores[cur_user][cate] not in user_mark[cate]:
+#             ranking[cate] = (total_done[cate],total_done[cate])
+#         else:
+#             ranking[cate] = (user_mark[cate].index(scores[cur_user][cate]) , total_done[cate])
+#     return Response(ranking)
+
 @api_view(['GET'])
 def ranking_counter(request):
+    cates = ['ma','lg','cs']
     users = User.objects.all()
-    scores = defaultdict()
-    user_mark = defaultdict(list)
-    for user in users: 
-        user_quiz  = UserSubmission.objects.filter(user=user)
-        mark  = defaultdict(float)
-        for quizdo in user_quiz:
-            
-            quiz = Quiz.objects.filter(pk=quizdo.id)
-            cate = quiz[0].category
-            mark[cate] += quizdo.mark
+    categories = defaultdict(list)
+    ranking = defaultdict()
 
-        for cate in mark:
-            user_mark[cate].append(mark[cate])
+    for cate in cates:
+        for user in users:
+            user_cate = UserSubmission.objects.filter(user=user,quiz__category=cate)
+            user_cate_score = user_cate.aggregate(Sum('mark'))['mark__sum']
+            if not user_cate_score:
+                user_cate_score = 0.0
 
-        scores[user.username] = mark
-    total_done = {}
-    for cate in user_mark:
-        user_mark[cate] = sorted(user_mark[cate],reverse=True)
-        total_done[cate] = len(user_mark[cate])
+            categories[cate].append((user.username,user_cate_score))
 
     cur_user = request.GET.get('username')
-    ranking = defaultdict()
-    for cate in user_mark:
-        if scores[cur_user][cate] not in user_mark[cate]:
-            ranking[cate] = (total_done[cate],total_done[cate])
+    for cate in categories:
+        categories[cate] = sorted(categories[cate], key=lambda x: x[1],reverse=True)
+        user_sorted,_ = zip(*categories[cate])
+        if cur_user in user_sorted:
+            ranking[cate] = (user_sorted.index(cur_user), len(user_sorted))
         else:
-            ranking[cate] = (user_mark[cate].index(scores[cur_user][cate]) , total_done[cate])
+            ranking[cate] = (len(user_sorted), len(user_sorted))
+
     return Response(ranking)
+
+
 
 @api_view(['GET'])
 def get_leaderboard(request):

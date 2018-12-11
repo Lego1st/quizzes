@@ -106,7 +106,7 @@ class GeneralInfo extends React.Component {
 		if (this.state.isLoaded) {
 			return (
 				<div>
-					<ul className="list-group list-group-flush" >
+					<ul className="list-group" >
 
 						<li className="list-group-item"  ><strong>Full Name</strong>
 							<label className='label-info' hidden={this.props.is_editing}> {this.state.fullname} </label>
