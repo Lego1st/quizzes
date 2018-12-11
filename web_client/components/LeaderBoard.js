@@ -22,8 +22,8 @@ function Board(props) {
     display_user_list.push(
       <li key={i} style={{'display': 'flex'}}>
         <i className="fas fa-trophy" style={style}/>
-        <div style={{'flex': '1', 'paddingRight': '12px'}}>{user_list[i][0]}</div>
-        <span>{user_list[i][1]}</span>
+        <div style={{'flex': '1', 'paddingLeft': '20px'}}>{user_list[i][0]}</div>
+        <span style={{width: '40px', overflow: 'hidden'}}>{user_list[i][1]}</span>
       </li>
     )
   }
