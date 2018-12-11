@@ -167,7 +167,10 @@ def get_statistic(request):
     static = []
     for cate in cates:
         user_quiz = UserSubmission.objects.filter(user=user[0],quiz__category=cate).count()
-        static.append({'counter':user_quiz / Quiz.objects.filter(category=cate).count(), 'cate': cate})
+        try:
+            static.append({'counter':user_quiz / Quiz.objects.filter(category=cate).count(), 'cate': cate})
+        except ZeroDivisionError:
+            pass
     months = range(1,13)
     year = datetime.datetime.now().year
     print(year)

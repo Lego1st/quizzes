@@ -18,7 +18,7 @@ class Profile extends React.Component {
 
     return (
       <div className="container" id="profile-page">
-        <div className="row" >
+        <div className="row">
           <ProfileSideBar username={this.props.match.params.username} />
           <div className="col-md-8">
 

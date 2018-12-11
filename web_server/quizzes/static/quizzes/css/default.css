@@ -43,6 +43,10 @@ input {
   vertical-align: middle;
 }
 
+#searcher {
+  background-color: #f7f7f7;
+}
+
 .navbar-mid {
   width: 60%;
 }
