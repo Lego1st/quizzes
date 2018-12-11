@@ -18,17 +18,16 @@ class Profile extends React.Component {
 
     return (
       <div className="container" id="profile-page">
-        <div className="row" >
+        <div className="row">
           <ProfileSideBar username={this.props.match.params.username} />
-          <div className="col-md-8">
+          <div className="col-md-9">
             {this.props.match.params.username != localStorage.getItem('username') ? '' :
               <button className='btn btn-outline-info btn-profile' id='editbtn' onClick={() => { this.setState({ is_editing: true }) }}> Edit </button>
             }
             <ul className="nav nav-tabs" >
               <li className="nav-item" >
-                <a className="nav-link active" data-toggle="tab" href="#general-info">
-                <i class="fas fa-user-circle"></i>
-                  <strong style={{color:"#42b6ff"}}> About me</strong>
+                <a className="nav-link active" style={{ backgroundColor: "#f7f7f7" }} data-toggle="tab" href="#general-info">
+                  <strong>General Info</strong>
                 </a>
               </li>
             </ul>
@@ -41,15 +40,14 @@ class Profile extends React.Component {
           </div>
         </div>
 
-        <div className="row" style={{marginTop: "-2%"}}>
+        <div className="row">
           <div className="col-md-3">
           </div>
-          <div className="col-md-8">
+          <div className="col-md-9">
             <ul className="nav nav-tabs">
               <li className="nav-item">
-                <a className="nav-link active" data-toggle="tab" href="#ranking">
-                  <i className="fas fa-star" style={{color:"yellow"}}></i>
-                  <strong style={{color:"#42b6ff"}}> Ranking</strong>
+                <a className="nav-link active" style={{ backgroundColor: "#f7f7f7" }} data-toggle="tab" href="#ranking">
+                  <strong>Ranking</strong>
                 </a>
               </li>
             </ul>
@@ -60,16 +58,14 @@ class Profile extends React.Component {
             </div>
           </div>
         </div>
-        
         <div className="row">
           <div className="col-md-3">
           </div>
-          <div className="col-md-8">
+          <div className="col-md-9">
             <ul className="nav nav-tabs">
               <li className="nav-item">
-                <a className="nav-link active"  data-toggle="tab" href="#progress">
-                <i class="fas fa-tasks" style={{color: "green"}}></i>
-                <strong style={{color:"#42b6ff"}}> Progress</strong></a>
+                <a className="nav-link active" style={{ backgroundColor: "#f7f7f7" }}  data-toggle="tab" href="#progress">
+                <strong>Progress</strong></a>
               </li>
             </ul>
             <div >

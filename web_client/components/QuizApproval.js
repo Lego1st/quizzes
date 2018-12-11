@@ -41,13 +41,14 @@ class QuizApproval extends Component {
                 let new_list = this.state.quiz_pending_list.map(q => {
                     if (q.id == this.state.selected.id) {
                         q.status = status;
-                        return q;
+                        return null;
                     } else {
                         return q;
                     }
                 });
-                let new_selected = this.state.selected;
-                new_selected.status = status;
+                new_list = new_list.filter(function (el) {return el != null;});
+                let new_selected = new_list[0];
+                // new_selected.status = status;
                 this.setState({
                     quiz_pending_list: new_list,
                     selected: new_selected
@@ -61,27 +62,30 @@ class QuizApproval extends Component {
     renderQuizList(quiz_list) {
         let quizzes = [];
         for (let i = 0; i < quiz_list.length; i++) {
-            quizzes.push(<div key={quiz_list[i].id} className={"qz_quiz_item" + 
-                    (this.state.selected.id == quiz_list[i].id ? " selected_quiz" : "")}
-                    onClick={() => {this.onSelectQuiz(quiz_list[i])}}>
-                <div className="qz_quiz_title">{quiz_list[i].title}</div>
-                <div className="qz_quiz_desc" style={{ textOverflow: "ellipsis", "whiteSpace": "nowrap" }}>{
-                    quiz_list[i].brief}</div>
-                <div className="row">
-                    <div className="col-sm-6">
-                        Created by: &nbsp;
-                        <Link to={`/profile`}>
-                            <span className="qz_quiz_author">{quiz_list[i].author}</span>
-                        </Link>
+            if (quiz_list[i]) {
+                quizzes.push(<div key={quiz_list[i].id} className={"qz_quiz_item" + 
+                        (this.state.selected.id == quiz_list[i].id ? " selected_quiz" : "")}
+                        onClick={() => {this.onSelectQuiz(quiz_list[i])}}>
+                    <div className="qz_quiz_title">{quiz_list[i].title}</div>
+                    <div className="qz_quiz_desc" style={{ textOverflow: "ellipsis", "whiteSpace": "nowrap" }}>{
+                        quiz_list[i].brief}</div>
+                    <div className="row">
+                        <div className="col-sm-6">
+                            Created by: &nbsp;
+                            <Link to={`/profile`}>
+                                <span className="qz_quiz_author">{quiz_list[i].author}</span>
+                            </Link>
+                        </div>
+                        <div className="col-sm-6">
+                            <Link to={`/category/${quiz_list[i].category}`} style={{ "float": "right" }}>
+                                <div className="qz_quiz_cate">{CATEGORY_FROM_CODE[quiz_list[i].category]}</div>
+                            </Link>
+                        </div>
                     </div>
-                    <div className="col-sm-6">
-                        <Link to={`/category/${quiz_list[i].category}`} style={{ "float": "right" }}>
-                            <div className="qz_quiz_cate">{CATEGORY_FROM_CODE[quiz_list[i].category]}</div>
-                        </Link>
-                    </div>
-                </div>
 
-            </div>)
+                </div>)
+                
+            }
         }
         return quizzes;
     }
