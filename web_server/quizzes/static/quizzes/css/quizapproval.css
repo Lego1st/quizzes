@@ -50,7 +50,7 @@
 }
 
 .qz_quiz_item {
-    border-bottom: 1px solid #dadada;
+    /*border-bottom: 1px solid #dadada;*/
     padding: 5%;
     background-color: #fbfbfb;
     position: relative;

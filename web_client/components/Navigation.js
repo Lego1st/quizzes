@@ -7,6 +7,9 @@ import get_data from './Utils';
 class Navigation extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      avatar: "/static/quizzes/images/default_avatar.jpg"
+    }
   }
   
   handle_logout = () => {
@@ -21,6 +24,21 @@ class Navigation extends Component {
     window.location.href = '/search/' + $("#search").val();
   }
 
+  componentDidMount() {
+        console.log(this.props.username);
+        get_data("/profile/api/current_avatar/?username="+ this.props.username, true)
+            .then((res) => res.json())
+            .then(
+                (result) => {
+                    console.log('general-info', result);
+                    if (result['avatar']) {
+                        this.setState({
+                            avatar: '/static/' + result['avatar']
+                        });
+                    }
+                })
+    }
+
   render() {
     return (
       <div>
@@ -28,9 +46,9 @@ class Navigation extends Component {
           <div className="container navbar-container">
             <div className="navbar-row">
               <div className="navbar-head">
-                <span className="navbar-brand"><Link to='/'><img style={{ "height": "50px" }} src={QUIZDECO} /></Link></span>
+                <span className="navbar-brand toTitle"><Link to='/'>QUIZZES</Link></span>
               </div>
-              <div className="navbar-mid" role="search">
+              <div className="navbar-mid toBold" role="search">
                 <div className="navbar-mid-row">
                   <form className="input-group" id="searcher" onSubmit={this.handleSubmitSearch.bind(this)}>
                     <input id="search" type="search" className="form-control" placeholder="What are you looking for?" />
@@ -53,13 +71,13 @@ class Navigation extends Component {
                 <div className="navbar-tail-row">
                   <div id="create-quiz">
                     <Link to="/addquiz">
-                      <i className="fas fa-plus-circle"></i>
+                      <i className="fas fa-plus-circle" style={{color: '#fbfbfb'}}></i>
                     </Link>
                   </div>
                   <li className="dropdown nav-category" style={{ padding: 0 }}>
                     <div id="head-ava" className="dropdown-toggle" data-toggle="dropdown">
                       <Link to="/profile">
-                        <img src={"/static/quizzes/images/default_avatar.jpg"} alt="default avatar" />
+                        <img className="rounded-circle" style={{width: '40px', height: '40px'}} src={this.state.avatar} alt="default avatar" />
                       </Link>
                     </div>
                     <ul className="dropdown-menu">

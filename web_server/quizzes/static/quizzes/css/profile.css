@@ -12,22 +12,18 @@
   background-size: cover;
   position: relative;
 }
+
 .hero-text {
   text-align: center;
-  /*position: absolute;*/
-  /*top: 50%;*/
-  /*left: 50%;*/
-  /*transform: translate(-50%, -50%);*/
-  font-family: 'Lobster', cursive;
   font-size: 100px;
   font-weight: 800;
   text-transform: uppercase;
   /* Warning: no fallback */
-  
+  /*
   background: -webkit-linear-gradient(-86deg, #007bff 5%, #ffffff 53%, #007bff 91%);
   -webkit-background-clip: text;
   -webkit-text-stroke: 4px transparent;
-  color: #232d2d;
+  color: #232d2d;*/
   
 }
 

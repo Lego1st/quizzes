@@ -155,7 +155,8 @@ class QuizDetail extends Component {
                   backgroundColor: "#fff", 
                   marginRight: "20px", 
                   fontSize: "20px", 
-                  color : this.state.liked ? "red" : "black"}}
+                  cursor: 'pointer',
+                  color : this.state.liked ? "#e2b5b5" : "black"}}
                 onClick={e => this.handleLove()}>  {this.state.like_count}
               </i>
               {this.state.dataQuiz.title}
@@ -169,8 +170,14 @@ class QuizDetail extends Component {
               } 
             </h2>         
             
-            <div>{this.renderRating()}</div>
-            <p>{this.state.dataQuiz.brief} </p>
+            <div className='row'>
+              <div className='col-sm-2'>
+                {this.renderRating()}
+              </div>
+              <div className='col-sm-10' style={{padding: '0px'}}>
+                {this.state.dataQuiz.brief}
+              </div>
+            </div>
           </div>
           <div className="col-sm-6">
             {

@@ -84,9 +84,9 @@ class Home extends Component {
           <div className="col-md-9" id="main-body" style={{ padding: "0 10px 20px 15px" }}>
 
             <div id="qz_pending_list" style={{ padding: "20px", height: "auto" }}>
-              <div className="qz_list_title">
+              <h3 className="toTitle">
                 Recent quizzes
-              </div>
+              </h3>
               {(this.state.recent_quizzes.length == 0) ? (
                 <div style={{ textAlign: 'center' }}>
                   <h3>It looks like we currently do not have any post yet ^^</h3>

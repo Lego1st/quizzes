@@ -85,8 +85,8 @@ class Post extends React.Component {
 		      <div className="row profile-post">
 		        <ProfileSideBar username={this.props.match.params.username}/>
 		        <div className="col-md-8">
-				  <div className="hero-text">
-				    <h1>Your Quizzes</h1>
+				  <div className="hero-text toTitle">
+				    <h3>Your Quizzes</h3>
 				  </div>
 		        { (posts.length == 0) ? (
 		        	<div style={{textAlign: 'center'}}>

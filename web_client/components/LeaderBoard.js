@@ -84,7 +84,7 @@ class LeaderBoard extends Component {
 
     return (
       <div className="container" id="lb-page">
-          <div id="leaderboard" > Leaderboard </div>
+          <div id="leaderboard" className='toTitle'> Leaderboard </div>
           {/* <div style={{"textAlign": "center", "paddingTop": "50px"}}>This feature hasn't been supported yet</div> */}
           <div id="boards">  
             {this.renderLeaderboard()}

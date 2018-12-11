@@ -85,7 +85,7 @@ class Favorite extends React.Component {
           <div className="row profile-favorite">
             <ProfileSideBar username={this.props.match.params.username}/>
             <div className="col-md-8">
-              <div className="hero-text">
+              <div className="hero-text toTitle">
                 <h3>Quizzes you liked</h3>
               </div>
             { (posts.length == 0) ? (

@@ -8,15 +8,28 @@ html {
 
 body {
   font-family: 'Questrial', sans-serif;
-  background-color: #f7f7f7;
+  background-color: #fbfbfb;
 }
 
 input {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+a {
+  color: black;
+}
+
+.toBold {
+  font-weight: bold;
+}
+
+.toTitle {
+  font-family: 'Acme';
+  text-align: center;
+}
+
 .navbar {
-  background-color: #fbfbfb; 
+  background-color: #e2b5b5; 
   padding: 2px 0;
   border-bottom: 1px solid #d3d3d3;
   margin-bottom: 0px;
@@ -44,7 +57,7 @@ input {
 }
 
 #searcher {
-  background-color: #f7f7f7;
+  background-color: #e2b5b5;
 }
 
 .navbar-mid {
@@ -52,13 +65,20 @@ input {
 }
 
 .navbar-brand > a {
-  font-size: 30px;
+  /*font-size: 30px;*/
   font-weight: 800;
   display: block;
-  color: #393533 !important;
+  color: #fbfbfb !important;
   text-decoration: none !important;
   word-wrap: break-word;
   white-space: pre;
+
+  font-size: 48px;
+   background: -webkit-linear-gradient(-35deg, #fbfbfb 47%, #e2b5b5 50%, #fbfbfb 56%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 58px;
+ 
 }
 
 .navbar-mid-row {
@@ -94,8 +114,8 @@ input {
   padding: 10px 5px;
 }
 
-.nav-category a {
-  color: #393533;
+.nav-category > a {
+  color: #fbfbfb;
   text-decoration: none;
 }
 

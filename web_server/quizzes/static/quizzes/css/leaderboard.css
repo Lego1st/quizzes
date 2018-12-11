@@ -23,7 +23,7 @@
 #boards .board {
   background: #fbfbfb;
   display: table-cell;
-  box-shadow: 0 0 18px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 5px 5px 18px -5px rgba(0, 0, 0, 0.8);
   width: 30%;
 }
 
