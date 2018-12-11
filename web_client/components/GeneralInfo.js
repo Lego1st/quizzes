@@ -105,7 +105,7 @@ class GeneralInfo extends React.Component {
 	render() {
 		if (this.state.isLoaded) {
 			return (
-				<div>
+				<div className="general-profile">
 					<ul className="list-group" >
 
 						<li className="list-group-item"  ><strong>Full Name</strong>

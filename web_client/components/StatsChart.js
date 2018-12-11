@@ -159,9 +159,9 @@ class StatChart extends React.Component {
 		if (this.state.isLoaded) {
 			const myStat = []
 			for (var i = 0; i < this.state.chartData.length; i++) {
-				myStat.push(<div style={{display: "table-cell"}}>
+				myStat.push(<div key={i} style={{display: "table-cell"}}>
 							<Doughnut 
-								key={i} 
+								
 								data={this.state.chartData[i]} 
 								redraw={true} 
 								width={200} 

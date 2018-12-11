@@ -20,7 +20,7 @@ class Profile extends React.Component {
       <div className="container" id="profile-page">
         <div className="row">
           <ProfileSideBar username={this.props.match.params.username} />
-          <div className="col-md-8">
+          <div className="col-md-9">
 
             <div className='title' style={{marginBottom: "5%"}}>
               <h4 style={{ display: 'inline-block' }}> About me </h4>

@@ -60,10 +60,11 @@
 .btn-profile{
 	float: right;
 }
-.label-info{
+
+/*.label-info{
 	float: right;
 	padding-right: 10px
-}
+}*/
 
 .badge {
 	float: right;
@@ -94,3 +95,26 @@
 .userPost:hover {
 	border-color: rgb(140, 140, 140);
 }
+
+.general-profile {
+	width: 69%;
+	margin: 0 auto;
+	font-size: 18px;
+}
+
+.general-profile > ul > li {
+	border: none;
+	background-color: transparent;
+	display: table;
+	table-layout: fixed;
+}
+
+.general-profile > ul > li > * {
+	display: table-cell;
+	width: 50%
+}
+
+.general-profile > ul > li > strong {
+	width: 35%;
+}
+
