@@ -8,7 +8,7 @@ html {
 
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: #f7f7f7;
+  background-color: #fbfbfb;
 }
 
 input {
@@ -16,7 +16,7 @@ input {
 }
 
 .navbar {
-  background-color: #fbfbfb; 
+  background-color: #e2b5b5; 
   padding: 2px 0;
   border-bottom: 1px solid #d3d3d3;
   margin-bottom: 0px;
@@ -44,7 +44,7 @@ input {
 }
 
 #searcher {
-  background-color: #f7f7f7;
+  background-color: #e2b5b5;
 }
 
 .navbar-mid {
