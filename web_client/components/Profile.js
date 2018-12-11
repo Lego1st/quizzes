@@ -34,7 +34,7 @@ class Profile extends React.Component {
             <div className='title'>
 
               <h4 style={{ display: 'inline-block' }}> Progress </h4>
-              <i class="fas fa-chart-line" style={{ display: 'inline', marginLeft: '1%', marginTop: '-1%', cursor: 'pointer' }}></i>
+              <i className="fas fa-chart-line" style={{ display: 'inline', marginLeft: '1%', marginTop: '-1%' }}></i>
 
             </div>
             <StatsChart username={this.props.match.params.username} />

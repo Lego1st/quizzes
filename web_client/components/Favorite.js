@@ -82,9 +82,12 @@ class Favorite extends React.Component {
     }
     return (
       <div className="container" id="profile-page">
-          <div className="row">
+          <div className="row profile-favorite">
             <ProfileSideBar username={this.props.match.params.username}/>
             <div className="col-md-8">
+              <div className="hero-text">
+                <h3>Quizzes you liked</h3>
+              </div>
             { (posts.length == 0) ? (
               <div style={{textAlign: 'center'}}>
                 <h3>You have not liked any quiz yet ^^</h3>

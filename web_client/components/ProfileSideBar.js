@@ -77,7 +77,7 @@ class ProfileSideBar extends React.Component {
                     <div className="avatar-upload">
                         <br/>
                         <label className="btn btn-outline-primary btn-upload">
-                            <i class="fas fa-camera-retro"></i>
+                            <i className="fas fa-camera-retro"></i>
                             <strong>  New picture </strong>
                         <input type="file" accept="image/jpeg,image/png" onChange={e => this.handle_upload(e)} style={{ display: "none" }} />
                         </label>
@@ -85,34 +85,34 @@ class ProfileSideBar extends React.Component {
                         <div className="upload-state">
                             <button type="button" className='btn btn-outline-primary' hidden={!this.state.loaded_ava} onClick={e => { this.handle_save(e, this.state.avatar) }}>
                                 Save
-                        </button>
-                            <button type="button" className='btn btn-outline-danger' hidden={!this.state.loaded_ava} onClick={this.handle_cancel}>
-                                Cancel
-                       </button>
+                            </button>
+                                <button type="button" className='btn btn-outline-danger' hidden={!this.state.loaded_ava} onClick={this.handle_cancel}>
+                                    Cancel
+                           </button>
                         </div>
                     </div>
                 }
 
                 <br />
                 <br />
-                <ul className="list-group list-group-flush" style={{textAlign: "center"}}>
+                <ul className="list-group" style={{textAlign: "center"}}>
                     <li className="list-group-item  list-profile " style={{padding:"2px"}}>
-                        <Link to={`/profile/${this.props.username}`} className="nav-link active">
+                        <Link to={`/profile/${this.props.username}`} className="nav-link" style={{color:'black'}}>
                             Profile
 				</Link>
                     </li>
                     <li className="list-group-item  list-profile " style={{padding:"2px"}}>
-                        <Link to={`/myquizzes/${this.props.username}`} className="nav-link active">
+                        <Link to={`/myquizzes/${this.props.username}`} className="nav-link" style={{color:'black'}}>
                             Post
 				</Link>
                     </li>
                     <li className="list-group-item  list-profile " style={{padding:"2px"}}>
-                        <Link to={`/favorite/${this.props.username}`} className="nav-link active">
+                        <Link to={`/favorite/${this.props.username}`} className="nav-link" style={{color:'black'}}>
                             Favorite
 				</Link>
                     </li>
                     <li className="list-group-item  list-profile " style={{padding:"2px"}}>
-                        <Link to={`/answered/${this.props.username}`} className="nav-link active">
+                        <Link to={`/answered/${this.props.username}`} className="nav-link" style={{color:'black'}}>
                             Answered
 	            </Link>
                     </li>

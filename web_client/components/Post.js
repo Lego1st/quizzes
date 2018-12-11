@@ -82,9 +82,12 @@ class Post extends React.Component {
 		}
 		return (
 			<div className="container" id="profile-page">
-		      <div className="row">
+		      <div className="row profile-post">
 		        <ProfileSideBar username={this.props.match.params.username}/>
 		        <div className="col-md-8">
+				  <div className="hero-text">
+				    <h1>Your Quizzes</h1>
+				  </div>
 		        { (posts.length == 0) ? (
 		        	<div style={{textAlign: 'center'}}>
 			        	<h3>You currently do not have any post yet ^^</h3>
