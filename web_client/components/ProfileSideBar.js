@@ -72,10 +72,13 @@ class ProfileSideBar extends React.Component {
             <div className="col-md-3">
 
                 <img id='avatar' src={this.state.avatar} alt="default avatar" className="img-circle avatar" />
+                
                 {this.props.username != localStorage.getItem('username') ? '' :
                     <div className="avatar-upload">
-                        <label className="btn-upload">
-                            Upload new picture
+                        <br/>
+                        <label className="btn btn-outline-primary btn-upload">
+                            <i class="fas fa-camera-retro"></i>
+                            <strong>  New picture </strong>
                         <input type="file" accept="image/jpeg,image/png" onChange={e => this.handle_upload(e)} style={{ display: "none" }} />
                         </label>
 
@@ -92,24 +95,24 @@ class ProfileSideBar extends React.Component {
 
                 <br />
                 <br />
-                <ul className="list-group">
-                    <li className="list-group-item  list-profile ">
-                        <Link to={`/profile/${this.props.username}`}>
+                <ul className="list-group list-group-flush" style={{textAlign: "center"}}>
+                    <li className="list-group-item  list-profile " style={{padding:"2px"}}>
+                        <Link to={`/profile/${this.props.username}`} className="nav-link active">
                             Profile
 				</Link>
                     </li>
-                    <li className="list-group-item  list-profile ">
-                        <Link to={`/myquizzes/${this.props.username}`}>
+                    <li className="list-group-item  list-profile " style={{padding:"2px"}}>
+                        <Link to={`/myquizzes/${this.props.username}`} className="nav-link active">
                             Post
 				</Link>
                     </li>
-                    <li className="list-group-item  list-profile ">
-                        <Link to={`/favorite/${this.props.username}`}>
+                    <li className="list-group-item  list-profile " style={{padding:"2px"}}>
+                        <Link to={`/favorite/${this.props.username}`} className="nav-link active">
                             Favorite
 				</Link>
                     </li>
-                    <li className="list-group-item  list-profile ">
-                        <Link to={`/answered/${this.props.username}`}>
+                    <li className="list-group-item  list-profile " style={{padding:"2px"}}>
+                        <Link to={`/answered/${this.props.username}`} className="nav-link active">
                             Answered
 	            </Link>
                     </li>

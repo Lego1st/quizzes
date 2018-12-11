@@ -16,7 +16,7 @@ Chart.helpers.extend(Chart.controllers.doughnut.prototype, {
 			height = chart.chart.height,
 			ctx = chart.chart.ctx;
 
-		var fontSize = 0.8;
+		var fontSize = 1.5;
 		ctx.font = fontSize + "em sans-serif";
 		ctx.textBaseline = "middle";
 
@@ -105,12 +105,12 @@ class StatChart extends React.Component {
 							'August', 'September', 'October', 'Novemver', 'December'],
 						datasets: [
 							{
-								label: 'Quiz do each months',
-								backgroundColor: '#36a2eb',
-								borderColor: '#36a2eb',
+								label: 'Quiz done each months',
+								backgroundColor: 'rgba(54,162,235,1)',
+								borderColor: 'rgba(54,162,235,0.4)',
 								borderWidth: 1,
-								hoverBackgroundColor: '#36a2eb',
-								hoverBorderColor: '#36a2eb',
+								hoverBackgroundColor: 'rgba(54,162,235,0.8)',
+								hoverBorderColor: 'rgba(54,162,235,0.8)',
 								data: results['per_mon']
 							}
 						]
@@ -138,15 +138,15 @@ class StatChart extends React.Component {
 		if (this.state.isLoaded) {
 			const myStat = []
 			for (var i = 0; i < this.state.chartData.length; i++) {
-				myStat.push(<Doughnut key={i} data={this.state.chartData[i]} width={200} height={200} options={this.state.chartOption[i]} />)
+				myStat.push(<Doughnut key={i} data={this.state.chartData[i]} redraw={true} width={200} height={200} options={this.state.chartOption[i]} />)
 			}
 			return (
-				<div>
+				<div style={{ backgroundColor: "#ffffff" }} >
 					<div style={{ position: 'relative', textAlign: "center", padding: "20px" }}>
 						{myStat}
 					</div>
 					<div>
-						<Bar data={this.state.barData} />
+						<Bar redraw={true} data={this.state.barData} />
 					</div>
 				</div>
 			);

@@ -4,14 +4,16 @@
 }
 
 .list-profile {
-	width: 80%
+	width: 80%;
 }
 
 .tab-pane {
 	padding-left: 0px;
 	padding-right: 0px;
 }
-
+.row {
+	padding-top: 10px;
+}
 .avatar {
 	width: 80%;
 	height: auto;
@@ -19,12 +21,12 @@
 	border-color: rgb(240, 240, 240);
 }
 .btn-upload {
-	border: 1px solid #cacaca;
 	padding: 5px;
 	width: 204px;
 	border-radius: 3px;
 	cursor: pointer;
 	text-align: center;
+	color: "#42b6ff";
 }
 .btn-profile{
 	float: right;

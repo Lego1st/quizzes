@@ -108,14 +108,14 @@ class GeneralInfo extends React.Component {
 				<div>
 					<ul className="list-group list-group-flush" >
 
-						<li className="list-group-item" style={{backgroundColor: "#f7f7f7"}} ><strong>Full Name</strong>
+						<li className="list-group-item"  ><strong>Full Name</strong>
 							<label className='label-info' hidden={this.props.is_editing}> {this.state.fullname} </label>
 
 							<span className="info">
 								<input id='fullname' style={{ border: 'groove' }} ref='fn' hidden={!this.props.is_editing} onChange={e => this.setState({ fullname: e.target.value })} value={this.state.fullname} />
 							</span>
 						</li>
-						<li className="list-group-item" style={{backgroundColor: "#f7f7f7"}}><strong>Age</strong>
+						<li className="list-group-item" ><strong>Age</strong>
 							<label className='label-info' hidden={this.props.is_editing}> {this.state.age} </label>
 
 							<span className="info">
@@ -123,7 +123,7 @@ class GeneralInfo extends React.Component {
 
 							</span>
 						</li>
-						<li className="list-group-item" style={{backgroundColor: "#f7f7f7"}}><strong>Country</strong>
+						<li className="list-group-item" ><strong>Country</strong>
 							<label className='label-info' hidden={this.props.is_editing}> {this.state.country} </label>
 
 							<span className="info">
@@ -137,7 +137,7 @@ class GeneralInfo extends React.Component {
 
 							</span>
 						</li>
-						<li className="list-group-item" style={{backgroundColor: "#f7f7f7"}}><strong>Education</strong>
+						<li className="list-group-item" ><strong>Education</strong>
 							<label className='label-info' hidden={this.props.is_editing}> {this.state.education} </label>
 
 							<span className="info">
@@ -145,7 +145,7 @@ class GeneralInfo extends React.Component {
 
 							</span>
 						</li>
-						<li className="list-group-item" style={{backgroundColor: "#f7f7f7"}}><strong>Bio</strong>
+						<li className="list-group-item" ><strong>Bio</strong>
 							<label className='label-info' hidden={this.props.is_editing}> {this.state.bio} </label>
 
 							<span className="info">
