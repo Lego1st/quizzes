@@ -40,18 +40,29 @@ class HasntDoneQuizOnly(permissions.BasePermission):
     """
     Custom permission to only allow user to do each quiz only once
     """
-    message = 'User has done this quiz.'
+    message = "User has done this quiz!"
 
     def has_object_permission(self, request, view, obj):
         user = request.user
         quiz = obj
         return UserSubmission.objects.filter(quiz=quiz, user=user).count() == 0
 
+class ApprovedQuizOnly(permissions.BasePermission):
+    """
+    Custom permission to only allow user to take action on approved quiz only
+    """
+    message = "This quiz has not been approved yet!"
+
+    def has_object_permission(self, request, view, obj):
+        return obj.status == 'a'
+
 # Quiz and Question APIs
 class QuizQuestionDetail(generics.RetrieveAPIView):
 
     permission_classes = (permissions.IsAuthenticated,
-                        HasntDoneQuizOnly,)
+                        HasntDoneQuizOnly,
+                        ApprovedQuizOnly,)
+
     queryset = Quiz.objects.all()
     serializer_class = QuizQuestionReadOnlySerializer
 
@@ -91,7 +102,8 @@ class QuizItemList(generics.ListAPIView):
 
 class RecentQuiz(QuizItemList):
 
-    queryset = Quiz.objects.all()
+    def get_queryset(self):
+        return Quiz.objects.filter(status='a')
 
 class QuizCategory(QuizItemList):
 
@@ -99,6 +111,12 @@ class QuizCategory(QuizItemList):
         return Quiz.objects.filter(category=self.kwargs['cate'], status='a')
 
 class PostedQuiz(QuizItemList):
+    """
+    Return a list of posted quizzes by a user.
+    If the user in the request is the author, return full list of the quiz,
+    including pending quizzes, rejected quizzes, and approved quizzes.
+    Otherwise, only return list of approved quizzes.
+    """
 
     def get_queryset(self):
         username = self.request.query_params.get('username', None)
@@ -106,9 +124,14 @@ class PostedQuiz(QuizItemList):
             output = Quiz.objects.filter(author=self.request.user)
         else:
             output = Quiz.objects.filter(author__username=username)
+            #if not the author, only return approved quizzes
+            if username != self.request.user.username:
+                output = output.filter(status='a')
+
         return output
 
 class UserAnswered(QuizItemList):
+
     ordering = ('-submissions__created_at', '-created_at')
     def get_queryset(self):
         username = self.request.query_params.get('username', None)
@@ -152,7 +175,7 @@ class SearchQuiz(generics.ListAPIView):
         return Question.objects.filter(content__contains=self.kwargs['search_text'])
 
 @api_view(['POST'])
-@permission_classes([permissions.IsAuthenticated])
+@permission_classes([permissions.IsAuthenticated, HasntDoneQuizOnly, ApprovedQuizOnly])
 def user_submit(request):
     def random_quiz(category, user):
         quiz_id_pool = Quiz.objects.filter(category=category)\
@@ -191,7 +214,7 @@ class UpdateStatusQuiz(generics.UpdateAPIView):
         return Response({'status': 'success'})
 
 class LikeQuiz(generics.UpdateAPIView):
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated, ApprovedQuizOnly,)
     serializer_class = BriefQuizSerializer
     queryset = Quiz.objects.all()
 

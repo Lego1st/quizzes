@@ -1,9 +1,10 @@
 # Quizzes backend API
 **Changelog:** 
-- Add `created_at` field to UserSubmission model
-- Add `mark` and `submitted_at` to the response of `answered_quiz` api
-- Add ordering filter with submission date to `answered_quiz` api
-- Remove constrain `null=True` from `Quiz.created_date`, to migrate the existing database, select option `Provide a one-off default now` and add value `timezone.now`
+- `recent_quiz`, `quiz_category` will only return approved quizzes
+- Add `ApprovedQuizOnly` permission to `like_quiz`, `submit_quiz`, `quiz_question`
+    - This mean that user can only like and do approved quizzes
+- Change `posted_quiz` to:
+    - Return a list of posted quizzes by a user. If the user in the request is the author, return full list of the posted quizzes, including pending quizzes, rejected quizzes, and approved quizzes. Otherwise, only return list of approved quizzes.
 ## Quiz and Question APIs
 List APIs:
 - [Quiz item list APIs](#quizitemlistapi):
@@ -88,7 +89,7 @@ Response: 200 OK
 ```
 
 #### `api/posted_quiz/`
-**Descriptions:** Response a list of quiz that is created by an user
+**Descriptions:**  Return a list of posted quizzes by a user. If the user in the request is the author, return full list of the posted quizzes, including pending quizzes, rejected quizzes, and approved quizzes. Otherwise, only return list of approved quizzes.
 
 Example:
 ```
