@@ -21,7 +21,16 @@ class GeneralInfo extends React.Component {
 			id: localStorage.getItem('id'),
 		};
 	}
+
+	highlight(e) {
+	    e.stopPropagation();
+		$("#status-overlay").show();
+	    $("#highlight-textarea").css('z-index','9999999');
+	    $("#highlight-textarea").css('position', 'relative');
+	}
+
 	componentDidMount() {
+
 		console.log(this.props.is_editing);
 		get_data(`/profile/api/detail/${this.props.username}/`, true)
 			.then((res) => res.json())
@@ -84,7 +93,8 @@ class GeneralInfo extends React.Component {
 				}
 			)
 	}
-	handle_click = (e, data) => {
+
+	handle_click(e, data) {
 		fetch(Config.serverUrl + '/profile/api/update/', {
 			method: 'POST',
 			headers: {
@@ -106,20 +116,21 @@ class GeneralInfo extends React.Component {
 		if (this.state.isLoaded) {
 			return (
 				<div className="general-profile">
-					<ul className="list-group" >
+					<div id="status-overlay" style={{display: "none"}}></div>
+					<ul className="list-group" id="highlight-textarea" >
 
 						<li className="list-group-item"  ><strong>Full Name</strong>
 							<label className='label-info' hidden={this.props.is_editing}> {this.state.fullname} </label>
 
 							<span className="info">
-								<input id='fullname' style={{ border: 'groove' }} ref='fn' hidden={!this.props.is_editing} onChange={e => this.setState({ fullname: e.target.value })} value={this.state.fullname} />
+								<input className="ginput" id='fullname' style={{ border: 'groove' }} ref='fn' hidden={!this.props.is_editing} onClick={this.highlight.bind(this)} onChange={e => this.setState({ fullname: e.target.value })} value={this.state.fullname} />
 							</span>
 						</li>
 						<li className="list-group-item" ><strong>Age</strong>
 							<label className='label-info' hidden={this.props.is_editing}> {this.state.age} </label>
 
 							<span className="info">
-								<input id='age' ref='age' style={{ border: 'groove' }} hidden={!this.props.is_editing} onChange={e => this.setState({ age: e.target.value })} value={this.state.age} />
+								<input className="ginput" id='age' ref='age' style={{ border: 'groove' }} hidden={!this.props.is_editing} onClick={this.highlight.bind(this)} onChange={e => this.setState({ age: e.target.value })} value={this.state.age} />
 
 							</span>
 						</li>
@@ -127,7 +138,7 @@ class GeneralInfo extends React.Component {
 							<label className='label-info' hidden={this.props.is_editing}> {this.state.country} </label>
 
 							<span className="info">
-								<input id='country' list="countries" ref='ct' style={{ border: 'groove' }} hidden={!this.props.is_editing} onFocus={e => e.target.value = ''} onChange={e => this.setState({ country: e.target.value })} value={this.state.country} />
+								<input className="ginput" id='country' list="countries" ref='ct' style={{ border: 'groove' }} hidden={!this.props.is_editing} onClick={this.highlight.bind(this)} onFocus={e => e.target.value = ''} onChange={e => this.setState({ country: e.target.value })} value={this.state.country} />
 								<datalist id="countries">
 									<option value="Vietnam" />
 									<option value="England" />
@@ -141,7 +152,7 @@ class GeneralInfo extends React.Component {
 							<label className='label-info' hidden={this.props.is_editing}> {this.state.education} </label>
 
 							<span className="info">
-								<input id='education' ref='edu' style={{ border: 'groove' }} hidden={!this.props.is_editing} onChange={e => this.setState({ education: e.target.value })} value={this.state.education} />
+								<input className="ginput" id='education' ref='edu' style={{ border: 'groove' }} hidden={!this.props.is_editing} onClick={this.highlight.bind(this)} onChange={e => this.setState({ education: e.target.value })} value={this.state.education} />
 
 							</span>
 						</li>
@@ -149,16 +160,20 @@ class GeneralInfo extends React.Component {
 							<label className='label-info' hidden={this.props.is_editing}> {this.state.bio} </label>
 
 							<span className="info">
-								<input id='bio' ref='bio' style={{ border: 'groove' }} hidden={!this.props.is_editing} onChange={e => this.setState({ bio: e.target.value })} value={this.state.bio} />
+								<input className="ginput" id='bio' ref='bio' style={{ border: 'groove' }} hidden={!this.props.is_editing} onClick={this.highlight.bind(this)} onChange={e => this.setState({ bio: e.target.value })} value={this.state.bio} />
 
-							</span></li>
+							</span>
+						</li>
 
+						<li className="list-group-item"> 
+							<a style={{color: "#A15959", fontWeight: 'bold', cursor: 'pointer'}}
+								hidden={!this.props.is_editing} 
+								onClick={e => this.handle_click(e, this.state)}>Save</a> 
+					
+							
+						</li>
 					</ul>
-					<div style={{ marginTop: 5 + 'px' }}>
-						{this.props.username != localStorage.getItem('username') ? '' :
-							<button className='btn btn-outline-success btn-profile' id='savebtn' hidden={!this.props.is_editing} onClick={e => this.handle_click(e, this.state)}>Save</button>
-						}
-					</div>
+					
 				</div>
 			);
 		}

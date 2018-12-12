@@ -34,6 +34,16 @@ class App extends Component {
     });
   }
 
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleClickOutside);
+  }
+
+  handleClickOutside() {
+    $("#status-overlay").hide();
+    $("#highlight-textarea").css('z-index','1');
+    $("#highlight-textarea").css('position', '');
+  }
+
   render() {
     return (
       <BrowserRouter>

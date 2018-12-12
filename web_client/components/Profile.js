@@ -14,6 +14,11 @@ class Profile extends React.Component {
   handle_save() {
     this.setState({ is_editing: false });
   }
+
+  toggle_editting() {
+    this.setState({ is_editing: true });
+  }
+  
   render() {
 
     return (
@@ -26,7 +31,7 @@ class Profile extends React.Component {
               <h4 style={{ display: 'inline-block' }}> About me </h4>
               {this.props.match.params.username != localStorage.getItem('username') ? '' :
                 // <button className='btn btn-outline-info btn-profile' > Edit </button>
-                <i className="fas fa-edit" style={{ display: 'inline', marginLeft: '1%', marginTop: '-1%', cursor: 'pointer' }} onClick={() => { this.setState({ is_editing: true }) }}></i>
+                <i className="fas fa-edit edit-profile-btn" style={{ display: 'inline', marginLeft: '1%', marginTop: '-1%', cursor: 'pointer' }} onClick={this.toggle_editting.bind(this)}></i>
               }
             </div>
 

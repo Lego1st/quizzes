@@ -55,6 +55,7 @@ class LoginSignUp extends React.Component {
         localStorage.setItem('is_staff', is_staff);
         this.props.setLoginState(true, username, is_staff.toString());
         this.props.history.push("/");
+        window.location.reload();
     }
 
     handle_login = (e, data) => {

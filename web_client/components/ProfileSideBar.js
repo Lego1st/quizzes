@@ -76,17 +76,17 @@ class ProfileSideBar extends React.Component {
                 {this.props.username != localStorage.getItem('username') ? '' :
                     <div className="avatar-upload">
                         <br/>
-                        <label className="btn btn-outline-primary btn-upload">
+                        <label className="btn btn-outline btn-upload">
                             <i className="fas fa-camera-retro"></i>
                             <strong>  New picture </strong>
                         <input type="file" accept="image/jpeg,image/png" onChange={e => this.handle_upload(e)} style={{ display: "none" }} />
                         </label>
 
                         <div className="upload-state">
-                            <button type="button" className='btn btn-outline-primary' hidden={!this.state.loaded_ava} onClick={e => { this.handle_save(e, this.state.avatar) }}>
+                            <button type="button" className='btn btn-success' style={{width: '40%', display: 'inline'}}  hidden={!this.state.loaded_ava} onClick={e => { this.handle_save(e, this.state.avatar) }}>
                                 Save
                             </button>
-                                <button type="button" className='btn btn-outline-danger' hidden={!this.state.loaded_ava} onClick={this.handle_cancel}>
+                                <button type="button" className='btn btn-danger' style={{width: '40%', display: 'inline'}} hidden={!this.state.loaded_ava} onClick={this.handle_cancel}>
                                     Cancel
                            </button>
                         </div>

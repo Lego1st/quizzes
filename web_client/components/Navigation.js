@@ -17,6 +17,7 @@ class Navigation extends Component {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     localStorage.removeItem('is_staff');
+    window.location.reload();
   };
 
   handleSubmitSearch(e) {
@@ -37,7 +38,13 @@ class Navigation extends Component {
                         });
                     }
                 })
+  }
+
+  handleReloadMyProfile() {
+    if (window.location.href.split("/").pop() != this.props.username) {
+      window.location.reload();
     }
+  }
 
   render() {
     return (
@@ -81,7 +88,7 @@ class Navigation extends Component {
                       </Link>
                     </div>
                     <ul className="dropdown-menu">
-                      <li><Link to={`/profile/${this.props.username}`}>Your Profile</Link></li>
+                      <li><Link to={`/profile/${this.props.username}`} onClick={this.handleReloadMyProfile.bind(this)}>Your Profile</Link></li>
                       {this.props.is_staff == "true" ? 
                         <li><Link to={`/quizapproval`}>Quizzes Approval</Link></li>
                         :
@@ -96,7 +103,7 @@ class Navigation extends Component {
             </div>
           </div>
         </nav>
-      </div >
+      </div>
     );
   }
 }

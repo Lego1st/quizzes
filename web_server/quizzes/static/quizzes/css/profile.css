@@ -49,14 +49,33 @@
 	border: 2px solid;
 	border-color: rgb(240, 240, 240);
 }
+
+#status-overlay {
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.50);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    overflow: hidden;
+}
+
 .btn-upload {
 	padding: 5px;
 	width: 80%;
 	border-radius: 3px;
 	cursor: pointer;
 	text-align: center;
-	color: "#42b6ff";
+	color: #A15959;
+	border-color: #A15959;
 }
+
+.btn-upload:hover {
+	color: #fbfbfb;
+	background-color: #A15959;
+}
+
 .btn-profile{
 	float: right;
 }

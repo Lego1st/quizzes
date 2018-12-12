@@ -63,7 +63,6 @@
 }
 
 .qz_quiz_item:hover {
-    cursor: pointer;
     -webkit-box-shadow: 0 0 40px -5px rgba(0, 0, 0, 0.2);
     box-shadow: 0 0 40px -5px rgba(0, 0, 0, 0.2);
     top: -5px;
