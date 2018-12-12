@@ -49,9 +49,9 @@ export const CATEGORY_IMG = {
 }
 
 export const CATEGORY_COLOR = {
-	'ma' : '#4f5d73',
-	'cs' : '#019839',
-	'lg' : '#c25b5a'
+	'ma' : '#e2b5b5',
+	'cs' : '#e2b5b5',
+	'lg' : '#e2b5b5'
 }
 
 export const EMOTICON = {
