@@ -11,6 +11,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.filters import OrderingFilter
 import random
 import pandas
+from django.db.models import Count
 
 def index(request):
     return render(request, 'index.html')
@@ -104,6 +105,14 @@ class RecentQuiz(QuizItemList):
 
     def get_queryset(self):
         return Quiz.objects.filter(status='a')
+
+class TopQuiz(QuizItemList):
+    """
+    Return most liked quizzes
+    """
+    ordering = ('-like_count', '-created_at')
+    def get_queryset(self):
+        return Quiz.objects.annotate(like_count=Count('likes')).filter(status='a')
 
 class QuizCategory(QuizItemList):
 
