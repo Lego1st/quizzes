@@ -45,7 +45,7 @@ class SingleChoiceQuest extends Component {
               x.options.map((option, idx) => 
                 <label 
                   key={idx} 
-                  className={"btn " + (option == this.props.doQuiz[x.index] ? "active btn-warning" : "btn-info")}
+                  className={"btn " + (option == this.props.doQuiz[x.index] ? "active btn-info-active" : "btn-info")}
                   onClick={event => this.handleOnClick(event, option)}
                   style={{"margin" : "10px 10px"}}>
                   <input type="radio" name="options" autoComplete="off" disabled={this.props.viewOnly}/> {option}
@@ -97,7 +97,7 @@ class MultipleChoiceQuest extends Component {
               x.options.map((option, idx) => 
                 <label 
                   key={idx} 
-                  className={"btn " + (this.props.doQuiz[x.index] && this.props.doQuiz[x.index].includes(option) ? "active btn-warning" : "btn-info")}
+                  className={"btn " + (this.props.doQuiz[x.index] && this.props.doQuiz[x.index].includes(option) ? "active btn-info-active" : "btn-info")}
                   onClick={event => this.handleOnClick(event, option)}
                   style={{"margin" : "10px 10px"}}
                   disabled={this.props.viewOnly}>

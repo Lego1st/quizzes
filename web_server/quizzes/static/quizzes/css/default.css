@@ -30,8 +30,8 @@ a {
 
 .navbar {
   background-color: #e2b5b5; 
-  padding: 2px 0;
-  border-bottom: 1px solid #d3d3d3;
+  padding: 0;
+  border-bottom: 1px solid #fbfbfb;
   margin-bottom: 0px;
 }
 
@@ -73,8 +73,8 @@ a {
   word-wrap: break-word;
   white-space: pre;
 
-  font-size: 48px;
-   background: -webkit-linear-gradient(-35deg, #fbfbfb 47%, #e2b5b5 50%, #fbfbfb 56%);
+  font-size: 40px;
+   background: -webkit-linear-gradient(90deg, #FFE5E5 4%, #fff 50%, #FFE5E5 77%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   line-height: 58px;

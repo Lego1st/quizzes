@@ -84,7 +84,7 @@ class QuizResult extends Component {
     
     return (
       <div>
-      <button type="button" className="btn btn-warning float-right" data-toggle="modal" data-target="#quizResultModal">
+      <button type="button" className="btn btn-submit-quiz float-right" data-toggle="modal" data-target="#quizResultModal">
         Submit Quiz
       </button>
 

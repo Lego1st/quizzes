@@ -63,12 +63,12 @@
 
 .btn-upload {
 	padding: 5px;
-	width: 80%;
 	border-radius: 3px;
 	cursor: pointer;
 	text-align: center;
 	color: #A15959;
 	border-color: #A15959;
+	background-color: #fbfbfb
 }
 
 .btn-upload:hover {

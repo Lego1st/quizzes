@@ -76,7 +76,7 @@ class ProfileSideBar extends React.Component {
                 {this.props.username != localStorage.getItem('username') ? '' :
                     <div className="avatar-upload">
                         <br/>
-                        <label className="btn btn-outline btn-upload">
+                        <label className="btn btn-outline btn-upload" style={{width: "80%"}}>
                             <i className="fas fa-camera-retro"></i>
                             <strong>  New picture </strong>
                         <input type="file" accept="image/jpeg,image/png" onChange={e => this.handle_upload(e)} style={{ display: "none" }} />

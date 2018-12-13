@@ -236,7 +236,7 @@ class QuizDetail extends Component {
                     {pages.map(page => {
                       let activePage = null;
                       if (this.state.currentPage === page) {
-                        activePage = { backgroundColor: "#fdce09" };
+                        activePage = { backgroundColor: "#A15959", color: '#fbfbfb' };
                       }
                       return (
                         <button

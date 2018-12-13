@@ -91,3 +91,34 @@
     margin-right: auto;
     width: 50%;
 }
+
+
+.btn-submit-quiz {
+    padding: 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    text-align: center;
+    color: #fbfbfb;
+    background-color: #A15959;
+}
+
+.btn-info:hover {
+    background-color: #C08383;
+    color: #fbfbfb;
+    border-color: #C08383;
+    border-radius: 5px;
+}
+
+.btn-info {
+    color: black;
+    background-color: #FFE5E5;
+    border-color: #C08383;
+    border-radius: 5px;
+}
+
+.btn-info-active {
+    background-color: #C08383;
+    color: #fbfbfb;
+    border-color: #C08383;
+    border-radius: 5px;
+}
