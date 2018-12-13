@@ -108,5 +108,75 @@
             "index": 7
         }
     ]
+},
+{
+    "title": "Warmup Puzzles",
+    "brief": "How fast is your thinking?",
+    "category": "lg",
+    "shuffle": false,
+    "questions": [{
+        "content": "Kevin, Joseph, and Nicholas are 3 brothers. If the following statements are all true, which of them is the youngest?\n + Kevin is the oldest.\n + Nicholas is not the oldest.\n + Joseph is not the youngest.",
+        "options": ["Joseph", "Kevin", "Nicholas"],
+        "type": "si",
+        "answer": ["Nicholas"],
+        "matchings": [],
+        "index": 0
+    },{
+        "content": "Merlin realizes that all Alakazams are Open Sesames, and some Hocus Pocuses are Alakazams.\nIs it true that some Hocus Pocuses are Open Sesames?",
+        "options": ["True", "False"],
+        "type": "si",
+        "answer": ["True"],
+        "matchings": [],
+        "index": 1
+    }, {
+        "content": "+ There is exactly 1 false statement in this list.\n+ There are exactly 2 false statements in this list.\n+ There are exactly 3 false statements in this list.\n\nWhich statements are false?",
+        "options": ["Statement 1", "Statement 2", "Statement 3"],
+        "type": "mu",
+        "answer": ["Statement 1", "Statement 3"],
+        "matchings": [],
+        "index": 2
+    }, {
+        "content": "5 brothers compare their heights and find that \n+ Alex is taller than Brian but shorter than Charlie;\n+ Daniel is taller than Edward but shorter than Alex.\n\nWho is the tallest?",
+        "options": ["Alex", "Brian", "Charlie", "Daniel", "Edward", "Not enough information"],
+        "type": "si",
+        "answer": ["Charlie"],
+        "matchings": [],
+        "index": 3
+    }, {
+        "content": "What is the next letter in the following sequence? **J, F, M, A, M, J, ______**",
+        "options": ["A", "J", "K", "F"],
+        "type": "si",
+        "answer": ["J"],
+        "matchings": [],
+        "index": 4
+    }, {
+        "content": "Mary's mum has four children. The first child is June. The second is May. The third child is April.\nSo the name of fourth child is ___",
+        "options": [],
+        "type": "fi",
+        "answer": ["Mary"],
+        "matchings": [],
+        "index": 5
+    }, {
+        "content": "How many times does the letter A appear in the alphabet from 0-100?\n The answer is ___",
+        "options": [],
+        "type": "fi",
+        "answer": "0",
+        "matchings": [],
+        "index": 6
+    }, {
+        "content": "A farmer has 15 sheep. All but 8 died. How many are left?",
+        "options": ["8", "6", "7", "15"],
+        "type": "si",
+        "answer": "8",
+        "matchings": [],
+        "index": 7
+    }, {
+        "content": "There are 2 mothers, 2 daughters, 1 grandmother and 1 granddaughter. How many people are there?",
+        "options": ["4", "6", "3", "5"],
+        "type": "si",
+        "answer": ["3"],
+        "matchings": [],
+        "index": 8
+    }]
 }
 ]
