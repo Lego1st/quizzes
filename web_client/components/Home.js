@@ -9,93 +9,106 @@ import get_data from './Utils';
 var Config = require('Config');
 const page_size = 5;
 
-class Home extends Component {
+function fetchData(api_name) {
+  get_data(`/api/${api_name}/?page_size=${page_size}`, true)
+    .then(res => {
+      return res.json();
+    })
+    .then((result) => {
+      this.setState({
+        next: result.next,
+        quizzes: result.results || []
+      })
+    },
+      (error) => {
+        console.log(error);
+        this.setState({
+          isLoaded: true,
+          error
+        });
+      }
+    );
+}
+
+function fetchMore(completed) {
+  if (this.state.next == null) {
+    completed();
+    return;
+  }
+  get_data(this.state.next.replace(Config.serverUrl, ''), true).then(res => res.json()).then(result => {
+    var newData = Object.assign([], this.state.recent_quizzes);
+    newData.push.apply(newData, result.results);
+    completed();
+    this.setState({
+      quizzes: newData,
+      next: result.next
+    })
+  });
+}
+
+class TopQuizzes extends Component {
   constructor(props) {
     super(props);
     this.state = {
       next: null,
-      next_top: null,
-      list_type: "Recent quizzes",
-      recent_quizzes: [],
-      top_quizzes: []
+      quizzes : [],
     }
   }
 
   componentDidMount() {
-    get_data(`/api/recent_quiz/?page_size=${page_size}`, true)
-      .then(res => {
-        return res.json();
-      })
-      .then((result) => {
-        console.log("Result ", result);
-        this.setState({
-          next: result.next,
-          recent_quizzes: result.results || []
-        })
-      },
-        (error) => {
-          console.log(error);
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      );
-    get_data(`/api/top_quiz/?page_size=${page_size}`, true)
-      .then(res => {
-        return res.json();
-      })
-      .then((result) => {
-        console.log("Result ", result);
-        this.setState({
-          next_top: result.next,
-          top_quizzes: result.results || []
-        })
-      },
-        (error) => {
-          console.log(error);
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
+    fetchData.apply(this, ['top_quiz'])
   }
 
   handleScrollToBottom(completed) {
-    // load more
-    if (this.state.next == null) {
-      completed();
-      return;
-    }
-    get_data(this.state.next.replace(Config.serverUrl, ''), true).then(res => res.json()).then(result => {
-      var newData = Object.assign([], this.state.recent_quizzes);
-      newData.push.apply(newData, result.results);
-      console.log("Scroll-load: ", result.results);
-      completed();
-      this.setState({
-        recent_quizzes: newData,
-        next: result.next
-      })
-    });
+    fetchData.apply(this, [completed])
   }
 
+  render() {
+    return (
+     <TableView
+        ref="top_quizzes"
+        dataSource={this.state.quizzes}
+        onScrollToBottom={this.handleScrollToBottom.bind(this)}
+      /> 
+    )
+  }
+}
 
-  handleScrollToBottomTopQuizzes(completed) {
-    // load more
-    if (this.state.next_top == null) {
-      completed();
-      return;
+class RecentQuizzes extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      next: null,
+      quizzes : [],
     }
-    get_data(this.state.next_top.replace(Config.serverUrl, ''), true).then(res => res.json()).then(result => {
-      var newData = Object.assign([], this.state.top_quizzes);
-      newData.push.apply(newData, result.results);
-      completed();
-      this.setState({
-        top_quizzes: newData,
-        next_top: result.next
-      })
-    });
+  }
+
+  componentDidMount() {
+    fetchData.apply(this, ['recent_quiz'])
+  }
+
+  handleScrollToBottom(completed) {
+    fetchData.apply(this, [completed])
+  }
+
+  render() {
+    return (
+     <TableView
+        ref="recent_quizzes"
+        dataSource={this.state.quizzes}
+        onScrollToBottom={this.handleScrollToBottom.bind(this)}
+      /> 
+    )
+  }
+
+}
+
+class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      list_type: "Recent quizzes"
+    }
   }
 
   handleChangeListType(event) {
@@ -128,24 +141,13 @@ class Home extends Component {
                   </div>
                 </div>
               </div>
+              <div key={this.state.new_load}>
               {
-                this.state.list_type == "Recent quizzes"
-                ? 
-                (<TableView
-                  key="recent_quizzes"
-                  ref="recent_quizzes"
-                  dataSource={this.state.recent_quizzes}
-                  onScrollToBottom={this.handleScrollToBottom.bind(this)}
-                />)
-                :
-                (<TableView
-                  key="top_quizzes"
-                  ref="top_quizzes"
-                  dataSource={this.state.top_quizzes}
-                  onScrollToBottom={this.handleScrollToBottomTopQuizzes.bind(this)}
-                />)
+                this.state.list_type == "Recent quizzes" 
+                ? <RecentQuizzes/>
+                : <TopQuizzes/>
               }
-
+              </div>
             </div>
           </div>
         </div>
