@@ -12,7 +12,14 @@ from rest_framework.filters import OrderingFilter
 import random
 import pandas
 from django.db.models import Count
+<<<<<<< HEAD
 from quizzes.permissions import *
+=======
+from django.db.models import Q
+from itertools import chain
+from django.forms.models import model_to_dict
+
+>>>>>>> f877ad82ce38e855d153e4132b4525c2886f02ad
 
 def index(request):
     return render(request, 'index.html')
@@ -142,12 +149,17 @@ class QuizCreate(generics.CreateAPIView):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
     
-class SearchQuiz(generics.ListAPIView):
-    permission_classes = (permissions.IsAuthenticated, )
-    serializer_class = QuestionAndQuizSerializer
 
-    def get_queryset(self):
-        return Question.objects.filter(content__contains=self.kwargs['search_text'])
+@api_view(['GET'])
+def search(request, search_text):
+    quizzes_author = Quiz.objects.filter(author__username=search_text)
+    
+    quizzes_title = Quiz.objects.filter(title__contains=search_text)
+    quizzes_questions = Quiz.objects.filter(questions__content__contains=search_text)
+    all_search = list(chain(quizzes_author, quizzes_title, quizzes_questions))
+
+    return Response(BriefQuizSerializer(all_search, many=True, context={'request': request}).data)
+
 
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated, HasntDoneQuizOnly, ApprovedQuizOnly])
