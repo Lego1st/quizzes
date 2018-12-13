@@ -41,7 +41,7 @@ class Navigation extends Component {
   }
 
   handleReloadMyProfile() {
-    if (window.location.href.split("/").pop() != this.props.username) {
+    if (window.location.href.split("/").length == 5 && window.location.href.split("/").includes("profile") && window.location.href.split("/").pop() != this.props.username) {
       window.location.reload();
     }
   }

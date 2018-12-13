@@ -134,8 +134,8 @@ class Home extends Component {
             <div id="qz_pending_list" style={{ padding: "10px", height: "auto" }}>
               <div style={{ padding: "0 0 5% 5%"}}>
                 <div className="input-group-prepend">
-                  <a className="dropdown-toggle toTitle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{fontSize : "24px"}}> {this.state.list_type} </a>
-                  <div className="dropdown-menu">
+                  <a className="dropdown-toggle toTitle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{fontSize : "24px", cursor: 'pointer'}}> {this.state.list_type} </a>
+                  <div className="dropdown-menu" style = {{cursor: 'pointer'}}>
                     <a className="dropdown-item" onClick={this.handleChangeListType.bind(this)}>Recent quizzes</a>
                     <a className="dropdown-item" onClick={this.handleChangeListType.bind(this)}>Top quizzes</a>
                   </div>
