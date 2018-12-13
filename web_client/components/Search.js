@@ -17,12 +17,13 @@ class Search extends Component {
             // console.log(result);
             let quizzes = result ? result.map(e => {
                 return {
-                    id: e.quiz_id,
-                    brief: e.quiz_brief,
-                    rating: e.quiz_rating,
-                    status: e.quiz_status,
-                    title: e.quiz_title,
-                    category: e.quiz_category
+                    id: e.id,
+                    brief: e.brief,
+                    rating: e.rating,
+                    status: e.status,
+                    title: e.title,
+                    category: e.category,
+                    author: e.author
                 }
             }) : [];
             this.setState({

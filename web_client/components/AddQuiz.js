@@ -231,13 +231,11 @@ class AddQuiz extends React.Component {
 					<h1 className="display-4">
 						<div className="input-group mb-3">
 							<div className="input-group-prepend">
-								<button className="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{this.state.category}</button>
+								<button className="btn btn-upload dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{this.state.category}</button>
 								<div className="dropdown-menu">
 									{
 										cate_dropdown
-									}
-									<div role="separator" className="dropdown-divider"></div>
-									<a className="dropdown-item" onClick={this.handleChangeCategory.bind(this)} href="#">Other</a>
+									}									
 								</div>
 							</div>
 							

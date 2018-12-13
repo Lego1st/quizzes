@@ -115,6 +115,29 @@ class QuestHolder extends React.Component {
 		console.log("Change answer of question " + this.state.question.index + " to ", this.state.question.answer);
 	}
 
+	increaseOptions() {
+		if (!this.state.addable) {
+			return;
+		}
+		this.setState({numOptions: this.state.numOptions + 1});
+	}
+
+
+	decreaseOptions() {
+		if (!this.state.addable) {
+			return;
+		}
+
+		var new_question = this.state.question;
+		new_question['options'] = new_question['options'].slice(0, -1);
+
+		const new_num_options = this.state.numOptions - 1;
+		if (new_num_options == 1) {
+			this.setState({addable: 0});
+		}
+		this.setState({numOptions: new_num_options, question: new_question});		
+	}
+
 	render() {
 		const types = ['Single-choice', 'Multiple-choice', 'Filling', 'Matching'];
 		const inputs = [];
@@ -218,9 +241,9 @@ class QuestHolder extends React.Component {
 									</div>
 									<div className="optCrl col-sm-1" >
 										<div style={{width: '1%', fontSize: '20px', textAlign: 'center'}}>
-											<i className="fas fa-lg fa-caret-up" onClick={() => this.setState({numOptions: this.state.numOptions + 1 * this.state.addable})}></i>
+											<i className="fas fa-lg fa-caret-up" onClick={this.increaseOptions.bind(this)}></i>
 											{this.state.numOptions}
-											<i className="fas fa-lg fa-caret-down" onClick={() => this.setState({numOptions: this.state.numOptions - 1 * this.state.addable})}></i>
+											<i className="fas fa-lg fa-caret-down" onClick={this.decreaseOptions.bind(this)}></i>
 										</div>
 									</div>
 
