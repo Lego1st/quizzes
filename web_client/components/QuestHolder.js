@@ -1,5 +1,6 @@
 import React from "react";
 import ReactMdeDemo from "./ReactMdeDemo";
+import EquationEditor from "./EquationEditor";
 
 class QuestHolder extends React.Component {
 	constructor(props) {
@@ -138,6 +139,13 @@ class QuestHolder extends React.Component {
 		this.setState({numOptions: new_num_options, question: new_question});		
 	}
 
+	insertEquation() {
+		var copyText = $("#testbox");
+		copyText.val('$' + copyText.val() + '$');
+		copyText.select();
+		document.execCommand("copy");
+	}
+
 	render() {
 		const types = ['Single-choice', 'Multiple-choice', 'Filling', 'Matching'];
 		const inputs = [];
@@ -207,6 +215,7 @@ class QuestHolder extends React.Component {
 
 		return (
 			<div className={'whatever-' + this.props.index} style={{ display: 'inline', textAlign: 'center' }}>
+				
 				<button type="button" className="btn btn-default questholder" style={{ width: "40%", marginLeft: '5%', marginRight: '5%', marginBottom: '2%' }}
 					data-toggle="modal" data-target={"#question-" + this.props.index} >{this.props.brief}</button>
 				<button type="button" onClick={this.handleDelete.bind(this)} className="btn" style={{ backgroundColor: 'white', width: "5%", marginLeft: '-5%', marginRight: '0%', marginBottom: '2%' }}><i className="far fa-trash-alt"></i></button>
@@ -234,7 +243,12 @@ class QuestHolder extends React.Component {
 								<ReactMdeDemo handleOnChange={this.handleChangeContent.bind(this)} 
 											index={this.state.question.index}
 											initialContent = {this.state.question.content} />
-
+								<hr />	
+								
+									<button className="btn btn-default copy-btn" onClick={this.insertEquation.bind(this)}>
+							          Copy to clipboard
+							        </button>
+								<EquationEditor />								
 								<hr />
 								<div className="options&answer row">
 									<div className="col-sm-1">

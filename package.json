@@ -14,10 +14,11 @@
     "url": "https://github.com/Lego1st/quizzes/issues"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "chart.js": "^2.1.4",
     "classnames": "^2.2.5",
     "codemirror": "^5.18.2",
-    "draft-js": "^0.10.5",
+    "css-loader": "^2.0.0",
     "package-json-merge": "0.0.1",
     "react-chartjs": "^1.2.0",
     "react-chartjs-2": "^2.7.4",
@@ -26,7 +27,8 @@
     "react-mde": "^6.0.0-alpha.1",
     "react-router-dom": "^4.3.1",
     "showdown": "^1.9.0",
-    "simplemde": "^1.11.2"
+    "simplemde": "^1.11.2",
+    "style-loader": "^0.23.1"
   },
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0",
