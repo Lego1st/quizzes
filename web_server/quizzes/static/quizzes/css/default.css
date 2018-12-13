@@ -73,13 +73,8 @@ a {
   word-wrap: break-word;
   white-space: pre;
 
-<<<<<<< HEAD
-  font-size: 40px;
    background: -webkit-linear-gradient(90deg, #FFE5E5 4%, #fff 50%, #FFE5E5 77%);
-=======
   font-size: 35px;
-   background: -webkit-linear-gradient(-35deg, #fbfbfb 47%, #e2b5b5 50%, #fbfbfb 56%);
->>>>>>> 02f223be220f599a75cde8ec4d748766f362f0ce
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   line-height: 58px;
