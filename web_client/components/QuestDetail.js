@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { EMOTICON } from './Constants';
-const ReactMarkdown = require('react-markdown');
+import * as ReactMarkdown from "react-markdown";
+import MathJax from "@matejmazur/react-mathjax";
+import * as RemarkMathPlugin from "remark-math";
 
 function updateQuizAnswer(user_answer) {
   const quest_detail = this.props.quest_detail;
@@ -12,6 +14,27 @@ function updateQuizAnswer(user_answer) {
   })
   this.props.callbackQuiz(data);
 }
+
+function MarkdownRender(props = ReactMarkdown.ReactMarkdownProps) {
+  const newProps = {
+    ...props,
+    plugins: [
+      RemarkMathPlugin,
+    ],
+    renderers: {
+      ...props.renderers,
+      math: (props = {value: string}) =>
+        <MathJax.Node>{props.value}</MathJax.Node>,
+      inlineMath: (props = {value: string}) =>
+        <MathJax.Node inline>{props.value}</MathJax.Node>,
+    }
+  };
+  return (
+    <MathJax.Context input="tex">
+      <ReactMarkdown {...newProps} />
+    </MathJax.Context>
+  );
+};
 
 class SingleChoiceQuest extends Component {
   constructor(props) {
@@ -35,7 +58,7 @@ class SingleChoiceQuest extends Component {
     return (
       <div className="row">
         <div className={this.props.viewOnly && this.props.approvalOnly ? "col-lg-12" : "col-lg-8"}>
-          <ReactMarkdown source={x.content}/>
+          <MarkdownRender source={x.content}/>
           <br/>
         </div>
         <div className={this.props.viewOnly && this.props.approvalOnly ? "col-lg-12" : "col-lg-4"}>
@@ -48,7 +71,7 @@ class SingleChoiceQuest extends Component {
                   className={"btn " + (option == this.props.doQuiz[x.index] ? "active btn-info-active" : "btn-info")}
                   onClick={event => this.handleOnClick(event, option)}
                   style={{"margin" : "10px 10px"}}>
-                  <input type="radio" name="options" autoComplete="off" disabled={this.props.viewOnly}/> {option}
+                  <input type="radio" name="options" autoComplete="off" disabled={this.props.viewOnly}/> <MarkdownRender source={option}/>
                 </label>
               )
             }              
@@ -87,7 +110,7 @@ class MultipleChoiceQuest extends Component {
     return(
       <div className="row">
         <div className={this.props.viewOnly && this.props.approvalOnly ? "col-lg-12" : "col-lg-8"}>
-          <ReactMarkdown source={x.content}/>
+          <MarkdownRender source={x.content}/>
           <br/>
         </div>
         <div className={this.props.viewOnly && this.props.approvalOnly ? "col-lg-12" : "col-lg-4"}>
@@ -101,7 +124,7 @@ class MultipleChoiceQuest extends Component {
                   onClick={event => this.handleOnClick(event, option)}
                   style={{"margin" : "10px 10px"}}
                   disabled={this.props.viewOnly}>
-                  <input type="checkbox" name="options" autoComplete="off" disabled={this.props.viewOnly}/> {option}
+                  <input type="checkbox" name="options" autoComplete="off" disabled={this.props.viewOnly}/> <MarkdownRender source={option}/>
                 </label>
               )
             }              
@@ -191,12 +214,12 @@ class MatchingQuest extends Component {
     return (
       <div className="row">
         <div className={this.props.viewOnly && this.props.approvalOnly ? "col-lg-12" : "col-lg-8"}>
-          <ReactMarkdown source={x.content}/>
+          <MarkdownRender source={x.content}/>
           <ul style={{"listStyleType" : "none"}}>
             {
               x.matchings.map((matching, idx) => 
                 <div key={idx} style={{"display":"table", "width" : "100%"}}> 
-                  <span style={{"display":"table-cell", "verticalAlign": "middle", "width" : "50%"}}> {matching} </span>
+                  <span style={{"display":"table-cell", "verticalAlign": "middle", "width" : "50%"}}> <MarkdownRender source={matching}/> </span>
                   <span style={{"display":"table-cell", "verticalAlign": "middle", "width" : "50%"}}>
                     <li
                     onDrop={event => this.onDrop(event, matching)}
@@ -204,7 +227,7 @@ class MatchingQuest extends Component {
                     onClick={event => this.handleOnClick(event, matching)}
                     className="btn btn-outline-info disabled"
                     style={{"display" : "block", "margin" : "10px 10px", "padding" : "15px 15px"}}>
-                    {matchedOption[matching]}
+                    <MarkdownRender source={matchedOption[matching]}/>
                     </li>
                   </span>
                 </div>
@@ -223,7 +246,7 @@ class MatchingQuest extends Component {
                   onDrag={(event) => this.onDrag(event, option)} 
                   className="btn btn-info" 
                   style={{"display" : "block"}}>
-                  {option}
+                  <MarkdownRender source={option}/>
                 </li>
               )
             }
@@ -251,7 +274,7 @@ class FillingQuest extends Component {
     return(
       <div className="row">
         <div className={this.props.viewOnly && this.props.approvalOnly ? "col-lg-12" : "col-lg-8"}>
-          <ReactMarkdown source={x.content}/>
+          <MarkdownRender source={x.content}/>
           <ul style={{"listStypeType" : "none"}}>
             {x.options.map((y, idx) => (<li key={idx}>{y} ?</li>))}
           </ul>

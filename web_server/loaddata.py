@@ -9,7 +9,7 @@ from quizzes.models import User, Quiz, Question
 
 data = json.load(open('quizzes/fixtures/quizzes.json', 'rb'))
 
-for d in data * 10:
+for d in data:
 	new_quiz = Quiz.objects.create(
 									title = d['title'],
 									brief = d['brief'],
