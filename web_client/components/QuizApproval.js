@@ -102,44 +102,51 @@ class QuizApproval extends Component {
         return (
             <div>
             {this.props.is_staff == "true" ? 
-                <div className="container" id="qz_quiz_approval">
-                    <div id="qz_pending_list" style={{ height: "initial", width: "550px" }}>
-                        {this.renderQuizList(this.state.quiz_pending_list)}
-                    </div>
-                    <div id="qz_detail_quiz">
-                        {selected ? 
-                            <div>
-                                <div className="qz_detail_title">{selected.title}</div>
-                                <div className="qz_detail_desc">{selected.brief}</div>
-                                <div className="row">
-                                    <div className="col-sm-6">
-                                        Created by: &nbsp;
-                                        <Link to={`/profile`}>
-                                            <span className="qz_quiz_author">{selected.author}</span>
-                                        </Link>
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <Link to={`/category/${selected.category}`} style={{ "float": "right" }}>
-                                            <div className="qz_quiz_cate">{CATEGORY_FROM_CODE[selected.category]}</div>
-                                        </Link>
-                                    </div>
-                                </div>
-                                <div className="qz_detail_group_button">
-                                    <button className="btn qz_approval_button btn-success"
-                                            onClick={() => {this.handleUpdate('a')}}
-                                            disabled={selected.status=='a'}>Approve</button>
-                                    <button className="btn qz_approval_button btn-danger"
-                                            onClick={() => {this.handleUpdate('r')}}
-                                            disabled={selected.status=='r'}>Reject</button>
-                                </div>
-                                <div>
-                                    {this.renderQuestionList(selected.questions)}
-                                </div>
+                <div>
+                    { this.state.quiz_pending_list.length == 0 ? 
+                        <div style={{textAlign: 'center', 'paddingTop': '150px'}}>
+                        Do not have any quizzes need to be approved</div>
+                        :
+                        <div className="container" id="qz_quiz_approval">
+                            <div id="qz_pending_list" style={{ height: "initial", width: "550px" }}>
+                                {this.renderQuizList(this.state.quiz_pending_list)}
                             </div>
-                            :
-                            null
-                        }
-                    </div>
+                            <div id="qz_detail_quiz">
+                                {selected ? 
+                                    <div>
+                                        <div className="qz_detail_title">{selected.title}</div>
+                                        <div className="qz_detail_desc">{selected.brief}</div>
+                                        <div className="row">
+                                            <div className="col-sm-6">
+                                                Created by: &nbsp;
+                                                <Link to={`/profile`}>
+                                                    <span className="qz_quiz_author">{selected.author}</span>
+                                                </Link>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <Link to={`/category/${selected.category}`} style={{ "float": "right" }}>
+                                                    <div className="qz_quiz_cate">{CATEGORY_FROM_CODE[selected.category]}</div>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                        <div className="qz_detail_group_button">
+                                            <button className="btn qz_approval_button btn-success"
+                                                    onClick={() => {this.handleUpdate('a')}}
+                                                    disabled={selected.status=='a'}>Approve</button>
+                                            <button className="btn qz_approval_button btn-danger"
+                                                    onClick={() => {this.handleUpdate('r')}}
+                                                    disabled={selected.status=='r'}>Reject</button>
+                                        </div>
+                                        <div>
+                                            {this.renderQuestionList(selected.questions)}
+                                        </div>
+                                    </div>
+                                    :
+                                    null
+                                }
+                            </div>
+                        </div>
+                    }
                 </div>
                 : 
                 <div style={{textAlign: 'center', 'paddingTop': '150px'}}>
