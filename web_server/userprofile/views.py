@@ -51,6 +51,7 @@ class PSDetail(generics.RetrieveAPIView):
         
 
 @api_view(['POST'])
+@permission_classes([permissions.IsAuthenticated])
 def upload_avatar(request):
     # profile = PSAvatarUpdate()
     im = request.FILES['avatar']
@@ -61,6 +62,7 @@ def upload_avatar(request):
 
 
 @api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
 def current_profile_avatar(request):
     userid = User.objects.get(username=request.GET.get('username')).id
     profile = Profile.objects.get(pk=userid)
@@ -73,6 +75,7 @@ def my_jwt_response_handler(token, user=None, request=None):
     }
     
 @api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
 def current_user(request):
     """
     Determine the current user by their token, and return their data
@@ -83,6 +86,7 @@ def current_user(request):
 
 
 @api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
 def ranking_counter(request):
     cates = ['ma','lg','cs']
     users = User.objects.all()
@@ -111,6 +115,7 @@ def ranking_counter(request):
 
 
 @api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
 def get_leaderboard(request):
     cates = ['ma','lg','cs']
     users = User.objects.all()
@@ -132,6 +137,7 @@ def get_leaderboard(request):
     return Response(categories)
 
 @api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
 def get_statistic(request):
     username = request.GET.get('username')
     user = User.objects.filter(username=username)

@@ -13,3 +13,9 @@
 .display-4 button {
 	width: 180px;
 }
+
+.eq-preview {
+	display: block;
+	margin: 0 auto;
+}
+

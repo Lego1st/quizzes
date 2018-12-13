@@ -227,7 +227,6 @@ class AddQuiz extends React.Component {
 		return (
 			<div className='container' style={{ marginTop: '3%', textAlign: 'center' }}>
 				<div className="jumbotron" style={{ backgroundColor: 'white' }}>
-
 					<h1 className="display-4">
 						<div className="input-group mb-3">
 							<div className="input-group-prepend">
