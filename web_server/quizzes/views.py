@@ -148,6 +148,7 @@ class QuizCreate(generics.CreateAPIView):
     
 
 @api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated,])
 def search(request, search_text):
     quizzes_author = Quiz.objects.filter(author__username=search_text)
     

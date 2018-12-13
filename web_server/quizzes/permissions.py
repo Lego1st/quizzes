@@ -1,4 +1,5 @@
 from rest_framework import permissions
+from quizzes.models import *
 
 # Permission classes
 class IsAuthorOrReadOnly(permissions.BasePermission):
