@@ -18,6 +18,6 @@ urlpatterns = [
     path('api/submit_quiz/', views.user_submit),
     path('api/pending_quiz/', views.PendingQuiz.as_view()),
     path('api/upfile/',views.upload_file_quiz),
-    path('api/search/<search_text>/', views.search),
+    path('api/search/', views.SearchQuiz.as_view()),
     re_path(r'^.*$', views.index),
 ]
