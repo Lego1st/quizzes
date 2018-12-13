@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.filters import OrderingFilter
+from rest_framework.filters import OrderingFilter, SearchFilter
 import random
 import pandas
 from django.db.models import Count
@@ -89,6 +89,14 @@ class QuizCategory(QuizItemList):
     def get_queryset(self):
         return Quiz.objects.filter(category=self.kwargs['cate'], status='a')
 
+class SearchQuiz(QuizItemList):
+    ordering = ('-like_count', '-created_at')
+    filter_backends = (OrderingFilter, SearchFilter,)
+    search_fields = ('author__username', 'title', 'brief', 'questions__content')
+    
+    def get_queryset(self):
+        return Quiz.objects.annotate(like_count=Count('likes')).filter(status='a')
+
 class PostedQuiz(QuizItemList):
     """
     Return a list of posted quizzes by a user.
@@ -145,19 +153,6 @@ class QuizCreate(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
-    
-
-@api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated,])
-def search(request, search_text):
-    quizzes_author = Quiz.objects.filter(author__username=search_text)
-    
-    quizzes_title = Quiz.objects.filter(title__contains=search_text)
-    quizzes_questions = Quiz.objects.filter(questions__content__contains=search_text)
-    all_search = list(chain(quizzes_author, quizzes_title, quizzes_questions))
-
-    return Response(BriefQuizSerializer(all_search, many=True, context={'request': request}).data)
-
 
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated, HasntDoneQuizOnly, ApprovedQuizOnly])

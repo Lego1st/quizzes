@@ -26,7 +26,7 @@ class QuizItem extends Component {
   }
 
   handleLove() {
-    fetch(`api/like_quiz/${this.props.info.id}/` , {
+    fetch(`/api/like_quiz/${this.props.info.id}/` , {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

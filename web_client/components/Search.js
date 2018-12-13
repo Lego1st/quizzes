@@ -1,49 +1,62 @@
 import React, { Component } from 'react';
 import get_data from './Utils';
-import QuizItem from './QuizItem';
+import TableView from './TableView';
+
+var Config = require('Config');
+const page_size = 5;
+
+function fetchData() {
+  get_data(`/api/search/?search=${this.props.match.params.search_text}&page_size=${page_size}`, true)
+    .then(res => {
+      return res.json();
+    })
+    .then((result) => {
+      this.setState({
+        next: result.next,
+        quizzes: result.results || []
+      })
+    },
+      (error) => {
+        console.log(error);
+        this.setState({
+          isLoaded: true,
+          error
+        });
+      }
+    );
+}
+
+function fetchMore(completed) {
+  if (this.state.next == null) {
+    completed();
+    return;
+  }
+  get_data(this.state.next.replace(Config.serverUrl, ''), true).then(res => res.json()).then(result => {
+    var newData = Object.assign([], this.state.quizzes);
+    newData.push.apply(newData, result.results);
+    completed();
+    this.setState({
+      quizzes: newData,
+      next: result.next
+    })
+  });
+}
 
 class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        search_result: []
-    }
+        next: null,
+        quizzes : [],
+      }
   }
 
   componentDidMount() {
-      get_data(`/api/search/${this.props.match.params.search_text}/`, true)
-        .then(res => res.json())
-        .then(result => {
-            // console.log(result);
-            let quizzes = result ? result.map(e => {
-                return {
-                    id: e.id,
-                    brief: e.brief,
-                    rating: e.rating,
-                    status: e.status,
-                    title: e.title,
-                    category: e.category,
-                    author: e.author
-                }
-            }) : [];
-            this.setState({
-                search_result: quizzes
-            })
-        }) 
-        .catch(err => {
-            console.log(err);
-        });
+      fetchData.apply(this);
   }
 
-  renderQuizList(quiz_list) {
-    var quizzes = [];
-    for (var i = 0; i < quiz_list.length; i++) {
-      quizzes.push(<QuizItem key={i} info={quiz_list[i]} />)
-    }
-    if (quizzes.length == 0) {
-        return <div style={{'textAlign': 'center'}}>No result found!</div>
-    }
-    return quizzes;
+  handleScrollToBottom(completed) {
+    fetchMore.apply(this, [completed])
   }
 
   render() {
@@ -53,10 +66,19 @@ class Search extends Component {
                 <div className="col-sm-1" id="left-body"></div>
                 <div className="col-sm-10" id="main-body" style={{padding: "0 10px 20px 15px"}}>
                     <div id="qz_pending_list" style={{padding: "20px", height: "auto"}}>
-                        <div className="qz_list_title" style={{fontSize: '32px', 'margin': '0 0 64px 0'}}>
+                        <div className="qz_list_title" style={{fontSize: '20px', 'margin': '0 0 20px 0'}}>
                             Search result for:  <span style={{textDecoration: "underline"}}>{this.props.match.params.search_text}</span>
                         </div>
-                        {this.renderQuizList(this.state.search_result)}
+                        {
+                            (this.state.quizzes.length == 0) ? (
+                                <div style={{'textAlign': 'center'}}>No result found!</div>
+                            ) : (
+                                <TableView
+                                    dataSource={this.state.quizzes}
+                                    onScrollToBottom={this.handleScrollToBottom.bind(this)}
+                                />
+                            )
+                        }
                     </div>
                 </div>
             </div>
