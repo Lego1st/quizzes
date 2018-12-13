@@ -178,5 +178,89 @@
         "matchings": [],
         "index": 8
     }]
+},
+{
+    "title": "IQ Test",
+    "brief": "How much is your intelligent?",
+    "category": "lg",
+    "shuffle": false,
+    "questions": [{
+        "content": "Two of the following numbers add up to seventeen. 6 - 13 - 2 - 12 - 7 - 14",
+        "options": ["True", "False"],
+        "type": "si",
+        "answer": ["False"],
+        "matchings": [],
+        "index": 0
+    }, {
+        "content": "Which ones of the five is least like the other four?",
+        "options": ["Shark", "Deer", "Cow", "Dog", "Lion", "Whale"],
+        "type": "mu",
+        "answer": ["Shark", "Whale"],
+        "matchings": [],
+        "index": 1
+    }, {
+        "content": "If you rearrange the letters \"ANICH\", you would have the name of a/an ___",
+        "options": [],
+        "type": "fi",
+        "answer": "country",
+        "matchings": [],
+        "index": 2
+    }, {
+        "content": "Sales of the company's new cola are through the roof!  It is represented in purple, with 4000 units sold. The green bar represents the Green Soda, with 3700 units sold.  How much faster will the new soda grow? ![image](https://www.funeducation.com/iqtest/multimedia/iqtest/mm026.JPG)",
+        "options": ["4200 units next month", "4300 units next month", "It will stop growing", "Not enough information"],
+        "type": "si",
+        "answer": "Not enough information",
+        "matchings": [],
+        "index": 3
+    }, {
+        "content": "Ralph travels four blocks north, then two blocks east, then three blocks south and finally two blocks west. How many blocks is Ralph from his starting place",
+        "options": ["1", "2", "3", "4"],
+        "type": "si",
+        "answer": ["1"],
+        "matchings": [],
+        "index": 4
+    }, {
+        "content": "Which one of these four symbols is least like the other three? ![image](https://www.funeducation.com/iqtest/multimedia/iqtest/mm029.JPG)",
+        "options": ["A", "B", "C", "D"],
+        "type": "si",
+        "answer": ["C"],
+        "matchings": [],
+        "index": 5
+    }, {
+        "content": "Three birds and and four dogs have how many total legs ___. (Assume no abnormalities and a typical bird.)",
+        "options": [],
+        "type": "fi",
+        "answer": ["22"],
+        "matchings": [],
+        "index": 6
+    }]
+},
+{
+    "title": "Sharpen your brain",
+    "brief": "Take your brain up to the next level of intelligence",
+    "category": "lg",
+    "shuffle": false,
+    "questions": [{
+        "content": "If all Bloobs are Toogs and no Toogs are Goppers, then we can be certain that absolutely no Goppers are Bloobs. This statement is:",
+        "options": ["True", "False", "Neither"],
+        "type": "si",
+        "answer": ["True"],
+        "matchings": [],
+        "index": 0
+    }, {
+        "content": "Assume that the red and blue blobs are two pieces that form the green blob.  Also assume that the area of the green blob in square centimeters is three times the area of the red blob.  If the area of the green blob is 750 square centimeters, what is the area of the blue blob? ___ ![image](https://www.funeducation.com/iqtest/multimedia/iqtest/mm024.JPG)",
+        "options": [],
+        "type": "fi",
+        "answer": ["500"],
+        "matchings": [],
+        "index": 1
+    }, {
+        "content": "Tim's grandfather's son is Mike's dad. How is Mike related to Tim? (Assume nobody has ever remarried)",
+        "options": ["They are cousins", "Mike's Tims's uncle", "Tim's Mike's uncle", "Tim's Mike's father", "Mike's Tim's father"],
+        "type": "si",
+        "answer": ["They are cousins"],
+        "matchings": [],
+        "index": 2
+    }]
 }
 ]
