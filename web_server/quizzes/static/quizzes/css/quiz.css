@@ -122,3 +122,7 @@
     border-color: #C08383;
     border-radius: 5px;
 }
+
+.btn-info > p {
+    margin: 0;
+}
