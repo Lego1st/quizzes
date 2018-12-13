@@ -36,7 +36,7 @@ function fetchMore(completed) {
     return;
   }
   get_data(this.state.next.replace(Config.serverUrl, ''), true).then(res => res.json()).then(result => {
-    var newData = Object.assign([], this.state.recent_quizzes);
+    var newData = Object.assign([], this.state.quizzes);
     newData.push.apply(newData, result.results);
     completed();
     this.setState({
@@ -60,7 +60,7 @@ class TopQuizzes extends Component {
   }
 
   handleScrollToBottom(completed) {
-    fetchData.apply(this, [completed])
+    fetchMore.apply(this, [completed])
   }
 
   render() {
@@ -88,7 +88,7 @@ class RecentQuizzes extends Component {
   }
 
   handleScrollToBottom(completed) {
-    fetchData.apply(this, [completed])
+    fetchMore.apply(this, [completed])
   }
 
   render() {
