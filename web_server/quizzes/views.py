@@ -12,14 +12,11 @@ from rest_framework.filters import OrderingFilter
 import random
 import pandas
 from django.db.models import Count
-<<<<<<< HEAD
 from quizzes.permissions import *
-=======
 from django.db.models import Q
 from itertools import chain
 from django.forms.models import model_to_dict
 
->>>>>>> f877ad82ce38e855d153e4132b4525c2886f02ad
 
 def index(request):
     return render(request, 'index.html')
