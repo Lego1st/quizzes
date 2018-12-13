@@ -1,0 +1,447 @@
+[
+    {
+        "title": "Covers hardware, software and networking",
+        "brief": "How does your know about network and hardware",
+        "category": "cs",
+        "shuffle": false,
+        "questions": [
+            {
+                "content": "Every Network Interface Card has a _______ address, which is a unique identifier?",
+                "options": [
+                    "GUI",
+                    "MAC",
+                    "NIC",
+                    "CPU"
+                ],
+                "type": "si",
+                "answer": [
+                    "MAC"
+                ],
+                "matchings": [],
+                "index": 0
+            },
+            {
+                "content": "Which is considered to be the computers short-term memory?",
+                "options": [
+                    "REM",
+                    "ROM",
+                    "RAM",
+                    "RIM"
+                ],
+                "type": "si",
+                "answer": [
+                    "RAM"
+                ],
+                "matchings": [],
+                "index": 1
+            },
+            {
+                "content": "Information that is broken down into small chunks before it is sent to another computer are called...",
+                "options": [
+                    "Letters",
+                    "Packets",
+                    "Messages",
+                    "Packages"
+                ],
+                "type": "si",
+                "answer": [
+                    "Packets"
+                ],
+                "matchings": [],
+                "index": 2
+            },
+            {
+                "content": "Message passing system allows processes to :",
+                "options": [
+                    "Communicate with one another without resorting to shared data",
+                    "Communicate with one another by resorting to shared data",
+                    "Share data",
+                    "Name the recipient or sender of the message"
+                ],
+                "type": "si",
+                "answer": [
+                    "Communicate with one another without resorting to shared data"
+                ],
+                "matchings": [],
+                "index": 3
+            },
+            {
+                "content": "The Input devices can send information to the processor",
+                "options": [
+                    "When the SIN status flag is set",
+                    "When the data arrives regardless of the SIN flag",
+                    "Neither of the cases",
+                    "Either of the cases"
+                ],
+                "type": "si",
+                "answer": [
+                    "When the SIN status flag is set"
+                ],
+                "matchings": [],
+                "index": 4
+            },
+            {
+                "content": "The brain of any computer system is ___",
+                "options": [],
+                "type": "fi",
+                "answer": [
+                    "CPU"
+                ],
+                "matchings": [],
+                "index": 5
+            },
+            {
+                "content": "Which models doesn’t allow defining requirements early in the cycle",
+                "options": [
+                    "Waterfall",
+                    "RAD",
+                    "Prototyping",
+                    "Spiral"
+                ],
+                "type": "mu",
+                "answer": [
+                    "Spiral",
+                    "Prototyping"
+                ],
+                "matchings": [],
+                "index": 6
+            },
+            {
+                "content": "The 4 byte IP address consists of",
+                "options": [
+                    "network address",
+                    "host address",
+                    "none of the mentioned",
+                    "Local address"
+                ],
+                "type": "mu",
+                "answer": [
+                    "network address",
+                    "host address"
+                ],
+                "matchings": [],
+                "index": 7
+            },
+            {
+                "content": "While executing the main program, if two or more interrupts occur, then the sequence of appearance of interrupts is called",
+                "options": [
+                    "interrupt within interrupt",
+                    "multi-interrupt",
+                    "nested interrupt",
+                    "no interrupt"
+                ],
+                "type": "mu",
+                "answer": [
+                    "interrupt within interrupt",
+                    "nested interrupt"
+                ],
+                "matchings": [],
+                "index": 8
+            },
+            {
+                "content": "The average time necessary for the correct sector of a disk to arrive at the read write head is ___",
+                "options": [],
+                "type": "fi",
+                "answer": [
+                    "Rotational delay"
+                ],
+                "matchings": [],
+                "index": 9
+            },
+            {
+                "content": "A small film-plate which is used for microfilming the output from a microcomputer screen is called ?",
+                "options": [
+                    "microfilm",
+                    "microfiche",
+                    "film card",
+                    "COM"
+                ],
+                "type": "si",
+                "answer": [
+                    "microfiche"
+                ],
+                "matchings": [],
+                "index": 10
+            },
+            {
+                "content": "Match the following",
+                "options": [
+                    "Input device",
+                    "Output device",
+                    "Processing device",
+                    "Typing documents"
+                ],
+                "answer": [],
+                "type": "ma",
+                "matchings": [
+                    "Mouse",
+                    "Monitor",
+                    "CPU",
+                    "Notepad"
+                ],
+                "index": 11
+            },
+            {
+                "content": "CHECK ALL INPUT DEVICES",
+                "options": [
+                    "Mouse",
+                    "Camera",
+                    "Keyboard",
+                    "Scanner"
+                ],
+                "answer": [
+                    "Keyboard",
+                    "Scanner"
+                ],
+                "type": "mu",
+                "matchings": [],
+                "index": 12
+            },
+            {
+                "content": "What is this? ![image](http://www.proprofs.com/quiz-school/upload/yuiupload/1236348282.jpg)",
+                "options": [
+                    "Basic input output system",
+                    "Central processing unit",
+                    "Motherboard",
+                    "Network interface card"
+                ],
+                "answer": [
+                    "Mohterboard"
+                ],
+                "type": "si",
+                "matchings": [],
+                "index": 13
+            },
+            {
+                "content": "Which of the following is not an example of Operating System?",
+                "options": [
+                    "Windows 98",
+                    "BSD Unix",
+                    "Microsoft Office",
+                    "Red Hat Linux"
+                ],
+                "answer": [
+                    "Microsoft Office"
+                ],
+                "type": "si",
+                "matchings": [],
+                "index": 14
+            },
+            {
+                "content": "Match the following.",
+                "options": [
+                    "Completeness",
+                    " Time Complexity ",
+                    "Space Complexity"
+                ],
+                "answer": [],
+                "type": "ma",
+                "matchings": [
+                    "Is the strategy guaranteed to find the solution when there in one.",
+                    "How long does it take to find a solution",
+                    "How much memory need to perform the search."
+                ],
+                "index": 15
+            },
+            {
+                "content": "When new data are to be inserted into a data structure, but there is not available space; this situation is usually called ___",
+                "options": [],
+                "answer": [
+                    "overflow"
+                ],
+                "type": "fi",
+                "matchings": [],
+                "index": 16
+            },
+            {
+                "content": "To find out how much memory is available, you could type ___ in terminal",
+                "options": [],
+                "answer": [
+                    "MEM"
+                ],
+                "type": "fi",
+                "matchings": [],
+                "index": 17
+            },
+            {
+                "content": "The entire hostname has a maximum of",
+                "options": [
+                    "255 characters",
+                    "177 characters",
+                    "234 characters",
+                    "213 characters"
+                ],
+                "answer": [
+                    "255 characters"
+                ],
+                "type": "si",
+                "matchings": [],
+                "index": 18
+            },
+            {
+                "content": "What a server is responsible for or has authority over is called a ___",
+                "options": [],
+                "answer": [
+                    "zone"
+                ],
+                "matchings": [],
+                "type": "fi",
+                "index": 19
+            },
+            {
+                "content": "In Domain Name System (DNS), the well known port 53 provides the services of",
+                "options": [
+                    "UDP",
+                    "TCP",
+                    "ICMP",
+                    "GDP"
+                ],
+                "answer": [
+                    "UDP",
+                    "TCP"
+                ],
+                "type": "mu",
+                "matchings": [],
+                "index": 20
+            },
+            {
+                "content": "If the size of the response message is more than 512 bytes, a Connection is used called",
+                "options": [
+                    "DNS connections",
+                    "ICMP connection",
+                    "STMP connection",
+                    "TCP connection"
+                ],
+                "answer": [
+                    "TCP connection"
+                ],
+                "type": "si",
+                "matchings": [],
+                "index": 21
+            },
+            {
+                "content": "During the normal PC boot process, which of the following is active first",
+                "answer": [
+                    "ROM BIOS"
+                ],
+                "options": [
+                    "ROM BIOS",
+                    "CMOS",
+                    "RAM BIOS",
+                    "Hard disk information"
+                ],
+                "type": "si",
+                "matchings": [],
+                "index": 22
+            },
+            {
+                "content": "During the boot process, a system first counts memory from where?",
+                "options": [
+                    "Expansion memory board",
+                    "Video adapter",
+                    "Cache",
+                    "System board"
+                ],
+                "answer": [
+                    "System board"
+                ],
+                "type": "si",
+                "matchings": [],
+                "index": 23
+            },
+            {
+                "content": "___ used to regulate the flow of elections in CRT ",
+                "options": [],
+                "answer": [
+                    "control electrode"
+                ],
+                "type": "fi",
+                "matchings": [],
+                "index": 24
+            },
+            {
+                "content": "Metafiles are ___ that contain both raster and vector data?",
+                "options": [],
+                "answer": [
+                    "Graphics"
+                ],
+                "type": "fi",
+                "matchings": [],
+                "index": 25
+            },
+            {
+                "content": "RGB system needs ___ of storage for the frame buffer",
+                "options": [],
+                "answer": [
+                    "2 Gb"
+                ],
+                "type": "fi",
+                "matchings": [],
+                "index": 26
+            },
+            {
+                "content": "The region against which an object is to be clipped is called ",
+                "options": [
+                    "image window",
+                    "clip window",
+                    "clipping window",
+                    "Drawing window"
+                ],
+                "answer": [
+                    "clip window",
+                    "clipping window"
+                ],
+                "type": "mu",
+                "matchings": [],
+                "index": 27
+            },
+            {
+                "content": "What is URL?",
+                "options": [
+                    "A computer program",
+                    "A type of programming object",
+                    "An acronym for unlimited resource for learning",
+                    "The address of a document or ‘page’ on the world wide web"
+                ],
+                "answer": [
+                    "The address of a document or ‘page’ on the world wide web"
+                ],
+                "type": "si",
+                "matchings": [],
+                "index": 28
+            },
+            {
+                "content": "Mail access starts with client when user needs to download e-mail from the",
+                "options": [
+                    "Mail Box",
+                    "IP server",
+                    "Internet",
+                    "Mail Server"
+                ],
+                "answer": [
+                    "Mail Box"
+                ],
+                "type": "si",
+                "matchings": [],
+                "index": 29
+            },
+            {
+                "content": "Point out the wrong statement:",
+                "options": [
+                    "All applications benefit from deployment in the cloud",
+                    "With cloud computing, you can start very small and become big very fast",
+                    "Cloud computing is revolutionary, even if the technology it is built on is evolutionary",
+                    "None of the mentioned"
+                ],
+                "answer": [
+                    "All applications benefit from deployment in the cloudAl"
+                ],
+                "type": "si",
+                "matchings": [],
+                "index": 30
+            },{
+                
+            }
+        ]
+    }
+]
