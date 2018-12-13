@@ -150,10 +150,11 @@ class QuizCreate(generics.CreateAPIView):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated,])
 def search(request, search_text):
-    quizzes_author = Quiz.objects.filter(author__username=search_text)
+    approved_quiz = Quiz.objects.filter(status='a')
+    quizzes_author = approved_quiz.filter(author__username=search_text)
     
-    quizzes_title = Quiz.objects.filter(title__contains=search_text)
-    quizzes_questions = Quiz.objects.filter(questions__content__contains=search_text)
+    quizzes_title = approved_quiz.filter(title__contains=search_text)
+    quizzes_questions = approved_quiz.filter(questions__content__contains=search_text)
     all_search = list(chain(quizzes_author, quizzes_title, quizzes_questions))
 
     return Response(BriefQuizSerializer(all_search, many=True, context={'request': request}).data)
