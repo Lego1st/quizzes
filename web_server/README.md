@@ -1,13 +1,16 @@
 # Quizzes backend API
 **Changelog:** 
-- Add `created_at` field to UserSubmission model
-- Add `mark` and `submitted_at` to the response of `answered_quiz` api
-- Add ordering filter with submission date to `answered_quiz` api
-- Remove constrain `null=True` from `Quiz.created_date`, to migrate the existing database, select option `Provide a one-off default now` and add value `timezone.now`
+- `recent_quiz`, `quiz_category` will only return approved quizzes
+- Add `ApprovedQuizOnly` permission to `like_quiz`, `submit_quiz`, `quiz_question`
+    - This mean that user can only like and do approved quizzes
+- Change `posted_quiz` to:
+    - Return a list of posted quizzes by a user. If the user in the request is the author, return full list of the posted quizzes, including pending quizzes, rejected quizzes, and approved quizzes. Otherwise, only return list of approved quizzes.
+- Add `top_quiz` api
 ## Quiz and Question APIs
 List APIs:
 - [Quiz item list APIs](#quizitemlistapi):
     - [`api/recent_quiz/`](#apirecent_quiz)
+    - [`api/top_quiz/`](#apitop_quiz)
     - [`api/posted_quiz/`](#apiposted_quiz)
     - [`api/quiz_category/<cate>/`](#apiquiz_categorycate)
     - [`api/answered_quiz/`](#apianswered_quiz)
@@ -87,8 +90,62 @@ Response: 200 OK
 }
 ```
 
+#### `api/top_quiz/`
+**Descriptions:** Get a list of most liked approved quiz
+
+Example:
+```
+Link:  http://127.0.0.1:8000/api/top_quiz/?page_size=5&page=1
+
+Response: 200 OK
+{
+    "count": 3,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "id": 22,
+            "title": "Logic And Math Quiz",
+            "brief": "How does your brain cope with a healthy dose of lateral thinking?",
+            "rating": 0,
+            "created_at": "2018-12-01T10:44:08.035344Z",
+            "status": "a",
+            "category": "ma",
+            "author": "admin",
+            "like_count": 3,
+            "liked": true
+        },
+        {
+            "id": 14,
+            "title": "Logic And Math Quiz",
+            "brief": "How does your brain cope with a healthy dose of lateral thinking?",
+            "rating": 0,
+            "created_at": "2018-12-01T10:44:07.117476Z",
+            "status": "a",
+            "category": "ma",
+            "author": "admin",
+            "like_count": 2,
+            "liked": true
+        },
+        {
+            "id": 15,
+            "title": "How logical are you?",
+            "brief": "How does your brain cope with a healthy dose of lateral thinking?",
+            "rating": 0,
+            "created_at": "2018-12-01T10:44:07.246234Z",
+            "status": "a",
+            "category": "lg",
+            "author": "admin",
+            "like_count": 0,
+            "liked": false
+        }
+    ]
+}
+```
+
+
 #### `api/posted_quiz/`
-**Descriptions:** Response a list of quiz that is created by an user
+**Descriptions:**  Return a list of posted quizzes by a user. If the user in the request is the author, return full list of the posted quizzes, including pending quizzes, rejected quizzes, and approved quizzes. Otherwise, only return list of approved quizzes.
 
 Example:
 ```

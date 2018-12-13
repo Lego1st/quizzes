@@ -16,12 +16,12 @@
 }
 
 .btn-submit {
-  width: 80%;
+  width: 50%;
   padding: 5px 5px 5px 5px;
   text-align: center;
   color: white;
-  background-color: orangered;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #e2b5b5;
+  /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
   border: none;
   border-radius: 5px;
 }
@@ -42,11 +42,11 @@ div input {
 #split {
   position:fixed;
   top: 50%;
-  left: 48.5%;
-  padding-right: 20px;
+  left: 50%;
   text-align: center;
 }
 
 #middle-or {
-    background-color: #f7f7f7;
+    background-color: #fbfbfb;
+    padding: 10px;
 }

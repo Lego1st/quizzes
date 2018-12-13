@@ -9,63 +9,111 @@ import get_data from './Utils';
 var Config = require('Config');
 const page_size = 5;
 
-class Home extends Component {
+function fetchData(api_name) {
+  get_data(`/api/${api_name}/?page_size=${page_size}`, true)
+    .then(res => {
+      return res.json();
+    })
+    .then((result) => {
+      this.setState({
+        next: result.next,
+        quizzes: result.results || []
+      })
+    },
+      (error) => {
+        console.log(error);
+        this.setState({
+          isLoaded: true,
+          error
+        });
+      }
+    );
+}
+
+function fetchMore(completed) {
+  if (this.state.next == null) {
+    completed();
+    return;
+  }
+  get_data(this.state.next.replace(Config.serverUrl, ''), true).then(res => res.json()).then(result => {
+    var newData = Object.assign([], this.state.quizzes);
+    newData.push.apply(newData, result.results);
+    completed();
+    this.setState({
+      quizzes: newData,
+      next: result.next
+    })
+  });
+}
+
+class TopQuizzes extends Component {
   constructor(props) {
     super(props);
     this.state = {
       next: null,
-      recent_quizzes: []
+      quizzes : [],
     }
-  }
-
-  renderQuizList(quiz_list) {
-    var quizzes = [];
-    for (var i = 0; i < quiz_list.length; i++) {
-      quizzes.push(<QuizItem key={i} info={quiz_list[i]} />)
-    }
-    return quizzes;
   }
 
   componentDidMount() {
-    get_data(`/api/recent_quiz/?page_size=${page_size}`, true)
-      .then(res => {
-        return res.json();
-      })
-      .then((result) => {
-        console.log("Result ", result);
-        this.setState({
-          next: result.next,
-          recent_quizzes: result.results || []
-        })
-      },
-        (error) => {
-          console.log(error);
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
+    fetchData.apply(this, ['top_quiz'])
   }
 
   handleScrollToBottom(completed) {
-    // load more
-    if (this.state.next == null) {
-      completed();
-      return;
-    }
-    get_data(this.state.next.replace(Config.serverUrl, ''), true).then(res => res.json()).then(result => {
-      var newData = Object.assign([], this.state.recent_quizzes);
-      newData.push.apply(newData, result.results);
-      console.log("Scroll-load: ", result.results);
-      completed();
-      this.setState({
-        recent_quizzes: newData,
-        next: result.next
-      })
-    });
+    fetchMore.apply(this, [completed])
   }
 
+  render() {
+    return (
+     <TableView
+        ref="top_quizzes"
+        dataSource={this.state.quizzes}
+        onScrollToBottom={this.handleScrollToBottom.bind(this)}
+      /> 
+    )
+  }
+}
+
+class RecentQuizzes extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      next: null,
+      quizzes : [],
+    }
+  }
+
+  componentDidMount() {
+    fetchData.apply(this, ['recent_quiz'])
+  }
+
+  handleScrollToBottom(completed) {
+    fetchMore.apply(this, [completed])
+  }
+
+  render() {
+    return (
+     <TableView
+        ref="recent_quizzes"
+        dataSource={this.state.quizzes}
+        onScrollToBottom={this.handleScrollToBottom.bind(this)}
+      /> 
+    )
+  }
+
+}
+
+class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      list_type: "Recent quizzes"
+    }
+  }
+
+  handleChangeListType(event) {
+    this.setState({ list_type: event.currentTarget.textContent });
+  }
 
   render() {
 
@@ -83,38 +131,24 @@ class Home extends Component {
 
           <div className="col-md-9" id="main-body" style={{ padding: "0 10px 20px 15px" }}>
 
-            <div id="qz_pending_list" style={{ padding: "20px", height: "auto" }}>
-              <h3 className="toTitle">
-                Recent quizzes
-              </h3>
-              {(this.state.recent_quizzes.length == 0) ? (
-                <div style={{ textAlign: 'center' }}>
-                  <h3>It looks like we currently do not have any post yet ^^</h3>
-
-                  <h4>Click
-                      <Link to="/addquiz">
-                      <i className="fas fa-plus-circle" style={{ margin: '1%' }}></i>
-                    </Link>
-                    to add one!
-                        </h4>
+            <div id="qz_pending_list" style={{ padding: "10px", height: "auto" }}>
+              <div style={{ padding: "0 0 5% 5%"}}>
+                <div className="input-group-prepend">
+                  <a className="dropdown-toggle toTitle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{fontSize : "24px"}}> {this.state.list_type} </a>
+                  <div className="dropdown-menu">
+                    <a className="dropdown-item" onClick={this.handleChangeListType.bind(this)}>Recent quizzes</a>
+                    <a className="dropdown-item" onClick={this.handleChangeListType.bind(this)}>Top quizzes</a>
+                  </div>
                 </div>
-              ) : (
-                  <TableView
-                    ref="recent_quizzes"
-                    dataSource={this.state.recent_quizzes}
-                    onScrollToBottom={this.handleScrollToBottom.bind(this)}
-                  />
-                )}
-
-            </div>
-
-            {/* <div id="qz_pending_list">
-              <div className="qz_list_title">
-                Top quiz
               </div>
-              {this.renderQuizList(this.state.top_quiz_list)}
-            </div> */}
-
+              <div key={this.state.new_load}>
+              {
+                this.state.list_type == "Recent quizzes" 
+                ? <RecentQuizzes/>
+                : <TopQuizzes/>
+              }
+              </div>
+            </div>
           </div>
         </div>
       </div>

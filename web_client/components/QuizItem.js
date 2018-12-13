@@ -46,6 +46,11 @@ class QuizItem extends Component {
     });
   }
 
+  getCurrentLocation() {
+    var currentLocation = window.location.pathname;
+    return currentLocation;
+  }
+
   render() {
     return (
       <div className="qz_quiz_item">
@@ -83,6 +88,16 @@ class QuizItem extends Component {
             </Link>
           </div>
         </div>
+        {
+          this.props.info.status && this.getCurrentLocation().match('/myquizzes/') &&  
+          (
+            this.props.info.status == "a"
+            ? <div style={{color : "green"}}> Approved </div>
+            : this.props.info.status == "r"
+            ? <div style={{color : "red"}}> Rejected </div>
+            : <div style={{color : "gray"}}> Pending </div>
+          )
+        }
         
       </div>  
     );

@@ -120,9 +120,9 @@ class LoginSignUp extends React.Component {
 
         return (
 
-            <div>
+            <div style={{paddingTop: "5%"}}>
                 <div id='registration'>
-                    <h3>REGISTRATION</h3>
+                    <h3 style={{color : "#e2b5b5", fontWeight: "bold"}}>REGISTRATION</h3>
                     <br></br>
                     <form onSubmit={e => this.handle_signup(e, this.state)} >
                         <span style={{ color: "red" }}>{this.state.errors["signup"]}</span>
@@ -162,13 +162,13 @@ class LoginSignUp extends React.Component {
                     </form>
 
                 </div>
-
+                {/*
                 <div id='split'>
-                    <h3 id="middle-or"> OR </h3>
+                    <h3 id="middle-or" style={{color : "#e2b5b5", fontWeight: "bold"}}> OR </h3>
                 </div>
-
+                */}
                 <div id='login'>
-                    <h3>LOGIN</h3>
+                    <h3 style={{color : "#e2b5b5", fontWeight: "bold"}}>LOGIN</h3>
                     <br></br>
 
                     <form onSubmit={e => this.handle_login(e, this.state)} >
