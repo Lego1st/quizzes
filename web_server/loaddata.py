@@ -15,7 +15,7 @@ django.setup()
 from quizzes.models import User, Quiz, Question
 from quizzes.serializers import FullQuizSerializer
 
-data = json.load(open('quizzes/fixtures/{}'.format(args.file), 'rb'))
+data = json.load(open('quizzes/fixtures/{}'.format(args.file), 'r'))
 
 for d in data:
 	serializer = FullQuizSerializer(data=d)
