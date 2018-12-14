@@ -13,5 +13,6 @@ urlpatterns = [
     path('api/detail/<str:username>/',views.PSDetail.as_view()),
     path('api/ranking/',views.ranking_counter),
     path('api/leader_board/',views.get_leaderboard),
-    path('api/statistic/',views.get_statistic)
+    path('api/statistic/',views.get_statistic),
+    path('api/contributor/',views.get_contributor)
 ] 

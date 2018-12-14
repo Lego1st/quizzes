@@ -160,6 +160,33 @@ def get_statistic(request):
 
     return Response({'per_cate':static,'per_mon':do_per_mon})
 
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_contributor(request):
+    users = User.objects.all()
+    contribute = []
+    for user in users:
+        if user.username != 'admin':
+            num_quiz = Quiz.objects.filter(author=user).count()
+            if num_quiz is not None:
+                contribute.append((user,num_quiz))
+            else:
+                contribute.append((user,0))
+    contribute = sorted(contribute,key=lambda x: x[1],reverse=True)
+    top_con = []
+    for i,con in enumerate(contribute):
+        if i < 3:
+            user, num = con
+            if num > 0:
+                profile = Profile.objects.get(user=user)
+                try:
+                    profile = {'avatar':profile.avatar.url, 'username':user.username, 'num_con':num}
+                except:
+                    profile = {'avatar':'/quizzes/images/default_avatar.jpg', 'username':user.username, 'num_con':num}
+
+                top_con.append(profile)
+                
+    return Response(top_con)
 
 class UserList(generics.GenericAPIView):
     """
