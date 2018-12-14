@@ -29,7 +29,7 @@ a {
 }
 
 .navbar {
-  background-color: #e2b5b5; 
+  background-color: #A15959; 
   padding: 0;
   border-bottom: 1px solid #fbfbfb;
   margin-bottom: 0px;
@@ -57,7 +57,7 @@ a {
 }
 
 #searcher {
-  background-color: #e2b5b5;
+  background-color: #A15959;
 }
 
 .navbar-mid {
@@ -73,7 +73,7 @@ a {
   word-wrap: break-word;
   white-space: pre;
 
-   background: -webkit-linear-gradient(90deg, #FFE5E5 4%, #fff 50%, #FFE5E5 77%);
+  background: -webkit-linear-gradient(90deg, #FFE5E5 4%, #fff 50%, #FFE5E5 77%);
   font-size: 35px;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -160,8 +160,12 @@ li.nav-category {
   width: 11rem;
 }
 
+.questholder {
+  background-color: #93A4A4;
+}
+
 .questholder:hover {
-  text-shadow: 2px 2px white;
+  text-shadow: 1px 1px #CDD4D4;
 }
 
 /* CSS here */

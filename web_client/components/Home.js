@@ -107,7 +107,7 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list_type: "Recent quizzes"
+      list_type: "Top quizzes"
     }
   }
 

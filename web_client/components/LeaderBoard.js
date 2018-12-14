@@ -129,7 +129,9 @@ class LeaderBoard extends Component {
         <div id="boards">
           {this.renderLeaderboard()}
         </div>
+        
         <div id="topcontribute" className='toTitle'>Top  3  contributors </div>
+        
         <div id="boardsCon" className="row">
           {this.renderContributor()}
         </div>

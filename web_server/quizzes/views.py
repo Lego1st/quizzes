@@ -58,7 +58,8 @@ class QuizResult(generics.RetrieveAPIView):
 class FullQuizDetail(generics.RetrieveUpdateDestroyAPIView):
 
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                        IsAuthorOrReadOnly,)
+                        IsAuthor,
+                        UpdatePendingQuizOnly,)
     queryset = Quiz.objects.all()
     serializer_class = FullQuizSerializer
 

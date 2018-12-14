@@ -48,14 +48,17 @@
   margin: 10px;
   padding: 0px;
   margin-top: 5%;
+  width: 30%;
+
 }
 
 .board .group-avatar{
   position: relative;
   border: 12px double;
   border-radius: 50%;
-  width: 330px;
-  height: 330px;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
 }
 
 .group-avatar .con-avatar {
@@ -68,7 +71,7 @@
   position: absolute;
   width: 25%;
   left: 40%;
-  top: -15%;
+  top: -20%;
 }
 
 .board .group-info {

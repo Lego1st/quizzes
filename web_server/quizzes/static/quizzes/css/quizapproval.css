@@ -1,3 +1,8 @@
+
+#qz_quiz_approval .qz_quiz_item {
+    cursor: pointer;
+}
+
 #qz_quiz_approval {
     display: flex;
     height: calc(100vh - 60px);

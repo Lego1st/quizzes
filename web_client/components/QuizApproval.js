@@ -20,7 +20,7 @@ class QuizApproval extends Component {
             .then(result => {
                 // console.log(result);
                 this.setState({
-                    quiz_pending_list: result,
+                    quiz_pending_list: result.reverse(),
                     selected: result.length > 0 ? result[0] : null
                 })
             })
