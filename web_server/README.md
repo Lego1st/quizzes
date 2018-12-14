@@ -15,6 +15,7 @@ List APIs:
     - [`api/quiz_category/<cate>/`](#apiquiz_categorycate)
     - [`api/answered_quiz/`](#apianswered_quiz)
     - [`api/liked_quiz/`](#apiliked_quiz)
+    - [`api/search/`](#apisearch)
 
 - [`api/quiz_question/<quiz_id>/`](#apiquiz_questionquiz_id)
 - [`api/full_quiz/<quiz_id>/`](#apifull_quizquiz_id)
@@ -22,6 +23,16 @@ List APIs:
 - [`api/submit_quiz/`](#apisubmit_quiz)
 - [`api/quiz_result/<quiz_id>/`](#apiquiz_resultquiz_id)
 - [`api/like_quiz/<quiz_id>/`](#apilike_quizquiz_id)
+
+- User's profile APIs:
+    - [`profile/api/register/`](#profileapiregister)
+    - [`profile/api/update/`](#profileapiupdate)
+    - [`profile/api/avatar/`](#profileapiavatar)
+    - [`profile/api/current_avatar`](#profileapicurrent_avatar)
+    - [`profile/api/detail/<username>/`](#profileapidetailusername)
+    - [`profile/api/ranking/`](#profileapiranking)
+    - [`profile/api/leader_board/`](#profileapileader_board)
+    - [`profile/api/statistic/`](#profileapistatistic)
 
 ### Quiz item list APIs
 **Method:** `GET`
@@ -305,6 +316,50 @@ Response: 200 OK
             "liked": false,
             "mark": 0,
             "submitted_at": "2018-12-09T05:15:35.197978Z"
+        }
+    ]
+}
+```
+
+#### `api/search/`
+**Descriptions:** Return a list of quiz which have title/author/question's content match with the query string
+
+**Parameters:**
+- `search`: the query string
+
+Example:
+```
+Link: http://127.0.0.1:8000/api/search/?search=logical&page_size=2
+
+Response:
+{
+    "count": 11,
+    "next": "http://127.0.0.1:8000/api/search/?page=2&page_size=2&search=logical",
+    "previous": null,
+    "results": [
+        {
+            "id": 21,
+            "title": "How logical are you?",
+            "brief": "How does your brain cope with a healthy dose of lateral thinking?",
+            "rating": 0,
+            "created_at": "2018-12-01T10:44:07.951632Z",
+            "status": "a",
+            "category": "lg",
+            "author": "admin",
+            "like_count": 3,
+            "liked": false
+        },
+        {
+            "id": 15,
+            "title": "How logical are you?",
+            "brief": "How does your brain cope with a healthy dose of lateral thinking?",
+            "rating": 0,
+            "created_at": "2018-12-01T10:44:07.246234Z",
+            "status": "a",
+            "category": "lg",
+            "author": "admin",
+            "like_count": 2,
+            "liked": false
         }
     ]
 }
@@ -729,3 +784,116 @@ Response: 200 OK
     "liked": true
 }
 ```
+
+### `profile/api/register/`
+**Method:** `POST`
+
+**Description:** Use for signing up a new user with provided informations
+
+**Parameters:**
+- `username`: string
+- `email`: string
+- `password`: string
+- `repassword`: string
+
+**Response:**
+- `user`: object contain registed user's infos:
+    - `token`: strin, authentication token
+    - `username`: string
+    - `is_staff`: boolean, is user a moderator or admin?
+
+Example:
+```
+Link:  http://127.0.0.1:8000/profile/api/register/
+{
+    "username": "minh123456",
+    "password": "loveyou@1",
+    "repassword": "loveyou@1",
+    "email": "minhkjl3@gmail.com",
+    "errors": {}
+}
+Response: 201 Created
+{
+    "user": {
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo4LCJ1c2VybmFtZSI6Im1pbmgxMjM0NTYiLCJleHAiOjE1NDUzMDIwOTgsImVtYWlsIjoiIiwib3JpZ19pYXQiOjE1NDQ2OTcyOTh9.oTqiNs-JLQ8-VGpa_sJD6LJO-tm3bbTZGJB_JUcwXCM",
+        "username": "minh123456",
+        "is_staff": false
+    }
+}
+```
+
+### `profile/api/update/`
+**Method:** `POST`
+
+**Description:** Use for updating user's profile
+
+**Parameters:**
+- `fullname`: string
+- `age`: string
+- `education`: string
+- `bio`: string
+- `country`: string
+
+Example:
+```
+Link:  http://127.0.0.1:8000/profile/api/update/
+
+Response: 201 Created
+{
+    "profile": "susscess"
+}
+```
+
+### `profile/api/avatar/`
+**Method:** `POST`
+
+**Description:** Use for upload user's avatar
+
+**Parameters:**
+- `avatar`: image
+
+### `profile/api/current_avatar`
+**Method:** `GET`
+
+**Description:** Use for upload user's avatar
+
+**Parameters:**
+- `username`: string
+
+**Response:**
+- `user`: int, user's id
+- `avatar`: string, image's path
+
+### `profile/api/detail/<username>/`
+**Method:** `GET`
+
+**Description:** Return user's profile details
+
+**Parameters:** None
+
+**Response:**
+- `user`: object
+    - `username`: string
+    - `id`: int, user's id
+    - `is_staff`: boolean
+- `age`: int
+- `country`: string
+- `education`: string
+- `bio`: string
+- `fullname`: string
+
+### `profile/api/ranking/`
+**Method:** `GET`
+
+**Description:** Return user's raking on each category
+
+**Parameters:**
+- `username`: string
+
+### `profile/api/statistic/`
+**Method:** `GET`
+
+**Description:** Return user's statistics on quizzes that they have done
+
+**Parameters:**
+- `username`: string

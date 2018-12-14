@@ -106,19 +106,27 @@
     background-color: #C08383;
     color: #fbfbfb;
     border-color: #C08383;
-    border-radius: 5px;
+    border-radius: 0px;
 }
 
 .btn-info {
     color: black;
     background-color: #FFE5E5;
     border-color: #C08383;
-    border-radius: 5px;
+    border-radius: 0px;
 }
 
 .btn-info-active {
     background-color: #C08383;
     color: #fbfbfb;
     border-color: #C08383;
-    border-radius: 5px;
+    border-radius: 0px;
+}
+
+.btn-info > p {
+    margin: 0;
+}
+
+.btn-info-active > p {
+    margin-bottom: auto;
 }

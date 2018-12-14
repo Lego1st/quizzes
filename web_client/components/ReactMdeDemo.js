@@ -17,6 +17,7 @@ class ReactMdeDemo extends React.Component{
 			};
 		}
 
+
 		handleOnChange(_content) {
 			this.props.handleOnChange(_content);
 		}

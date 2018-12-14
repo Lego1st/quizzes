@@ -5,17 +5,17 @@ class EquationEditor extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
-    EqEditor.embed('editor','');
+  // componentDidMount() {
+  //   EqEditor.embed('editor','');
 
-    var a=new EqTextArea('equation', 'testbox');
-    EqEditor.add(a,false);
+  //   var a=new EqTextArea('equation', 'testbox');
+  //   EqEditor.add(a,false);
 
-    // a.addExportArea('exportarea1','html');
-    // a.addExportArea('exportarea3','tw');
-    // a.addExportArea('exportarea4','url');
-    // a.addExportArea('exportarea5','url');
-  }
+  //   // a.addExportArea('exportarea1','html');
+  //   // a.addExportArea('exportarea3','tw');
+  //   // a.addExportArea('exportarea4','url');
+  //   // a.addExportArea('exportarea5','url');
+  // }
 
   onmouseout() {
     var tooltip = document.getElementById("myTooltip");
@@ -26,7 +26,7 @@ class EquationEditor extends React.Component {
     return (
       <div className="eq-editor">
 
-        <div id="editor"></div>
+        <div id={"editor-" + this.props.index }></div>
         <textarea id="testbox" rows="3" cols="40"></textarea>
         <img id="equation" className="eq-preview" />
 

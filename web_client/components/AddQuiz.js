@@ -12,10 +12,10 @@ class AddQuiz extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			title: "This is a title, click to edit.",
-			brief: 'This is a brief, click to edit.',
+			title: "",
+			brief: "",
 			shuffle: false,
-			category: "Category",
+			category: "",
 			rating: 1,
 			questions: [],
 			deletions: []
@@ -63,6 +63,7 @@ class AddQuiz extends React.Component {
 
 		this.setState({ questions: new_questions });
 		console.log(this.state.questions);
+
 	}
 
 	handleDeleteQuestion(index) {
@@ -99,7 +100,47 @@ class AddQuiz extends React.Component {
 		return converted_state;
 	}
 
+	validateTitle(){
+		if (this.state.title.replace(/ /g,'') == '') {
+			return false;
+		}
+		return true;
+	}
+
+	validateBrief(){
+		if (this.state.brief.replace(/ /g,'') == '') {
+			return false;
+		}
+		return true;
+	}
+
+	validateCategory(){
+		if (!this.state.category) {
+			return false;
+		}
+		return true;
+	}
+
 	handleSubmit(e) {
+
+		if (!this.validateCategory()) {
+			$(".submitErrorMesssage").text("Please specify the category.");
+			$(".categoryDropdown").click();
+			return;
+		}
+
+		if (!this.validateTitle()) {
+			$(".submitErrorMesssage").text("Please fill in the title.");
+			$(".titleInput").focus();
+			return;
+		}
+
+		if (!this.validateBrief()) {
+			$(".submitErrorMesssage").text("Please fill in the brief.");
+			$(".briefInput").focus();
+			return;
+		}
+
 		const converted_state = this.convertState();
 
 		console.log('Final state: ', JSON.stringify(converted_state));
@@ -114,10 +155,11 @@ class AddQuiz extends React.Component {
 			.then((result) => {
 				if (result.ok) {
 					console.log(result);	
-					window.location.reload();				
+					window.location.reload();
+					$(".submitErrorMesssage").text("");
 				}
 				else {
-					alert('Oops! Something went wrong :( Please re-check your form!')
+					$(".submitErrorMesssage").text('Oops! Something went wrong :( Please re-check your form!');
 				}
 			})
 			.catch(
@@ -154,6 +196,7 @@ class AddQuiz extends React.Component {
 			}).then(result => {
 				let data = result['quizz'];
 				let uploaded_questions = []
+				let old_questions = this.state.questions;
 				console.log(data);
 
 				for (let i = 0; i < Object.values(data.Type).length; i++) {
@@ -170,7 +213,7 @@ class AddQuiz extends React.Component {
 					}
 					
 					let question = {
-						index: i,
+						index: i + old_questions.length,
 						content: data.Content[i],
 						type: data.Type[i],
 						matchings: _matchings,
@@ -179,7 +222,7 @@ class AddQuiz extends React.Component {
 					}
 					uploaded_questions.push(question);
 				}
-				this.setState({questions: uploaded_questions});
+				this.setState({questions: old_questions.concat(uploaded_questions)});
 				this.refs.guideModel.click();
 			})
 
@@ -230,7 +273,7 @@ class AddQuiz extends React.Component {
 					<h1 className="display-4">
 						<div className="input-group mb-3">
 							<div className="input-group-prepend">
-								<button className="btn btn-upload dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{this.state.category}</button>
+								<button className="btn btn-upload dropdown-toggle categoryDropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{this.state.category || "Category"}</button>
 								<div className="dropdown-menu">
 									{
 										cate_dropdown
@@ -238,8 +281,8 @@ class AddQuiz extends React.Component {
 								</div>
 							</div>
 							
-							<input type="text" className="form-control"
-								placeholder={this.state.title}
+							<input type="text" className="form-control titleInput"
+								placeholder="This is a title, click to edit."
 								onChange={this.handleChangeTitle.bind(this)} />
 							
 						</div>
@@ -252,8 +295,8 @@ class AddQuiz extends React.Component {
 								
 							</div>
 							
-							<input type="text" className="form-control"
-								placeholder={this.state.brief}
+							<input type="text" className="form-control briefInput"
+								placeholder="This is a brief, click to edit."
 								onChange={this.handleChangeBrief.bind(this)} />
 						</div>
 					</h1>
@@ -266,10 +309,13 @@ class AddQuiz extends React.Component {
 					}
 
 				</div>
-				<button className="btn btn-outline-success" style={{display: 'inline'}} 
+				<p className="submitErrorMesssage" style={{color: 'red'}}></p>
+				<button className="btn btn-outline-success" style={{display: 'inline', marginRight: '1%'}} 
+						data-toggle="tooltip" data-placement="top" title="Click to submit quiz"
 						type="button" onClick={this.handleSubmit.bind(this)}>Submit</button>
 
-				<button type="button" className="btn btn-outline-info" style={{display: 'inline'}}
+				<button type="button" className="btn btn-outline-info" style={{display: 'inline', marginLeft: '1%'}}
+						data-toggle="tooltip" data-placement="top" title="Click to upload file"
 						data-toggle="modal" data-target="#upload-file-guide" >Upload</button>
 
 				<div className="modal fade bd-example-modal-lg" id="upload-file-guide" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
