@@ -275,7 +275,7 @@ class AddQuiz extends React.Component {
 
 		return (
 			<div className='container addquiz' style={{ marginTop: '3%', textAlign: 'center' }}>
-				<div className="jumbotron" style={{ backgroundColor: 'white' }}>
+				<div className="jumbotron" style={{ backgroundColor: '#fbfbfb' }}>
 					<h1 className="display-4">
 						<div className="input-group mb-3">
 							<div className="input-group-prepend">
@@ -297,8 +297,10 @@ class AddQuiz extends React.Component {
 					<h1 className="display-4">
 						<div className="input-group mb-3">
 							<div className="input-group-append ">
-								<button className="btn btn-outline-secondary" type="button" onClick={() => console.log(this.convertState())}>Check state</button>
-								
+								{/*<button className="btn btn-outline-secondary" type="button" onClick={() => console.log(this.convertState())}>Check state</button>*/}
+								<button type="button" className="btn btn-upload" style={{display: 'inline', marginLeft: '1%'}}
+									data-toggle="tooltip" data-placement="top" title="Click to upload file"
+									data-toggle="modal" data-target="#upload-file-guide" >Upload</button>
 							</div>
 							
 							<input type="text" className="form-control briefInput"
@@ -317,13 +319,13 @@ class AddQuiz extends React.Component {
 				</div>
 				
 				<p className="submitErrorMesssage" style={{color: 'red'}}></p>
-				<button className="btn btn-outline-success" style={{display: 'inline', marginRight: '1%'}} 
+				<button className="btn btn-outline-success" style={{display: 'inline', width: '15%'}} 
 						data-toggle="tooltip" data-placement="top" title="Click to submit quiz"
 						type="button" onClick={this.handleSubmit.bind(this)}>Submit</button>
 
-				<button type="button" className="btn btn-outline-info" style={{display: 'inline', marginLeft: '1%'}}
+				{/*<button type="button" className="btn btn-outline-info" style={{display: 'inline', marginLeft: '1%'}}
 						data-toggle="tooltip" data-placement="top" title="Click to upload file"
-						data-toggle="modal" data-target="#upload-file-guide" >Upload</button>
+						data-toggle="modal" data-target="#upload-file-guide" >Upload</button>*/}
 
 				<div className="modal fade bd-example-modal-lg" id="upload-file-guide" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 					<div className="modal-dialog modal-lg">
