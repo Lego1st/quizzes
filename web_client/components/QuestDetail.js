@@ -3,6 +3,7 @@ import { EMOTICON } from './Constants';
 import * as ReactMarkdown from "react-markdown";
 import MathJax from "@matejmazur/react-mathjax";
 import * as RemarkMathPlugin from "remark-math";
+import MarkdownRender from "./MarkdownRender";
 
 function updateQuizAnswer(user_answer) {
   const quest_detail = this.props.quest_detail;
@@ -14,27 +15,6 @@ function updateQuizAnswer(user_answer) {
   })
   this.props.callbackQuiz(data);
 }
-
-export function MarkdownRender(props = ReactMarkdown.ReactMarkdownProps) {
-  const newProps = {
-    ...props,
-    plugins: [
-      RemarkMathPlugin,
-    ],
-    renderers: {
-      ...props.renderers,
-      math: (props = {value: string}) =>
-        <MathJax.Node>{props.value}</MathJax.Node>,
-      inlineMath: (props = {value: string}) =>
-        <MathJax.Node inline>{props.value}</MathJax.Node>,
-    }
-  };
-  return (
-    <MathJax.Context input="tex">
-      <ReactMarkdown {...newProps} />
-    </MathJax.Context>
-  );
-};
 
 class SingleChoiceQuest extends Component {
   constructor(props) {
@@ -336,8 +316,4 @@ class QuestDetail extends Component {
   }
 }
 
-export default {
-  QuestDetail,
-}
-
-
+export default QuestDetail;
