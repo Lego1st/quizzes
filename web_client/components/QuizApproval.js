@@ -65,7 +65,8 @@ class QuizApproval extends Component {
             if (quiz_list[i]) {
                 quizzes.push(<div key={quiz_list[i].id} className={"qz_quiz_item" + 
                         (this.state.selected.id == quiz_list[i].id ? " selected_quiz" : "")}
-                        onClick={() => {this.onSelectQuiz(quiz_list[i])}}>
+                        onClick={() => {this.onSelectQuiz(quiz_list[i])}}
+                        style={{"cursor": "pointer"}}>
                     <div className="qz_quiz_title">{quiz_list[i].title}</div>
                     <div className="qz_quiz_desc" style={{ textOverflow: "ellipsis", "whiteSpace": "nowrap" }}>{
                         quiz_list[i].brief}</div>
