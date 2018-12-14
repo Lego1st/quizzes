@@ -49,7 +49,7 @@ class QuestHolder extends React.Component {
 
 	validateOptions() {
 		var options = this.state.question.options;
-		if (options.length == 0) {
+		if (options.length == 0 && this.state.question.type != 2) {
 			return false;
 		}
 
