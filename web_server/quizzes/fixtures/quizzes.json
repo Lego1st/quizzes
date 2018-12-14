@@ -160,14 +160,14 @@
         "content": "How many times does the letter A appear in the alphabet from 0-100?\n The answer is ___",
         "options": [],
         "type": "fi",
-        "answer": "0",
+        "answer": ["0"],
         "matchings": [],
         "index": 6
     }, {
         "content": "A farmer has 15 sheep. All but 8 died. How many are left?",
         "options": ["8", "6", "7", "15"],
         "type": "si",
-        "answer": "8",
+        "answer": ["8"],
         "matchings": [],
         "index": 7
     }, {
@@ -202,14 +202,14 @@
         "content": "If you rearrange the letters \"ANICH\", you would have the name of a/an ___",
         "options": [],
         "type": "fi",
-        "answer": "country",
+        "answer": ["country"],
         "matchings": [],
         "index": 2
     }, {
         "content": "Sales of the company's new cola are through the roof!  It is represented in purple, with 4000 units sold. The green bar represents the Green Soda, with 3700 units sold.  How much faster will the new soda grow? ![image](https://www.funeducation.com/iqtest/multimedia/iqtest/mm026.JPG)",
         "options": ["4200 units next month", "4300 units next month", "It will stop growing", "Not enough information"],
         "type": "si",
-        "answer": "Not enough information",
+        "answer": ["Not enough information"],
         "matchings": [],
         "index": 3
     }, {
