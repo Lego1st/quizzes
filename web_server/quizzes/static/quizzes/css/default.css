@@ -160,8 +160,12 @@ li.nav-category {
   width: 11rem;
 }
 
+.questholder {
+  background-color: #93A4A4;
+}
+
 .questholder:hover {
-  text-shadow: 2px 2px white;
+  text-shadow: 1px 1px #CDD4D4;
 }
 
 /* CSS here */

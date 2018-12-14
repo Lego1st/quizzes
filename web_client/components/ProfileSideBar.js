@@ -60,6 +60,7 @@ class ProfileSideBar extends React.Component {
             .then((res) => {
                 if (res.ok) {
                     this.setState({ loaded_ava: false });
+                    window.location.reload();
                 } else {
                     console.log(res);
                 }

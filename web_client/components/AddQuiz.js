@@ -63,7 +63,6 @@ class AddQuiz extends React.Component {
 
 		this.setState({ questions: new_questions });
 		console.log(this.state.questions);
-
 	}
 
 	handleDeleteQuestion(index) {
@@ -155,8 +154,9 @@ class AddQuiz extends React.Component {
 			.then((result) => {
 				if (result.ok) {
 					console.log(result);	
-					window.location.reload();
-					$(".submitErrorMesssage").text("");
+					$(".addquiz").children().remove();
+					$(".addquiz").append("<h3 class='toTitle'>Your quiz was submitted successfully. </h3> <h3 class='toTitle'> Please wait until approval or reload if you want to add a new one!</h3>")
+					
 				}
 				else {
 					$(".submitErrorMesssage").text('Oops! Something went wrong :( Please re-check your form!');
@@ -205,7 +205,7 @@ class AddQuiz extends React.Component {
 					let _answer = data.Answer[i] != '' ? data.Answer[i].split("/") : [];
 
 					if (data.Type[i] < 2) {
-						_answer = _answer.map((item) => _options.indexOf(item)); // todo: handle cases where options duplicate
+						_answer = _answer.map((item) => _options.indexOf(item)); 
 					}
 
 					if (data.Type[i] == 3) {
@@ -225,6 +225,11 @@ class AddQuiz extends React.Component {
 				this.setState({questions: old_questions.concat(uploaded_questions)});
 				this.refs.guideModel.click();
 			})
+			.catch(
+				(error) => {
+					$(".submitErrorMesssage").text("Oops! Something must be wrong with your file");
+					this.refs.guideModel.click();
+			});
 
 	}
 
@@ -236,6 +241,7 @@ class AddQuiz extends React.Component {
 	      				style={{marginLeft: '1%', marginRight: '1%'}}></span>)
 	    return rate;
 	}
+
 
 	render() {
 		const buttons = [];
@@ -255,7 +261,7 @@ class AddQuiz extends React.Component {
 		}
 
 		buttons.push(<Adder index={indices.length > 0 ? Math.max.apply(null, indices) + 1 : 0} 
-							order={buttons.length} 
+							order={buttons.length} 					
 							key={indices.length > 0 ? Math.max.apply(null, indices) + 1 : 0} 
 							handleChangeQuestion={this.handleChangeQuestion}
 							handleAddQuestion={this.handleAddQuestion}> </Adder>)
@@ -268,7 +274,7 @@ class AddQuiz extends React.Component {
 		}
 
 		return (
-			<div className='container' style={{ marginTop: '3%', textAlign: 'center' }}>
+			<div className='container addquiz' style={{ marginTop: '3%', textAlign: 'center' }}>
 				<div className="jumbotron" style={{ backgroundColor: 'white' }}>
 					<h1 className="display-4">
 						<div className="input-group mb-3">
@@ -309,6 +315,7 @@ class AddQuiz extends React.Component {
 					}
 
 				</div>
+				
 				<p className="submitErrorMesssage" style={{color: 'red'}}></p>
 				<button className="btn btn-outline-success" style={{display: 'inline', marginRight: '1%'}} 
 						data-toggle="tooltip" data-placement="top" title="Click to submit quiz"
