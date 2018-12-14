@@ -12,14 +12,14 @@ Quizzes sẽ giúp bạn giỏi hơn ở những lĩnh vực mà nó cung cấp.
 Quizzes bao gồm rất nhiều câu hỏi với các mức độ khó dễ, được chia thành nhiều lĩnh vực khác nhau. Các câu hỏi được chọn lọc kĩ lưỡng, có hình ảnh minh họa sinh động. Người dùng với một tài khoản trên hệ thống có thể lựa chọn lĩnh vực yêu thích của mình để học tập hay giải trí.
 
 ## Hướng dẫn cài đặt
-##Yêu cầu: Quizzes yêu cầu máy chủ cài Nodejs và Python 3.5+
-##Cài đặt thư viện, packages: 
+### Yêu cầu: Quizzes yêu cầu máy chủ cài Nodejs và Python 3.5+
+### Cài đặt thư viện, packages: 
 ```sh
 $ npm install
 
 $  pip install -r requirements.txt
 ```
-##Các bước để deploy web local:
+### Các bước để deploy web local:
 
 Tại thư mục web_server chạy khởi tạo cơ sở dữ liệu: 
 ```sh
