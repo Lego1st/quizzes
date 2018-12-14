@@ -165,7 +165,7 @@
                     "Network interface card"
                 ],
                 "answer": [
-                    "Mohterboard"
+                    "Motherboard"
                 ],
                 "type": "si",
                 "matchings": [],
@@ -189,16 +189,20 @@
             {
                 "content": "Match the following.",
                 "options": [
-                    "Completeness",
-                    "Time Complexity",
-                    "Space Complexity"
-                ],
-                "answer": [],
-                "type": "ma",
-                "matchings": [
                     "Is the strategy guaranteed to find the solution when there in one.",
                     "How long does it take to find a solution",
                     "How much memory need to perform the search."
+                ],
+                "answer": [
+                    "Is the strategy guaranteed to find the solution when there in one.",
+                    "How long does it take to find a solution",
+                    "How much memory need to perform the search."
+                ],
+                "type": "ma",
+                "matchings": [
+                    "Completeness",
+                    "Time Complexity",
+                    "Space Complexity"
                 ],
                 "index": 4
             },
@@ -289,18 +293,23 @@
             {
                 "content": "Match the following",
                 "options": [
-                    "Input device",
-                    "Output device",
-                    "Processing device",
-                    "Typing documents"
-                ],
-                "answer": [],
-                "type": "ma",
-                "matchings": [
                     "Mouse",
                     "Monitor",
                     "CPU",
                     "Notepad"
+                ],
+                "answer": [
+                    "Mouse",
+                    "Monitor",
+                    "CPU",
+                    "Notepad"
+                ],
+                "type": "ma",
+                "matchings": [
+                    "Input device",
+                    "Output device",
+                    "Processing device",
+                    "Typing documents"
                 ],
                 "index": 3
             },
@@ -452,7 +461,7 @@
                     "None of the mentioned"
                 ],
                 "answer": [
-                    "All applications benefit from deployment in the cloudAl"
+                    "All applications benefit from deployment in the cloud"
                 ],
                 "type": "si",
                 "matchings": [],
@@ -625,7 +634,7 @@
                     "None of the mentioned"
                 ],
                 "answer": [
-                    "All applications benefit from deployment in the cloudAl"
+                    "All applications benefit from deployment in the cloud"
                 ],
                 "type": "si",
                 "matchings": [],
@@ -734,18 +743,23 @@
             {
                 "content": "Match the following",
                 "options": [
-                    "Input device",
-                    "Output device",
-                    "Processing device",
-                    "Typing documents"
-                ],
-                "answer": [],
-                "type": "ma",
-                "matchings": [
                     "Mouse",
                     "Monitor",
                     "CPU",
                     "Notepad"
+                ],
+                "answer": [
+                    "Mouse",
+                    "Monitor",
+                    "CPU",
+                    "Notepad"
+                ],
+                "type": "ma",
+                "matchings": [
+                    "Input device",
+                    "Output device",
+                    "Processing device",
+                    "Typing documents"
                 ],
                 "index": 2
             },
