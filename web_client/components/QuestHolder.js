@@ -223,7 +223,7 @@ class QuestHolder extends React.Component {
 
 
 	decreaseOptions() {
-		if (!this.state.addable || this.state.numOptions == 1) {
+		if (!this.state.addable || this.state.numOptions == 2) {
 			return;
 		}
 
@@ -252,18 +252,6 @@ class QuestHolder extends React.Component {
 
 	    var a = new EqTextArea('equation', 'testbox');
 	    EqEditor.add(a,false);
-	}
-
-	togglePreview() {
-		if (!this.state.preview) {
-			$(".fa-arrows-alt-v").text('Toggle editor');
-		}
-		else {
-			$(".fa-arrows-alt-v").text('Toggle preview');
-		}
-		this.setState({preview: !this.state.preview});
-		$(".md-editor-tabs").children().hide();
-
 	}
 
 
@@ -471,7 +459,7 @@ class QuestHolder extends React.Component {
 								<p className = "errorMessage" style = {{color: 'red'}}></p>
 								<button type = "button" className = "btn btn-secondary closeModal" data-dismiss = "modal">Close</button>
 								<button type = "button" className = "btn btn-secondary" onClick = {this.handleSave.bind(this)}>Save</button>
-								<button type = "button" className = "btn btn-secondary" onClick = {() => console.log(this.state.question)}>Check</button>
+								{/*<button type = "button" className = "btn btn-secondary" onClick = {() => console.log(this.state.question)}>Check</button>*/}
 							</div>
 						</div>
 					</div>

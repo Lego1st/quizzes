@@ -1,6 +1,6 @@
 [
     {
-        "title": "How smart",
+        "title": "How smart are you ?",
         "brief": "How does your compute math problem?",
         "category": "ma",
         "shuffle": false,
@@ -124,58 +124,71 @@
                 "type": "si",
                 "matchings": [],
                 "index": 7
-            },
+            }
+        ]
+    },
+    {
+        "title": "Take me to your math",
+        "brief": "Strengthen your math skill",
+        "category": "ma",
+        "shuffle": false,
+        "questions": [
             {
-                "content": "Solve : $4x^{3} + 8x^{2} - 25x -50 = 0$",
+                "content": "Use the subtraction by addition method to calculate 8,117 − 5,479",
                 "options": [
-                    "$x = -2.5, -2 or 2.5$",
-                    "$x = -2, -0.4 or 0.4$",
-                    "$x = -2.5, 2 or 2.5$",
-                    "$x = -2, 2 or 2.5$"
+                    "2,672",
+                    "2.738",
+                    "2,662",
+                    "2.638"
                 ],
+                "type": "si",
                 "answer": [
-                    "$x = -2.5, -2 or 2.5$"
+                    "2.638"
                 ],
                 "matchings": [],
-                "type": "si",
-                "index": 8
+                "index": 0
             },
             {
-                "content": "What are the sum the roots of the quartic equation $6x^{4} + 3x^{3} - 5x^{2} + 12 = 0$",
+                "content": "What is -5 + (-10) − (-8) ?",
                 "options": [
-                    "$\\frac{1}{2}$",
-                    "$\\frac{1}{3}$",
-                    "$\\frac{-1}{2}$",
-                    "$\\frac{1}{7}$"
+                    "-23",
+                    "-7",
+                    "-3",
+                    "13"
                 ],
+                "type": "si",
                 "answer": [
-                    "$\\frac{1}{2}$"
+                    "-7"
                 ],
-                "type": "si",
                 "matchings": [],
-                "index": 9
+                "index": 3
             },
             {
-                "content": "Ed thinks of a number, adds 8, and then multiplies the result by 3. The answer is 45. If the number Ed thinks of is represented by x, how can this be written using algebra?",
+                "content": "Karen deposited 24% of the cost of her house. If she paid $124,800 for the deposit, what was the cost of the house?",
                 "options": [
-                    "3x + 8 = 45",
-                    "x + 24 = 45",
-                    "3(x + 8) = 45",
-                    "3(x - 8) = 45"
+                    "29.952",
+                    "154.752",
+                    "499.200",
+                    "520.000"
                 ],
-                "answer": ["3(x + 8) = 45"],
                 "type": "si",
+                "answer": [
+                    "520.000"
+                ],
                 "matchings": [],
-                "index": 10
+                "index": 5
             },
             {
-                "content": "Express $\\frac{13}{33}$ as a recurring decimal",
+                "content": "The price of car increased by 5%. If the new price was $22,050, what was the old price?",
                 "options": [
-                    "0.309", "0.39", "0.38", "0.37"
+                    "20000",
+                    "21000",
+                    "23152",
+                    "23210"
                 ],
-                "answer": ["0.39"],
                 "type": "si",
                 "matchings": [],
+                "answer": ["23152"],
                 "index": 11
             }, 
             {
@@ -187,20 +200,27 @@
                 "index": 14
             },
             {
-                "content": "A freight company uses a tank wagon to transport a large quantity of a liquid chemical. What would be the approximate volume of this tank wagon?![image](https://www.mathopolis.com/questions/images/8/9/79b4918bfe58dfd423270dfe5e91ad2.gif)",
-                "options": ["34 gallons", "340 gallons", "3400 gallons", "34000 gallons"],
+                "content": "The diagram shows a prism whose cross section is a regular heptagon. By approximating the heptagon by a circle, which of the following gives the best estimate for the total surface area of the prism? ![image](https://www.mathopolis.com/questions/images/d/d/8db968c726f92baddcf652b1ab7e3d2.jpg)",
+                "options": [
+                    "600 square units",
+                    "700 square units",
+                    "800 square units",
+                    "900 square units"
+                ],
+                "answer": [
+                    "900 square units"
+                ],
                 "type": "si",
-                "answer": ["34000 gallons"],
                 "matchings": [],
-                "index": 15
+                "index": 2
             },
             {
-                "content": "A carton contains 24 bottles of soda, and there are 20 fluid ounces of soda in each bottle. How many pints are there altogether in one carton?![image](https://www.mathopolis.com/questions/images/a/6/f29a2f4cab71052d3e64a1564724942.gif)",
-                "options": ["3 pints", "25 pints", "30 pints", "60 pints"],
-                "type": "si",
-                "answer": ["30 pints"],
+                "content": "Estimate the area of the nonagon by counting squares. Which of the following gives the best estimate? ___ ![image](https://www.mathopolis.com/questions/images/3/2/65472d6a3cff12ba07df0038c3f3592.gif)",
+                "options": [],
+                "type": "fi",
+                "answer": ["75"],
                 "matchings": [],
-                "index": 16
+                "index": 4
             }
         ]
     },
@@ -279,7 +299,7 @@
                 ],
                 "type": "si",
                 "matchings": [],
-                "index": 5
+                "index": 0
             },
             {
                 "content": "![image] (https://www.mathopolis.com/questions/images/7/3/f65662a8f8723af3ab512dd407c72d2.gif) \n Only one of them shows the correct time.\n One of them is 20 minutes ahead, another is 20 minutes late, and the other is stopped. \n What is the time at the moment?",
@@ -294,7 +314,7 @@
                 ],
                 "type": "si",
                 "matchings": [],
-                "index": 6
+                "index": 2
             },
             {
                 "content": "What is the next number in this sequence? \n 95, 120, 145, ___",
@@ -309,7 +329,7 @@
                 ],
                 "type": "si",
                 "matchings": [],
-                "index": 3
+                "index": 4
             },
             {
                 "content": "Victoria scored 60% in her end of year math exam in 2015.\n In 2016, Victoria's score increased by 5% of her 2015 score.\n What percent did Victoria score in her math exam in 2016?",
@@ -324,24 +344,37 @@
                 ],
                 "type": "si",
                 "matchings": [],
-                "index": 4
+                "index": 1
             },
             {
                 "content": "Karen deposited 24% of the cost of her house. If she paid $124,800 for the deposit, what was the cost of the house?",
-                "options": ["29.952", "154.752", "499.200", "520.000"],
+                "options": [
+                    "29.952",
+                    "154.752",
+                    "499.200",
+                    "520.000"
+                ],
                 "type": "si",
-                "answer": ["520.000"],
+                "answer": [
+                    "520.000"
+                ],
                 "matchings": [],
-                "index": 19
+                "index": 3
             },
             {
                 "content": "The price of car increased by 5%. If the new price was $22,050, what was the old price?",
-                "options": ["20000", "21000", "23152", "23210"],
+                "options": [
+                    "20000",
+                    "21000",
+                    "23152",
+                    "23210"
+                ],
                 "type": "si",
                 "answer": ["23152"],
                 "matchings": [],
-                "index": 20
-            }]
+                "index": 5
+            }
+        ]
     },
     {
         "title": "How smart",
@@ -418,67 +451,194 @@
         "brief": "Show us your math skill with this challenge",
         "category": "ma",
         "shuffle": false,
-        "questions": [{
-            "content": "What is the next number in this sequence? \n 95, 120, 145, ___",
-            "options": [
-                "170",
-                "160",
-                "165",
-                "175"
-            ],
-            "answer": [
-                "170"
-            ],
-            "type": "si",
-            "matchings": [],
-            "index": 3
-        },{
-            "content": "A carton contains 24 bottles of soda, and there are 20 fluid ounces of soda in each bottle. How many pints are there altogether in one carton?![image](https://www.mathopolis.com/questions/images/a/6/f29a2f4cab71052d3e64a1564724942.gif)",
-            "options": ["3 pints", "25 pints", "30 pints", "60 pints"],
-            "type": "si",
-            "answer": ["30 pints"],
-            "matchings": [],
-            "index": 16
-        },{
-            "content": "What is the value of $[\\frac{1}{2} + \\frac{1}{6} + .... + \\frac{1}{n(n+1)}]$",
-            "options": [
-                "$\\frac{1}{n}$",
-                "$\\frac{n}{n+1}$",
-                "$\\frac{1}{n+1}$",
-                "$\\frac{2}{n+1}$"
-            ],
-            "answer": [
-                "$\\frac{n}{n+1}$"
-            ],
-            "type": "si",
-            "matchings": [],
-            "index": 0
-        },{
-            "content": "The diagram shows a prism whose cross section is a right triangle. The total surface area of the prism is ___. ![image](https://www.mathopolis.com/questions/images/1/6/673619b8983723db19f16fe7d9a9a42.gif)",
-            "options": [],
-            "type": "fi",
-            "answer": ["500"],
-            "matchings": [],
-            "index": 14
-        },{
-            "content": "Ed thinks of a number, adds 8, and then multiplies the result by 3. The answer is 45. If the number Ed thinks of is represented by x, how can this be written using algebra?",
-            "options": [
-                "3x + 8 = 45",
-                "x + 24 = 45",
-                "3(x + 8) = 45",
-                "3(x - 8) = 45"
-            ],
-            "answer": ["3(x + 8) = 45"],
-            "type": "si",
-            "matchings": [],
-            "index": 10
-        },{
-            "content": "What is -5 + (-10) − (-8) ?",
-            "options": ["-23", "-7", "-3", "13"],
-            "type": "si",
-            "answer": ["-7"],
-            "matchings": [],
-            "index": 18
-        }]
+        "questions": [
+            {
+                "content": "What is the next number in this sequence? \n 95, 120, 145, ___",
+                "options": [
+                    "170",
+                    "160",
+                    "165",
+                    "175"
+                ],
+                "answer": [
+                    "170"
+                ],
+                "type": "si",
+                "matchings": [],
+                "index": 0
+            },
+            {
+                "content": "A carton contains 24 bottles of soda, and there are 20 fluid ounces of soda in each bottle. How many pints are there altogether in one carton?![image](https://www.mathopolis.com/questions/images/a/6/f29a2f4cab71052d3e64a1564724942.gif)",
+                "options": [
+                    "3 pints",
+                    "25 pints",
+                    "30 pints",
+                    "60 pints"
+                ],
+                "type": "si",
+                "answer": [
+                    "30 pints"
+                ],
+                "matchings": [],
+                "index": 2
+            },
+            {
+                "content": "What is the value of $[\\frac{1}{2} + \\frac{1}{6} + .... + \\frac{1}{n(n+1)}]$",
+                "options": [
+                    "$\\frac{1}{n}$",
+                    "$\\frac{n}{n+1}$",
+                    "$\\frac{1}{n+1}$",
+                    "$\\frac{2}{n+1}$"
+                ],
+                "answer": [
+                    "$\\frac{n}{n+1}$"
+                ],
+                "type": "si",
+                "matchings": [],
+                "index": 4
+            },
+            {
+                "content": "The diagram shows a prism whose cross section is a right triangle. The total surface area of the prism is ___. ![image](https://www.mathopolis.com/questions/images/1/6/673619b8983723db19f16fe7d9a9a42.gif)",
+                "options": [],
+                "type": "fi",
+                "answer": ["500"],
+                "matchings": [],
+                "index": 1
+            },
+            {
+                "content": "Ed thinks of a number, adds 8, and then multiplies the result by 3. The answer is 45. If the number Ed thinks of is represented by x, how can this be written using algebra?",
+                "options": [
+                    "3x + 8 = 45",
+                    "x + 24 = 45",
+                    "3(x + 8) = 45",
+                    "3(x - 8) = 45"
+                ],
+                "answer": [
+                    "3(x + 8) = 45"
+                ],
+                "type": "si",
+                "matchings": [],
+                "index": 3
+            },
+            {
+                "content": "What is -5 + (-10) − (-8) ?",
+                "options": [
+                    "-23",
+                    "-7",
+                    "-3",
+                    "13"
+                ],
+                "type": "si",
+                "answer": [
+                    "-7"
+                ],
+                "matchings": [],
+                "index": 5
+            }
+        ]
+    },
+    {
+        "title": "Math problems testing ?",
+        "brief": "Show us your math skill with these problems",
+        "category": "ma",
+        "shuffle": false,
+        "questions": [
+            {
+                "content": "Solve : $4x^{3} + 8x^{2} - 25x -50 = 0$",
+                "options": [
+                    "$x = -2.5, -2 or 2.5$",
+                    "$x = -2, -0.4 or 0.4$",
+                    "$x = -2.5, 2 or 2.5$",
+                    "$x = -2, 2 or 2.5$"
+                ],
+                "answer": [
+                    "$x = -2.5, -2 or 2.5$"
+                ],
+                "matchings": [],
+                "type": "si",
+                "index": 0
+            },
+            {
+                "content": "What are the sum the roots of the quartic equation $6x^{4} + 3x^{3} - 5x^{2} + 12 = 0$",
+                "options": [
+                    "$\\frac{1}{2}$",
+                    "$\\frac{1}{3}$",
+                    "$\\frac{-1}{2}$",
+                    "$\\frac{1}{7}$"
+                ],
+                "answer": [
+                    "$\\frac{1}{2}$"
+                ],
+                "type": "si",
+                "matchings": [],
+                "index": 3
+            },
+            {
+                "content": "Ed thinks of a number, adds 8, and then multiplies the result by 3. The answer is 45. If the number Ed thinks of is represented by x, how can this be written using algebra?",
+                "options": [
+                    "3x + 8 = 45",
+                    "x + 24 = 45",
+                    "3(x + 8) = 45",
+                    "3(x - 8) = 45"
+                ],
+                "answer": [
+                    "3(x + 8) = 45"
+                ],
+                "type": "si",
+                "matchings": [],
+                "index": 5
+            },
+            {
+                "content": "Express $\\frac{13}{33}$ as a recurring decimal",
+                "options": [
+                    "0.309",
+                    "0.39",
+                    "0.38",
+                    "0.37"
+                ],
+                "answer": [
+                    "0.39"
+                ],
+                "type": "si",
+                "matchings": [],
+                "index": 1
+            },
+            {
+                "content": "The diagram shows a prism whose cross section is a right triangle. The total surface area of the prism is ___. ![image](https://www.mathopolis.com/questions/images/1/6/673619b8983723db19f16fe7d9a9a42.gif)",
+                "options": [],
+                "type": "fi",
+                "answer": ["500"],
+                "matchings": [],
+                "index": 2
+            },
+            {
+                "content": "A freight company uses a tank wagon to transport a large quantity of a liquid chemical. What would be the approximate volume of this tank wagon?![image](https://www.mathopolis.com/questions/images/8/9/79b4918bfe58dfd423270dfe5e91ad2.gif)",
+                "options": [
+                    "34 gallons",
+                    "340 gallons",
+                    "3400 gallons",
+                    "34000 gallons"
+                ],
+                "type": "si",
+                "answer": ["34000 gallons"],
+                "matchings": [],
+                "index": 4
+            },
+            {
+                "content": "A carton contains 24 bottles of soda, and there are 20 fluid ounces of soda in each bottle. How many pints are there altogether in one carton?![image](https://www.mathopolis.com/questions/images/a/6/f29a2f4cab71052d3e64a1564724942.gif)",
+                "options": [
+                    "3 pints",
+                    "25 pints",
+                    "30 pints",
+                    "60 pints"
+                ],
+                "type": "si",
+                "answer": [
+                    "30 pints"
+                ],
+                "matchings": [],
+                "index": 6
+            }
+        ]
     }
 ]

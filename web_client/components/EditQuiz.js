@@ -16,11 +16,11 @@ class EditQuiz extends React.Component {
 		super(props);
 		this.state = {
 			id: null,
-			title: "This is a title, click to edit.",
-			brief: 'This is a brief',
-			category : "Category",
+			title: "",
+			brief: "",
+			category : "",
 			shuffle: false,
-			rating : 1.0,
+			rating : 1,
 			questions: [],
 			deletions: []
 		};
@@ -137,7 +137,46 @@ class EditQuiz extends React.Component {
 		return converted_state;
 	}
 
+	validateTitle(){
+		if (this.state.title.replace(/ /g,'') == '') {
+			return false;
+		}
+		return true;
+	}
+
+	validateBrief(){
+		if (this.state.brief.replace(/ /g,'') == '') {
+			return false;
+		}
+		return true;
+	}
+
+	validateCategory(){
+		if (!this.state.category) {
+			return false;
+		}
+		return true;
+	}
+
 	handleSubmit(e) {
+		if (!this.validateCategory()) {
+			$(".submitErrorMesssage").text("Please specify the category.");
+			$(".categoryDropdown").click();
+			return;
+		}
+
+		if (!this.validateTitle()) {
+			$(".submitErrorMesssage").text("Please fill in the title.");
+			$(".titleInput").focus();
+			return;
+		}
+
+		if (!this.validateBrief()) {
+			$(".submitErrorMesssage").text("Please fill in the brief.");
+			$(".briefInput").focus();
+			return;
+		}
+
 		const converted_state = this.convertState();
 
 		console.log('Final state: ', JSON.stringify(converted_state));
@@ -153,14 +192,35 @@ class EditQuiz extends React.Component {
 			if (result.ok) {
 				console.log(result);	
 				window.location.replace(Config.serverUrl + '/myquizzes');				
-				console.log(result);
 			}
+			else if (result.status == 403){
+				$(".submitErrorMesssage").text('You cannot edit quiz after it is approved!');
+			} 
 			else {
-				alert('Oops! Something went wrong :( Please re-check your form!')
+				console.log(result);	
+				$(".submitErrorMesssage").text('Oops! Something went wrong :( Please re-check your form!');
 			}
 		});
 	}
 
+	handleDelete() {
+		fetch(Config.serverUrl + '/api/full_quiz/'  + this.props.match.params.quizid + "/", {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': 'Token ' + localStorage.getItem('token'),
+			},
+		})
+		.then((result) => {
+			if (result.ok) {
+				console.log(result);	
+				window.location.replace(Config.serverUrl+ '/myquizzes/' + localStorage.getItem('username'));				
+			}
+			else {
+				$(".submitErrorMesssage").text('Oops! Something went wrong :( Please re-check your form!');
+			}
+		});
+	}
 	renderRating() {
 	    var rate = [];
 	    for(var i = 0; i < 3; i++)
@@ -202,17 +262,16 @@ class EditQuiz extends React.Component {
 
 		return (
 			<div className = 'container' style ={{marginTop: '3%', textAlign: 'center'}}>
-				<div className="jumbotron" style = {{backgroundColor: 'white'}}>
+				<div className="jumbotron"  style={{ backgroundColor: '#fbfbfb' }}>
 					<h1 className="display-4">
 						<div className="input-group mb-3">
 							<div className="input-group-prepend">
-								<button className="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{CATEGORY_CODE[this.state.category]}</button>
+								<button className="btn btn-upload dropdown-toggle categoryDropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{CATEGORY_CODE[this.state.category]}</button>
 								<div className="dropdown-menu">
 									{
 										cate_dropdown
 									}
-									<div role="separator" className="dropdown-divider"></div>
-									<a className="dropdown-item" onClick={this.handleChangeCategory.bind(this)} href="#">Other</a>
+									
 								</div>
 							</div>
 							
@@ -226,8 +285,10 @@ class EditQuiz extends React.Component {
 					<h1 className="display-4">
 						<div className="input-group mb-3">
 							<div className="input-group-append ">
-								<button className="btn btn-outline-secondary" type="button" onClick={() => console.log(this.convertState())}>Check state</button>
-								
+								{/*<button className="btn btn-outline-secondary" type="button" onClick={() => console.log(this.convertState())}>Check state</butto*/}
+								<button disabled type="button" className="btn btn-upload" style={{display: 'inline', marginLeft: '1%'}}
+									data-toggle="tooltip" data-placement="top" title="Click to upload file"
+									data-toggle="modal" data-target="#upload-file-guide" >Upload</button>
 							</div>
 							
 							<input type="text" className="form-control"
@@ -244,7 +305,14 @@ class EditQuiz extends React.Component {
 					}
 
 				</div>
-			  <button className="btn btn-outline-primary" type="button" onClick = {this.handleSubmit.bind(this)}>Update</button>
+
+			<p className="submitErrorMesssage" style={{color: 'red'}}></p>
+		    <button className="btn btn-outline-success" type="button" style={{display: 'inline', marginRight: '1%', width: '15%'}}  
+			  			data-toggle="tooltip" data-placement="top" title="Click to update quiz"
+			  			onClick = {this.handleSubmit.bind(this)}>Update</button>
+			<button className="btn btn-outline-danger" style={{display: 'inline', marginLeft: '1%', width: '15%'}} 
+						data-toggle="tooltip" data-placement="top" title="Click to delete quiz"
+						type="button" onClick={this.handleDelete.bind(this)}>Delete</button>
 			</div>
 		);
 	}
