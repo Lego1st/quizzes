@@ -29,9 +29,11 @@ class HasntDoneQuizOnly(permissions.BasePermission):
 
 class ApprovedQuizOnly(permissions.BasePermission):
     """
-    Custom permission to only allow user to take action on approved quiz only
+    Custom permission to only allow user except the quiz's author to take action on approved quiz only
     """
     message = "This quiz has not been approved yet!"
 
     def has_object_permission(self, request, view, obj):
+        if obj.author == request.user:
+            return True
         return obj.status == 'a'
