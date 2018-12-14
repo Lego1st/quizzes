@@ -6,7 +6,7 @@
         "shuffle": false,
         "questions": [
             {
-                "content": "What is the value of $[\frac{1}{2} + \frac{1}{6} + .... + \frac{1}{n(n+1)}]$",
+                "content": "What is the value of $[\\frac{1}{2} + \\frac{1}{6} + .... + \\frac{1}{n(n+1)}]$",
                 "options": [
                     "$\\frac{1}{n}$",
                     "$\\frac{n}{n+1}$",
