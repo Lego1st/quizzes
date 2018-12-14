@@ -41,7 +41,7 @@
 {
     "title": "Logic And Math Quiz",
     "brief": "How does your brain cope with a healthy dose of lateral thinking?",
-    "category": "ma",
+    "category": "lg",
     "shuffle": false,
     "questions": [
         {
@@ -261,6 +261,28 @@
         "answer": ["They are cousins"],
         "matchings": [],
         "index": 2
+    }, {
+        "content": "Latoya is taller than Kito, and Mike is shorter than Latoya. Which of the following statements would be most accurate?",
+        "options": ["Mike is taller", "Mike is shorter", "They are equal", "Not enough information"],
+        "type": "si",
+        "answer": ["Not enough information"],
+        "matchings": [],
+        "index": 3
+    },
+    {
+        "content": "What is the next number in the following sequence **4 16 5 25 6 36 7 49 8 _______**",
+        "options": [56, 64, 36, 52],
+        "type": "mu",
+        "answer": [64],
+        "matchings": [],
+        "index": 1
+    },{
+        "content": "Merlin realizes that all Alakazams are Open Sesames, and some Hocus Pocuses are Alakazams.\nIs it true that some Hocus Pocuses are Open Sesames?",
+        "options": ["True", "False"],
+        "type": "si",
+        "answer": ["True"],
+        "matchings": [],
+        "index": 1
     }]
 }
 ]
