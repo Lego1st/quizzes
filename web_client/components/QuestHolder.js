@@ -2,6 +2,11 @@ import React from "react";
 import ReactMdeDemo from "./ReactMdeDemo";
 import EquationEditor from "./EquationEditor";
 import MarkdownRender from "./MarkdownRender";
+import QuestDetail from  "./QuestDetail";
+import { CODE_CATEGORY } from "./Constants";
+import { QUESTION_TYPE, UPLOAD_FILE_API } from "./Constants";
+import { QUIZ_STATUS } from "./Constants";
+
 // var MarkdownRender = require("./QuestDetail").MarkdownRender;
 class QuestHolder extends React.Component {
 	constructor(props) {
@@ -11,7 +16,7 @@ class QuestHolder extends React.Component {
 		var addable = 1;
 
 		if (props.intial_state.type  ==  2) {
-			intial_state['options'] = intial_state['answer']
+			// intial_state['options'] = intial_state['answer']
 			numOptions = 1;
 			addable = 0;
 		}
@@ -21,7 +26,7 @@ class QuestHolder extends React.Component {
 			numOptions: numOptions,
 			initNumOptions: numOptions,
 			addable: addable,
-			preview: true
+			preview: false
 		}
 		
 		console.log("Adding new question " + props.index + ":", this.state.question);
@@ -49,11 +54,12 @@ class QuestHolder extends React.Component {
 		}
 
 		for(let i = 0; i < options.length-1; i++){
+			if (!options[i]) {
+				return false;
+			}
+
 			for(let j = i + 1; j < options.length; j++){
-				if (!options[i]) {
-					return false;
-				}
-				else if (options[i] == options[j]) {
+				if (options[i] == options[j]) {
 					return false;
 				}
 			}
@@ -61,9 +67,29 @@ class QuestHolder extends React.Component {
 		return true;
 	}
 
+	validateMatchings() {
+		var matchings = this.state.question.matchings;
+		if (matchings.length == 0) {
+			return false;
+		}
+
+		for(let i = 0; i < matchings.length-1; i++){
+			if (!matchings[i]) {
+				return false;
+			}
+
+			for(let j = i + 1; j < matchings.length; j++){
+				if (matchings[i] == matchings[j]) {
+					return false;
+				}
+			}
+		}	
+		return true;
+	}
+
 	validateAnswer() {
 		var answer = this.state.question.answer;
-		if (answer.length == 0) {
+		if (answer.length == 0 && this.state.question.type != 3) {
 			return false;
 		}
 		return true;
@@ -79,12 +105,18 @@ class QuestHolder extends React.Component {
 
 	handleSave() {
 		if (!this.validateOptions()) {
-			if (this.state.question.options.length != 0) {
+			if (this.state.question.options.length != 0 && this.state.question.type != 2) {
 				$(".errorMessage").text("Please check your options, of which you might missed or duplicated some.");
 			}
 			else {
 				$(".errorMessage").text("Please specify the options!");	
 			}
+			$(".optCrl").find(".form-control")[0].focus();
+			return;
+		}
+
+		if (this.state.question.type == 3 && !this.validateMatchings()) {
+			$(".errorMessage").text("Please check your matchings, of which you might missed or duplicated some.");			
 			$(".optCrl").find(".form-control")[0].focus();
 			return;
 		}
@@ -222,20 +254,66 @@ class QuestHolder extends React.Component {
 	    EqEditor.add(a,false);
 	}
 
+	togglePreview() {
+		if (!this.state.preview) {
+			$(".fa-arrows-alt-v").text('Toggle editor');
+		}
+		else {
+			$(".fa-arrows-alt-v").text('Toggle preview');
+		}
+		this.setState({preview: !this.state.preview});
+		$(".md-editor-tabs").children().hide();
+
+	}
+
+
+	convertQuestion() {
+		var question =  Object.assign({}, this.state.question);
+		console.log("before conversion: ", question);
+		if (question['type'] == 3) {
+			question['answer'] = question['options'];
+		}
+		if (question['type'] < 2) {
+			question['answer'] = question['answer'].map((item) => question['options'][item]);
+		}
+		question['type'] = QUESTION_TYPE[question['type']];
+				
+		return question;
+	}
+
+	renderQuestionList(questions) {
+        return questions.map(question => {
+            return <QuestDetail key={question.index} quest_detail={question} viewOnly={true} approvalOnly={true}
+                                doQuiz={{}} callbackQuiz={() => {}}/>
+        });
+    }
+
 	render() {
 		const types = ['Single-choice', 'Multiple-choice', 'Filling', 'Matching'];
 		const inputs = [];
 		const inputs_match = [];
 
 		for (var i = 0; i < this.state.numOptions; i++) {
-			inputs.push(<input ref = {'input' + (i + 1).toString()} 
-								key = {'input' + (i + 1).toString()} 
-								type = "text" 
-								className = "form-control" 
-								placeholder =  {this.state.question.options[i] ? this.state.question.options[i] : "Option " + (i+1).toString()}
-								value =  {this.state.question.options[i] ? this.state.question.options[i] : ''}
-								style = {{display: 'inline', float: 'left', width: '30%', marginLeft: '5%', marginRight: '5%', marginBottom: '1%'}}
-								onChange = {this.handleChangeOption.bind(this, i)}/> )
+			if (this.state.question.type != 2) {
+				inputs.push(<input ref = {'input' + (i + 1).toString()} 
+									key = {'input' + (i + 1).toString()} 
+									type = "text" 
+									className = "form-control" 
+									placeholder =  {this.state.question.options[i] ? this.state.question.options[i] : "Option " + (i+1).toString()}
+									value =  {this.state.question.options[i] ? this.state.question.options[i] : ''}
+									style = {{display: 'inline', float: 'left', width: '30%', marginLeft: '5%', marginRight: '5%', marginBottom: '1%'}}
+									onChange = {this.handleChangeOption.bind(this, i)}/> )
+			}
+			else {
+				inputs.push(<input ref = {'input' + (i + 1).toString()} 
+									key = {'input' + (i + 1).toString()} 
+									type = "text" 
+									className = "form-control" 
+									placeholder =  {this.state.question.answer[i] ? this.state.question.answer[i] : "Answer"}
+									value =  {this.state.question.answer[i] ? this.state.question.answer[i] : ''}
+									style = {{display: 'inline', float: 'left', width: '30%', marginLeft: '5%', marginRight: '5%', marginBottom: '1%'}}
+									onChange = {this.handleChangeOption.bind(this, i)}/> )
+			}
 
 			if (this.state.question.type  ==  0){ 
 				if (this.state.question.answer.includes(i)) {
@@ -284,7 +362,7 @@ class QuestHolder extends React.Component {
 								  		key = {'input' + (i*2 + 1).toString()}  
 										type = "text" 
 										className = "form-control" 
-										value = {this.state.question.answer[i] ? this.state.question.answer[i] : ''}
+										value = {this.state.question.options[i] ? this.state.question.options[i] : ''}
 										placeholder = {this.state.question.answer[i] ? this.state.question.answer[i] : "Match " + (i+1).toString()}
 										style = {{display: 'inline', float: 'left', width: '30%', marginLeft: '5%', marginRight: '5%', marginBottom: '1%'}}
 										onChange = {this.handleChangeOption.bind(this, i)}/>)
@@ -295,7 +373,7 @@ class QuestHolder extends React.Component {
 			<div className = {'whatever-' + this.props.index} style = {{ display: 'inline', textAlign: 'center' }}>
 				
 				<button type = "button" className = "btn btn-default questholder" style = {{ width: "40%", marginLeft: '5%', marginRight: '5%', marginBottom: '2%' }}
-					onClick = {this.loadCodeCog.bind(this)}
+					// onClick = {this.loadCodeCog.bind(this)}
 					data-toggle = "modal" data-target = {"#question-" + this.props.index} >{this.props.brief}</button>
 				<button type = "button" onClick = {this.handleDelete.bind(this)} className = "btn" style = {{ backgroundColor: 'white', width: "5%", marginLeft: '-5%', marginRight: '0%', marginBottom: '2%' }}><i className = "far fa-trash-alt"></i></button>
 				<div className = "modal fade bd-example-modal-lg" id = {"question-" + this.props.index} tabIndex = "-1" role = "dialog" aria-labelledby = "myLargeModalLabel" aria-hidden = "true">
@@ -313,71 +391,87 @@ class QuestHolder extends React.Component {
 										<a className = "dropdown-item" onClick = {this.handleChangeType.bind(this, 3)} href = "#">Matching</a>
 									</div>
 								</div>
+								{/*<i className = "fas fa-arrows-alt-v" data-toggle = "tooltip" 
+									data-placement = "top" title = "Click to toggle live review"
+									style = {{fontSize: '15px', margin: '1%', cursor: 'pointer'}} 
+									onClick = {this.togglePreview.bind(this)}> Toggle preview</i>*/}
+								<nav  style={{marginLeft: '1%'}}>
+								  <div className="nav nav-tabs" id="nav-tab" role="tablist">
+								    <a className="nav-item nav-link active" id="nav-editor-tab" data-toggle="tab" href={"#nav-editor-"  + this.props.index}role="tab" aria-controls="nav-editor" aria-selected="true">Editor</a>
+								    <a className="nav-item nav-link" id="nav-preview-tab" data-toggle="tab" href={"#nav-preview-" + this.props.index} role="tab" aria-controls="nav-preview" aria-selected="false">Preview</a>
+								  </div>
+								</nav>
 
 								<button type = "button" className = "close" data-dismiss = "modal" aria-label = "Close">
 									<span aria-hidden = "true">&times;</span>
 								</button>
 							</div>
+							
 							<div className = "modal-body container" style = {{ display: 'inline', textAlign: 'center' }}>
-								<ReactMdeDemo handleOnChange = {this.handleChangeContent.bind(this)} 
-											index = {this.state.question.index}
-											initialContent = {this.state.question.content} />
-								<i className = "fas fa-arrows-alt-v" data-toggle = "tooltip" 
-									data-placement = "top" title = "Click to toggle live review"
-									style = {{fontSize: '30px', margin: '1%', cursor: 'pointer'}} 
-									onClick = {()  => this.setState({preview: !this.state.preview})}></i>
-								
-								{this.state.preview &&
-									<div style = {{height: "90%", overflow: "auto", maxHeight: "400px", width: "100%", padding: "30px 10px", border: "1px solid rgb(221, 221, 221)"}}>
-										<MarkdownRender source = {this.state.question.content}/>
-									</div>
-								}
-								
-								
-								<hr />	
-								
-									<button className = "btn btn-default copy-btn" data-toggle = "tooltip" 
-											data-placement = "top" title = "Click to copy" onClick = {this.insertEquation.bind(this)}
-											style = {{marginBottom:'1%'}}>
-							          Copy to clipboard
-							        </button>
-								<EquationEditor index = {this.props.index} />								
-								<hr />
-								<div className = "options&answer row">
-									<div className = "col-sm-1">
-									</div>
-									<div className = "optCrl col-sm-1" >
-										<div style = {{width: '1%', fontSize: '20px', textAlign: 'center'}}>
-											<i className = "fas fa-lg fa-caret-up" onClick = {this.increaseOptions.bind(this)}></i>
-											{this.state.numOptions}
-											<i className = "fas fa-lg fa-caret-down" onClick = {this.decreaseOptions.bind(this)}></i>
+								<div className="tab-content" id="nav-tabContent">
+								  <div className="tab-pane fade show active" id={"nav-editor-" + this.props.index} role="tabpanel" aria-labelledby="nav-editor-tab">
+								  		<ReactMdeDemo handleOnChange = {this.handleChangeContent.bind(this)} 
+													index = {this.state.question.index}
+													initialContent = {this.state.question.content} />
+
+										<hr />	
+										
+										{/*<button className = "btn btn-default copy-btn" data-toggle = "tooltip" 
+												data-placement = "top" title = "Click to copy" onClick = {this.insertEquation.bind(this)}
+												style = {{marginBottom:'1%'}}>
+								          Copy to clipboard
+								        </button>*/}
+										{/*<EquationEditor index = {this.props.index} />*/}
+										<hr />
+										<div className = "options&answer row">
+											<div className = "col-sm-1">
+											</div>
+											<div className = "optCrl col-sm-1" >
+												<div style = {{width: '1%', fontSize: '20px', textAlign: 'center'}}>
+													<i className = "fas fa-lg fa-caret-up" onClick = {this.increaseOptions.bind(this)}></i>
+													{this.state.numOptions}
+													<i className = "fas fa-lg fa-caret-down" onClick = {this.decreaseOptions.bind(this)}></i>
+												</div>
+											</div>
+
+											<div className = "optCrl col-sm-10" style = {{paddingLeft: '0%', paddingRight: '0%'}}>
+												{this.state.question.type < 3 ? (
+													<form>
+														{
+															inputs
+														}
+
+													</form>
+												) : (
+														<form>
+															{
+																inputs_match
+															}
+														</form>
+													)}
+											</div>
 										</div>
-									</div>
 
-									<div className = "optCrl col-sm-10" style = {{paddingLeft: '0%', paddingRight: '0%'}}>
-										{this.state.question.type < 3 ? (
-											<form>
-												{
-													inputs
-												}
-
-											</form>
-										) : (
-												<form>
-													{
-														inputs_match
-													}
-												</form>
-											)}
 									</div>
+									  <div className="tab-pane fade" id={"nav-preview-" + this.props.index} role="tabpanel" aria-labelledby="nav-preview-tab">
+
+											{/*<div style = {{height: "90%", overflow: "auto", maxHeight: "400px", width: "100%", padding: "30px 10px", border: "1px solid rgb(221, 221, 221)"}}>
+												<MarkdownRender source = {this.state.question.content}/>
+											</div>*/}											
+											{this.renderQuestionList([this.convertQuestion(this.state.question)])}
+									  </div>
+
+								  </div>
+
+								  
 								</div>
-
-
-							</div>
+																
+															
 							<div className = "modal-footer">
 								<p className = "errorMessage" style = {{color: 'red'}}></p>
 								<button type = "button" className = "btn btn-secondary closeModal" data-dismiss = "modal">Close</button>
-								<button type = "button" className = "btn btn-secondary" onClick = {this.handleSave.bind(this)}>Saving</button>
+								<button type = "button" className = "btn btn-secondary" onClick = {this.handleSave.bind(this)}>Save</button>
+								<button type = "button" className = "btn btn-secondary" onClick = {() => console.log(this.state.question)}>Check</button>
 							</div>
 						</div>
 					</div>
