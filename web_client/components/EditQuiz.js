@@ -31,7 +31,7 @@ class EditQuiz extends React.Component {
 
 	componentDidMount() {
 		console.log(this.props.match.params.quizid);
-		get_data("/api/full_quiz/" + this.props.match.params.quizid + "/", false).then((res) => res.json())
+		get_data("/api/full_quiz/" + this.props.match.params.quizid + "/", true).then((res) => res.json())
 			.catch(
 				(error) => {
 					console.log(error);
