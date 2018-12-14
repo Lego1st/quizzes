@@ -2,7 +2,7 @@ from rest_framework import permissions
 from quizzes.models import *
 
 # Permission classes
-class IsAuthorOrReadOnly(permissions.BasePermission):
+class IsAuthor(permissions.BasePermission):
     """
     Custom permission to only allow authors of an object to edit it.
     """
@@ -10,9 +10,6 @@ class IsAuthorOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         # Read permissions are allowed to any request,
         # so we'll always allow GET, HEAD or OPTIONS requests.
-        if request.method in permissions.SAFE_METHODS:
-            return True
-
         # Write permissions are only allowed to the author of the quiz.
         return obj.author == request.user
 
@@ -37,3 +34,14 @@ class ApprovedQuizOnly(permissions.BasePermission):
         if obj.author == request.user:
             return True
         return obj.status == 'a'
+
+class UpdatePendingQuizOnly(permissions.BasePermission):
+    """
+    Custom permission to only allow user update pending quizzes
+    """
+    message = "This quiz can not be update after being approved"
+
+    def has_object_permission(self, request, view, obj):
+        if request.method != 'PUT':
+            return True
+        return obj.status != 'a'
