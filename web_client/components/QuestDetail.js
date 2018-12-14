@@ -15,7 +15,7 @@ function updateQuizAnswer(user_answer) {
   this.props.callbackQuiz(data);
 }
 
-function MarkdownRender(props = ReactMarkdown.ReactMarkdownProps) {
+export function MarkdownRender(props = ReactMarkdown.ReactMarkdownProps) {
   const newProps = {
     ...props,
     plugins: [
@@ -318,7 +318,7 @@ class QuestDetail extends Component {
                       <div style={{color : "red"}}>Incorrect</div>
                     </div>
                 }
-                <div style={{color : "green"}}>Solution: {x.answer.toString()}</div>
+                <div style={{color : "green"}}>Solution: <MarkdownRender source={x.answer.toString()}/></div>
               </div>
             )
           }
@@ -336,5 +336,8 @@ class QuestDetail extends Component {
   }
 }
 
+export default {
+  QuestDetail,
+}
 
-export default QuestDetail;
+
