@@ -1,34 +1,31 @@
 import json
 import os
 import django
+import random
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--file", type=str, required=True, 
+				help="Please specify fixtures file in quizzes/fixtures directory. Ex: quizzes.json")
+args = parser.parse_args()
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'quizzes_django_react.settings')
 django.setup()
 
 from quizzes.models import User, Quiz, Question
+from quizzes.serializers import FullQuizSerializer
 
-data = json.load(open('quizzes/fixtures/quizzes.json', 'rb'))
+data = json.load(open('quizzes/fixtures/{}'.format(args.file), 'rb'))
 
 for d in data:
-	new_quiz = Quiz.objects.create(
-									title = d['title'],
-									brief = d['brief'],
-									category = d['category'],
-									author = User.objects.get(id = 1))
-	new_quiz.save()
-
-	filt = lambda x: str([str(i).replace("'", " ") for i in x]).replace("'", '"')
-	questions = d['questions']
-	for q in questions:
-
-		new_quest = Question.objects.create(
-											content = q['content'],
-											index = q['index'],
-											question_type = q['type'],
-											quiz = new_quiz,
-											options = filt(q['options']),
-											answer = filt(q['answer']),
-											matchings = filt(q['matchings']))
-		new_quest.save()
-
-	print("Created quiz: {}, id: {}".format(d['title'], new_quiz.id))
+	serializer = FullQuizSerializer(data=d)
+	if serializer.is_valid():
+		user_pool = User.objects.all()[:10]
+		user = random.choice(user_pool)
+		new_quiz = serializer.save(author=user)
+		print("Created quiz: {}, id: {}".format(d['title'], new_quiz.id))
+	else:
+		print()
+		print("Error data: ", json.dumps(d, indent=2))
+		print("Error : ", serializer.errors)
+		print()

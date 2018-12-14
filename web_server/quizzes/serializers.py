@@ -161,8 +161,8 @@ class FullQuestionSerializer(serializers.BaseSerializer):
             'index': int(index),
             'question_type': question_type,
             'content': content,
-            'options': json.dumps(options).replace("'", '"') ,
-            'answer': json.dumps(answer).replace("'", '"')
+            'options': json.dumps(options),
+            'answer': json.dumps(answer)
         }
         if question_type == 'ma':
             output['matchings'] = json.dumps(matchings)

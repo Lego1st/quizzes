@@ -52,10 +52,10 @@
 
 .board .group-avatar{
   position: relative;
-  width: 100%;
-  height: 70%;
-  border-radius: 50%;
   border: 12px double;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
 }
 
 .group-avatar .con-avatar {
@@ -63,9 +63,14 @@
   width: 100%;
   border-radius: 50%;
 }
-.group-avatar .con-avatar img{
-  height: 100%;
+
+.group-avatar .con-avatar-top{
+  position: absolute;
+  width: 25%;
+  left: 40%;
+  top: -15%;
 }
+
 .board .group-info {
   text-align: center;
   padding: 10%;
@@ -77,12 +82,7 @@
   text-align: center;
 }
 
-.group-avatar .con-avatar-top{
-  position: absolute;
-  width: 25%;
-  left: 40%;
-  top: -15%;
-}
+
 
 .board ul {
   list-style: none;
