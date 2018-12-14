@@ -409,5 +409,73 @@
             "matchings": [],
             "index": 3
         }]
+    },
+    {
+        "title": "Are you scared of math?",
+        "brief": "Show us your math skill with this challenge",
+        "category": "ma",
+        "shuffle": false,
+        "questions": [{
+            "content": "What is the next number in this sequence? \n 95, 120, 145, ___",
+            "options": [
+                "170",
+                "160",
+                "165",
+                "175"
+            ],
+            "answer": [
+                "170"
+            ],
+            "type": "si",
+            "matchings": [],
+            "index": 3
+        },{
+            "content": "A carton contains 24 bottles of soda, and there are 20 fluid ounces of soda in each bottle. How many pints are there altogether in one carton?![image](https://www.mathopolis.com/questions/images/a/6/f29a2f4cab71052d3e64a1564724942.gif)",
+            "options": ["3 pints", "25 pints", "30 pints", "60 pints"],
+            "type": "si",
+            "answer": ["30 pints"],
+            "matchings": [],
+            "index": 16
+        },{
+            "content": "What is the value of $[\\frac{1}{2} + \\frac{1}{6} + .... + \\frac{1}{n(n+1)}]$",
+            "options": [
+                "$\\frac{1}{n}$",
+                "$\\frac{n}{n+1}$",
+                "$\\frac{1}{n+1}$",
+                "$\\frac{2}{n+1}$"
+            ],
+            "answer": [
+                "$\\frac{n}{n+1}$"
+            ],
+            "type": "si",
+            "matchings": [],
+            "index": 0
+        },{
+            "content": "The diagram shows a prism whose cross section is a right triangle. The total surface area of the prism is ___. ![image](https://www.mathopolis.com/questions/images/1/6/673619b8983723db19f16fe7d9a9a42.gif)",
+            "options": [],
+            "type": "fi",
+            "answer": "500",
+            "matchings": [],
+            "index": 14
+        },{
+            "content": "Ed thinks of a number, adds 8, and then multiplies the result by 3. The answer is 45. If the number Ed thinks of is represented by x, how can this be written using algebra?",
+            "options": [
+                "3x + 8 = 45",
+                "x + 24 = 45",
+                "3(x + 8) = 45",
+                "3(x - 8) = 45"
+            ],
+            "answer": ["3(x + 8) = 45"],
+            "type": "si",
+            "matchings": [],
+            "index": 10
+        },{
+            "content": "What is -5 + (-10) − (-8) ?",
+            "options": ["-23", "-7", "-3", "13"],
+            "type": "si",
+            "answer": ["-7"],
+            "matchings": [],
+            "index": 18
+        }]
     }
 ]
