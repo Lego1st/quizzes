@@ -179,24 +179,6 @@
                 "index": 11
             }, 
             {
-                "content": "The diagram shows a prism whose cross section is a regular heptagon. By approximating the heptagon by a circle, which of the following gives the best estimate for the total surface area of the prism? ![image](https://www.mathopolis.com/questions/images/d/d/8db968c726f92baddcf652b1ab7e3d2.jpg)",
-                "options": [
-                    "600 square units", "700 square units", "800 square units", "900 square units"
-                ],
-                "answer": ["900 square units"],
-                "type": "si",
-                "matchings": [],
-                "index": 12
-            },
-            {
-                "content": "Estimate the area of the nonagon by counting squares. Which of the following gives the best estimate? ___ ![image](https://www.mathopolis.com/questions/images/3/2/65472d6a3cff12ba07df0038c3f3592.gif)",
-                "options": [],
-                "type": "fi",
-                "answer": "75",
-                "matchings": [],
-                "index": 13
-            },
-            {
                 "content": "The diagram shows a prism whose cross section is a right triangle. The total surface area of the prism is ___. ![image](https://www.mathopolis.com/questions/images/1/6/673619b8983723db19f16fe7d9a9a42.gif)",
                 "options": [],
                 "type": "fi",
@@ -219,22 +201,129 @@
                 "answer": ["30 pints"],
                 "matchings": [],
                 "index": 16
+            }
+        ]
+    },
+    {
+        "title": "Take me to your math",
+        "brief": "Strengthen your math skill",
+        "category": "ma",
+        "shuffle": false,
+        "questions": [{
+            "content": "Use the subtraction by addition method to calculate 8,117 − 5,479",
+            "options": ["2,672", "2.738", "2,662", "2.638"],
+            "type": "si",
+            "answer": ["2.638"],
+            "matchings": [],
+            "index": 17
+        },
+        {
+            "content": "What is -5 + (-10) − (-8) ?",
+            "options": ["-23", "-7", "-3", "13"],
+            "type": "si",
+            "answer": ["-7"],
+            "matchings": [],
+            "index": 18
+        },
+        {
+            "content": "Karen deposited 24% of the cost of her house. If she paid $124,800 for the deposit, what was the cost of the house?",
+            "options": ["29.952", "154.752", "499.200", "520.000"],
+            "type": "si",
+            "answer": ["520.000"],
+            "matchings": [],
+            "index": 19
+        },
+        {
+            "content": "The price of car increased by 5%. If the new price was $22,050, what was the old price?",
+            "options": ["20000", "21000", "23152", "23210"],
+            "type": "si",
+            "matchings": [],
+            "index": 20
+        },
+        {
+            "content": "The diagram shows a prism whose cross section is a regular heptagon. By approximating the heptagon by a circle, which of the following gives the best estimate for the total surface area of the prism? ![image](https://www.mathopolis.com/questions/images/d/d/8db968c726f92baddcf652b1ab7e3d2.jpg)",
+            "options": [
+                "600 square units", "700 square units", "800 square units", "900 square units"
+            ],
+            "answer": ["900 square units"],
+            "type": "si",
+            "matchings": [],
+            "index": 12
+        },
+        {
+            "content": "Estimate the area of the nonagon by counting squares. Which of the following gives the best estimate? ___ ![image](https://www.mathopolis.com/questions/images/3/2/65472d6a3cff12ba07df0038c3f3592.gif)",
+            "options": [],
+            "type": "fi",
+            "answer": "75",
+            "matchings": [],
+            "index": 13
+        }]
+    },
+    {
+        "title": "Take me to your math 2",
+        "brief": "Strengthen your math skill",
+        "category": "ma",
+        "shuffle": false,
+        "questions": [
+            {
+                "content": "What is the probability that a year that is not a leap year, selected at random, contains 53 Tuesdays?",
+                "options": [
+                    "$\\frac{1}{7}$",
+                    "$\\frac{1}{4}$",
+                    "$\\frac{1}{3}$",
+                    "$\\frac{1}{2}$"
+                ],
+                "answer": [
+                    "$\\frac{1}{7}$"
+                ],
+                "type": "si",
+                "matchings": [],
+                "index": 5
             },
             {
-                "content": "Use the subtraction by addition method to calculate 8,117 − 5,479",
-                "options": ["2,672", "2.738", "2,662", "2.638"],
+                "content": "![image] (https://www.mathopolis.com/questions/images/7/3/f65662a8f8723af3ab512dd407c72d2.gif) \n Only one of them shows the correct time.\n One of them is 20 minutes ahead, another is 20 minutes late, and the other is stopped. \n What is the time at the moment?",
+                "options": [
+                    "4:45",
+                    "5:05",
+                    "5:25",
+                    "5:40"
+                ],
+                "answer": [
+                    "5:05"
+                ],
                 "type": "si",
-                "answer": ["2.638"],
                 "matchings": [],
-                "index": 17
+                "index": 6
             },
             {
-                "content": "What is -5 + (-10) − (-8) ?",
-                "options": ["-23", "-7", "-3", "13"],
+                "content": "What is the next number in this sequence? \n 95, 120, 145, ___",
+                "options": [
+                    "170",
+                    "160",
+                    "165",
+                    "175"
+                ],
+                "answer": [
+                    "170"
+                ],
                 "type": "si",
-                "answer": ["-7"],
                 "matchings": [],
-                "index": 18
+                "index": 3
+            },
+            {
+                "content": "Victoria scored 60% in her end of year math exam in 2015.\n In 2016, Victoria's score increased by 5% of her 2015 score.\n What percent did Victoria score in her math exam in 2016?",
+                "options": [
+                    "62%",
+                    "63%",
+                    "64%",
+                    "65%"
+                ],
+                "answer": [
+                    "63%"
+                ],
+                "type": "si",
+                "matchings": [],
+                "index": 4
             },
             {
                 "content": "Karen deposited 24% of the cost of her house. If she paid $124,800 for the deposit, what was the cost of the house?",
@@ -250,7 +339,75 @@
                 "type": "si",
                 "matchings": [],
                 "index": 20
-            }
-        ]
+            }]
+    },
+    {
+        "title": "How smart",
+        "brief": "How does your compute math problem?",
+        "category": "ma",
+        "shuffle": false,
+        "questions": [{
+            "content": " AB and CD are parallel lines and EH is a transversal. \n The size of angle BFE is $52^{o} $ and  the size of angle CGH is $2x^{o}$. \n What is the value of x?",
+            "options": [
+                "26",
+                "52",
+                "28",
+                "21"
+            ],
+            "answer": [
+                "26"
+            ],
+            "type": "si",
+            "matchings": [],
+            "index": 2
+        },{
+            "content": "Victoria scored 60% in her end of year math exam in 2015.\n In 2016, Victoria's score increased by 5% of her 2015 score.\n What percent did Victoria score in her math exam in 2016?",
+            "options": [
+                "62%",
+                "63%",
+                "64%",
+                "65%"
+            ],
+            "answer": [
+                "63%"
+            ],
+            "type": "si",
+            "matchings": [],
+            "index": 4
+        },{
+            "content": "Solve : $4x^{3} + 8x^{2} - 25x -50 = 0$",
+            "options": [
+                "$x = -2.5, -2 or 2.5$",
+                "$x = -2, -0.4 or 0.4$",
+                "$x = -2.5, 2 or 2.5$",
+                "$x = -2, 2 or 2.5$"
+            ],
+            "answer": [
+                "$x = -2.5, -2 or 2.5$"
+            ],
+            "matchings": [],
+            "type": "si",
+            "index": 8
+        },{
+            "content": "The price of car increased by 5%. If the new price was $22,050, what was the old price?",
+            "options": ["20000", "21000", "23152", "23210"],
+            "type": "si",
+            "matchings": [],
+            "index": 20
+        },{
+            "content": "What is the next number in this sequence? \n 95, 120, 145, ___",
+            "options": [
+                "170",
+                "160",
+                "165",
+                "175"
+            ],
+            "answer": [
+                "170"
+            ],
+            "type": "si",
+            "matchings": [],
+            "index": 3
+        }]
     }
 ]
