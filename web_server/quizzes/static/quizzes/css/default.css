@@ -165,3 +165,6 @@ li.nav-category {
 }
 
 /* CSS here */
+.btn {
+  white-space: normal;
+}
