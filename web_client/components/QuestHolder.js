@@ -1,7 +1,7 @@
 import React from "react";
 import ReactMdeDemo from "./ReactMdeDemo";
 import EquationEditor from "./EquationEditor";
-import {MarkdownRender} from "./QuestDetail";
+import MarkdownRender from "./MarkdownRender";
 // var MarkdownRender = require("./QuestDetail").MarkdownRender;
 class QuestHolder extends React.Component {
 	constructor(props) {
