@@ -7,3 +7,4 @@ web_server/db.sqlite3
 !**/migrations/__init__.py
 **/main.js
 /web_server/userprofile/static/media/user_avatar
+npm-debug.log

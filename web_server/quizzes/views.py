@@ -63,6 +63,12 @@ class FullQuizDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Quiz.objects.all()
     serializer_class = FullQuizSerializer
 
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        if instance.status == 'r':
+            instance.status = 'p'
+            instance.save()
+
 # Set of api that return a list of quiz item use BriefQuizSerializer
 class QuizItemList(generics.ListAPIView):
     permission_classes = (permissions.IsAuthenticated,)
