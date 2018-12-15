@@ -133,7 +133,7 @@ def get_leaderboard(request):
 
     for cate in categories:
         categories[cate] = sorted(categories[cate], key=lambda x: x[1],reverse=True)
-        categories[cate] = categories[cate][:min(5, len(categories[cate]))]
+        categories[cate] = categories[cate][:min(6, len(categories[cate]))]
     return Response(categories)
 
 @api_view(['GET'])
