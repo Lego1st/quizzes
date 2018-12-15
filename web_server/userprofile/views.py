@@ -158,7 +158,29 @@ def get_statistic(request):
         do_per_mon.append(per_mon)
 
 
-    return Response({'per_cate':static,'per_mon':do_per_mon})
+    users = User.objects.all()
+    categories = defaultdict(list)
+    ranking = defaultdict()
+
+    for cate in cates:
+        for user in users:
+            user_cate = UserSubmission.objects.filter(user=user,quiz__category=cate)
+            user_cate_score = user_cate.aggregate(total_score=ExpressionWrapper(Sum(F('mark') * F('quiz__rating')),
+                                                  output_field=FloatField()))['total_score']
+            if not user_cate_score:
+                user_cate_score = 0.0
+
+            categories[cate].append((user.username,user_cate_score))
+
+    for cate in categories:
+        categories[cate] = sorted(categories[cate], key=lambda x: x[1],reverse=True)
+        user_sorted,_ = zip(*categories[cate])
+        if username in user_sorted:
+            ranking[cate] = (user_sorted.index(username), len(user_sorted))
+        else:
+            ranking[cate] = (len(user_sorted), len(user_sorted))
+
+    return Response({'per_cate':static,'per_mon':do_per_mon,'ranking':ranking})
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])

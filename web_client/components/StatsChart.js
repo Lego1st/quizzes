@@ -60,15 +60,15 @@ class StatChart extends React.Component {
 	}
 
 	componentDidMount() {
-		get_data("/profile/api/ranking/?username="+this.props.username,true)
-		.then(res => res.json())
-		.then(
-		  (result) => {
-				console.log("statistic:", result);
+	// 	get_data("/profile/api/ranking/?username="+this.props.username,true)
+	// 	.then(res => res.json())
+	// 	.then(
+	// 	  (result) => {
+	// 			console.log("statistic:", result);
 				  
-		  		this.setState({rankData: result})
-		  },
-		)
+	// 	  		this.setState({rankData: result})
+	// 	  },
+	// 	)
 		get_data("/profile/api/statistic/?username=" + this.props.username, true)
 			.then(res => res.json())
 			.then(
@@ -76,9 +76,10 @@ class StatChart extends React.Component {
 					var data = [];
 					var option = [];
 					var result = results['per_cate'];
+					var ranking = results['ranking'];
 					for (let i = 0; i < result.length; i++) {
 						try{
-						let rank = this.state.rankData[result[i]['cate']];
+						let rank = ranking[result[i]['cate']];
 
 						let num = 'th';
 						if((rank[0] + 1) % 10 == 1){
@@ -120,7 +121,7 @@ class StatChart extends React.Component {
 							
 						}
 					}
-					var result2 = results['per_mon']
+
 					var data2 = {
 						labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
 							'August', 'September', 'October', 'Novemver', 'December'],
