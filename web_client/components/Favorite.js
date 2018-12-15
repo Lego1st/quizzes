@@ -20,7 +20,7 @@ class Favorite extends React.Component {
   }
 
   componentDidMount() {
-    get_data(`/api/liked_quiz/?page_size=${page_size}?username=${this.props.match.params.username}`, true)
+    get_data(`/api/liked_quiz/?page_size=${page_size}&username=${this.props.match.params.username}`, true)
       .then(res => {
         return res.json();
       })
@@ -86,19 +86,27 @@ class Favorite extends React.Component {
             <ProfileSideBar username={this.props.match.params.username}/>
             <div className="col-md-8">
               <div className="hero-text toTitle">
-                <h3>Quizzes you liked</h3>
+                <h3>Liked Quizzes</h3>
               </div>
             { (posts.length == 0) ? (
               <div style={{textAlign: 'center'}}>
-                <h3>You have not liked any quiz yet ^^</h3>
+                {
+									(this.props.match.params.username == localStorage.getItem('username')) ? (
+										<div>
+											<h3>You have not liked any quiz yet ^^</h3>
 
-                <h4>Go 
-                  <Link to="/">
+                      <h4>Go 
+                        <Link to="/">
                           <i className="fas fa-home" style={{margin: '1%'}}></i>
                         </Link>
                         to explore more quizzes!
-                    </h4>
-                  </div>
+                      </h4>
+										</div>
+									) : (
+										<h3>This user has not liked any quiz yet ^^</h3>
+									)
+								}
+              </div>
               ) : (
                   <TableView 
                         dataSource={this.state.posts}

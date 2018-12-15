@@ -20,7 +20,7 @@ class Post extends React.Component {
 	}
 
 	componentDidMount() {
-		get_data(`/api/posted_quiz/?page_size=${page_size}`, true)
+		get_data(`/api/posted_quiz/?page_size=${page_size}&username=${this.props.match.params.username}`, true)
 			.then(res => {
 				return res.json();
 			})
@@ -86,19 +86,26 @@ class Post extends React.Component {
 		        <ProfileSideBar username={this.props.match.params.username}/>
 		        <div className="col-md-8">
 				  <div className="hero-text toTitle">
-				    <h3>Your Quizzes</h3>
+				    <h3>Posted Quizzes</h3>
 				  </div>
 		        { (posts.length == 0) ? (
 		        	<div style={{textAlign: 'center'}}>
-			        	<h3>You currently do not have any post yet ^^</h3>
-
-			        	<h4>Click 
-				        	<Link to="/addquiz">
-		                      <i className="fas fa-plus-circle" style={{margin: '1%'}}></i>
-		                    </Link>
-		                    to add one!
-		                </h4>
-	                </div>
+								{
+									(this.props.match.params.username == localStorage.getItem('username')) ? (
+										<div>
+											<h3>You currently do not have any post yet ^^</h3>
+											<h4>Click 
+												<Link to="/addquiz">
+														<i className="fas fa-plus-circle" style={{margin: '1%'}}></i>
+												</Link>
+													to add one!
+											</h4>
+										</div>
+									) : (
+										<h3>This user currently does not have any post yet ^^</h3>
+									)
+								}
+	          	</div>
 		        	) : (
 		            	<TableView 
 		                    dataSource={this.state.posts}

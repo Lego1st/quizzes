@@ -191,7 +191,7 @@ class EditQuiz extends React.Component {
 		.then((result) => {
 			if (result.ok) {
 				console.log(result);	
-				window.location.replace(Config.serverUrl + '/myquizzes');				
+				window.location.replace(Config.serverUrl + '/myquizzes' + localStorage.getItem('username'));				
 			}
 			else if (result.status == 403){
 				$(".submitErrorMesssage").text('You cannot edit quiz after it is approved!');
