@@ -305,8 +305,6 @@ class QuestDetail extends Component {
                
         </div>
 
-        <h2> Quesiton {x.index}</h2>
-        <br/>
         {x.type=='si' && <SingleChoiceQuest key={x.index} quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz} viewOnly={this.props.viewOnly} approvalOnly={this.props.approvalOnly}/>}
         {x.type=='mu' && <MultipleChoiceQuest key={x.index} quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz} viewOnly={this.props.viewOnly} approvalOnly={this.props.approvalOnly}/>}
         {x.type=='ma' && <MatchingQuest key={x.index} quest_detail={x} callbackQuiz={this.props.callbackQuiz} doQuiz={this.props.doQuiz} viewOnly={this.props.viewOnly} approvalOnly={this.props.approvalOnly}/>}

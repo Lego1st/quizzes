@@ -70,7 +70,7 @@ class QuizItem extends Component {
             </span>
           </div>
         </div>
-        <div className="qz_quiz_desc" style={{textOverflow: "ellipsis", "whiteSpace": "nowrap"}}>{
+        <div className="qz_quiz_desc" style={{textOverflow: "ellipsis"}}>{
           this.props.info.brief}</div>
         <div className="qz_quiz_rating">
           {this.renderRating()}
