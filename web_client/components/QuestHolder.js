@@ -37,7 +37,7 @@ class QuestHolder extends React.Component {
 	}
 
 	handleDelete() {
-		this.props.handleDeleteQuestion(this.props.index);
+		this.props.handleDeleteQuestion(this.props.order);
 	}
 
 	handleChangeContent(_content) {
@@ -103,38 +103,42 @@ class QuestHolder extends React.Component {
 		return true;
 	}
 
+	displayError(_text) {
+		$(".errorMessage-" + this.props.index).text(_text);
+	}
+
 	handleSave() {
 		if (!this.validateOptions()) {
 			if (this.state.question.options.length != 0 && this.state.question.type != 2) {
-				$(".errorMessage").text("Please check your options, of which you might missed or duplicated some.");
+				this.displayError("Please check your options, of which you might missed or duplicated some.");
 			}
 			else {
-				$(".errorMessage").text("Please specify the options!");	
+				this.displayError("Please specify the options!");	
 			}
 			$(".optCrl").find(".form-control")[0].focus();
 			return;
 		}
 
 		if (this.state.question.type == 3 && !this.validateMatchings()) {
-			$(".errorMessage").text("Please check your matchings, of which you might missed or duplicated some.");			
+			this.displayError("Please check your matchings, of which you might missed or duplicated some.");			
 			$(".optCrl").find(".form-control")[0].focus();
 			return;
 		}
 
 		if (!this.validateContent()) {
-			$(".errorMessage").text("Please give some content to help user understand your quiz.");
+			this.displayError("Please give some content to help user understand your quiz.");
 			$(".md-editor-textarea").focus();
 			return;
 		}
 
 		if (!this.validateAnswer()) {
-			$(".errorMessage").text("Please specify the answer.");
+			this.displayError("Please specify the answer.");
 			$(".optCrl").find('form').find("input")[0].focus();
 			return;
 		}
 
 		this.props.savingQuestion(this.state.question, this.props.order);
-		$(".errorMessage").text("");
+		this.displayError("");
 		$(".closeModal").click();
 	}
 
@@ -257,7 +261,7 @@ class QuestHolder extends React.Component {
 
 	convertQuestion() {
 		var question =  Object.assign({}, this.state.question);
-		console.log("before conversion: ", question);
+
 		if (question['type'] == 3) {
 			question['answer'] = question['options'];
 		}
@@ -456,7 +460,7 @@ class QuestHolder extends React.Component {
 																
 															
 							<div className = "modal-footer">
-								<p className = "errorMessage" style = {{color: 'red'}}></p>
+								<p className = {"errorMessage-" + this.props.index} style = {{color: 'red'}}></p>
 								<button type = "button" className = "btn btn-secondary closeModal" data-dismiss = "modal">Close</button>
 								<button type = "button" className = "btn btn-secondary" onClick = {this.handleSave.bind(this)}>Save</button>
 								{/*<button type = "button" className = "btn btn-secondary" onClick = {() => console.log(this.state.question)}>Check</button>*/}

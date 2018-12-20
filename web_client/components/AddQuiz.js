@@ -18,7 +18,6 @@ class AddQuiz extends React.Component {
 			category: "",
 			rating: 1,
 			questions: [],
-			deletions: []
 		};
 		this.handleChangeQuestion = this.handleChangeQuestion.bind(this);
 		this.handleAddQuestion = this.handleAddQuestion.bind(this);
@@ -62,14 +61,18 @@ class AddQuiz extends React.Component {
 		})
 
 		this.setState({ questions: new_questions });
-		console.log(this.state.questions);
+		console.log("state questions:", this.state.questions);
 	}
 
-	handleDeleteQuestion(index) {
-		const new_deletions = this.state.deletions;
-		new_deletions.push(index);
-		this.setState({ deletions: new_deletions });
-		console.log(this.state.deletions);
+	handleDeleteQuestion(order) {
+		var new_questions = this.state.questions;
+		new_questions[order] = null;
+		var filtered = this.state.questions.filter(function (el) {
+		  return el != null;
+		});
+
+		this.setState({questions: filtered});
+		console.log("state questions:", filtered);
 	}
 
 	convertState() {
@@ -77,13 +80,9 @@ class AddQuiz extends React.Component {
 		converted_state['category'] = CODE_CATEGORY[converted_state['category']];
 
 		const converted_questions = [];
-		console.log("Delete: ", converted_state.deletions);
 		for (var i = 0; i < converted_state.questions.length; i++) {
 			const question = Object.assign({}, converted_state.questions[i]);
-			if (converted_state.deletions.includes(question['index'])) {
-				continue;
-			}
-
+			
 			if (question['type'] == 3) {
 				question['answer'] = question['options'];
 			}
@@ -95,7 +94,6 @@ class AddQuiz extends React.Component {
 		}
 
 		converted_state.questions = converted_questions;
-		delete converted_state['deletions'];
 		return converted_state;
 	}
 
@@ -244,22 +242,22 @@ class AddQuiz extends React.Component {
 
 
 	render() {
-		const buttons = [];
-		const indices = [];
+		let buttons = [];
+		let indices = [];
+
 		for (var i = 0; i < this.state.questions.length; i++) {
-			if (!this.state.deletions.includes(i)) {
-				buttons.push(<QuestHolder index={this.state.questions[i].index}
-										order={i}
-										numOptions={Math.max(4, this.state.questions[i].options.length, this.state.questions[i].answer.length)}
-										key={this.state.questions[i].index}
-										intial_state={this.state.questions[i]}
-										savingQuestion={this.handleChangeQuestion}
-										handleDeleteQuestion={this.handleDeleteQuestion}
-										brief={this.state.questions[i].content.substring(0, 20) + '...'} />)
-				indices.push(this.state.questions[i].index);
-			}
+			buttons.push(<QuestHolder index={this.state.questions[i].index}
+									order={i}
+									numOptions={Math.max(4, this.state.questions[i].options.length, this.state.questions[i].answer.length)}
+									key={this.state.questions[i].index}
+									intial_state={this.state.questions[i]}
+									savingQuestion={this.handleChangeQuestion}
+									handleDeleteQuestion={this.handleDeleteQuestion}
+									brief={this.state.questions[i].content.substring(0, 20) + '...'} />)
+			indices.push(this.state.questions[i].index);
 		}
 
+		console.log('re-render, indices: ', indices, ' buttons: ', buttons);
 		buttons.push(<Adder index={indices.length > 0 ? Math.max.apply(null, indices) + 1 : 0} 
 							order={buttons.length} 					
 							key={indices.length > 0 ? Math.max.apply(null, indices) + 1 : 0} 

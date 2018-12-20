@@ -22,7 +22,6 @@ class EditQuiz extends React.Component {
 			shuffle: false,
 			rating : 1,
 			questions: [],
-			deletions: []
 		};
 		this.handleChangeQuestion = this.handleChangeQuestion.bind(this);
 		this.handleAddQuestion = this.handleAddQuestion.bind(this);
@@ -103,22 +102,22 @@ class EditQuiz extends React.Component {
 		console.log(this.state.questions);
 	}
 
-	handleDeleteQuestion(index) {
-		const new_deletions = this.state.deletions;
-		new_deletions.push(index);
-		this.setState({deletions: new_deletions});
-		console.log(this.state.deletions);
+	handleDeleteQuestion(order) {
+		var new_questions = this.state.questions;
+		new_questions[order] = null;
+		var filtered = this.state.questions.filter(function (el) {
+		  return el != null;
+		});
+
+		this.setState({questions: filtered});
+		console.log("state questions:", filtered);
 	}
 
 	convertState() {
 		const converted_state = Object.assign({}, this.state);
 		const converted_questions = [];
-		console.log("Delete: ", converted_state.deletions);
 		for (var i = 0; i < converted_state.questions.length; i++) {
 			const question = Object.assign({}, converted_state.questions[i]);
-			if (converted_state.deletions.includes(question['index'])) {
-				continue;
-			}
 						
 			if (question['type'] == 3) {
 				question['answer'] = question['options'];
@@ -132,7 +131,6 @@ class EditQuiz extends React.Component {
 		}
 
 		converted_state.questions = converted_questions;
-		delete converted_state['deletions'];
 
 		return converted_state;
 	}
@@ -221,6 +219,7 @@ class EditQuiz extends React.Component {
 			}
 		});
 	}
+
 	renderRating() {
 	    var rate = [];
 	    for(var i = 0; i < 3; i++)
@@ -231,20 +230,18 @@ class EditQuiz extends React.Component {
 	}
 
 	render() {
-		const buttons = [];
-		const indices = [];
+		let buttons = [];
+		let indices = [];
 		for (var i = 0; i < this.state.questions.length; i++) {
-			if (! this.state.deletions.includes(i)) {
-				buttons.push( <QuestHolder index = {this.state.questions[i].index}
-										order = {i}
-										numOptions={Math.max(4, this.state.questions[i].options.length, this.state.questions[i].answer.length)}
-										key = {this.state.questions[i].index}
-										intial_state = {this.state.questions[i]}
-										savingQuestion = {this.handleChangeQuestion}
-										handleDeleteQuestion = {this.handleDeleteQuestion}
-										brief = {this.state.questions[i].content.substring(0, 20) + '...'}/>)
-				indices.push(this.state.questions[i].index);
-			}
+			buttons.push( <QuestHolder index = {this.state.questions[i].index}
+									order = {i}
+									numOptions={Math.max(4, this.state.questions[i].options.length, this.state.questions[i].answer.length)}
+									key = {this.state.questions[i].index}
+									intial_state = {this.state.questions[i]}
+									savingQuestion = {this.handleChangeQuestion}
+									handleDeleteQuestion = {this.handleDeleteQuestion}
+									brief = {this.state.questions[i].content.substring(0, 20) + '...'}/>)
+			indices.push(this.state.questions[i].index);
 		}
 
 		buttons.push(<Adder index = {Math.max.apply(null, indices) + 1} 
@@ -277,6 +274,7 @@ class EditQuiz extends React.Component {
 							
 							<input type="text" className="form-control"
 								placeholder={this.state.title}
+								value = {this.state.title}
 								onChange={this.handleChangeTitle.bind(this)} />
 							
 						</div>
@@ -293,6 +291,7 @@ class EditQuiz extends React.Component {
 							
 							<input type="text" className="form-control"
 								placeholder={this.state.brief}
+								value={this.state.brief}
 								onChange={this.handleChangeBrief.bind(this)} />
 						</div>
 					</h1>
